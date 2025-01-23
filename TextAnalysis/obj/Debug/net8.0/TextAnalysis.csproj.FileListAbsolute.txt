@@ -1,0 +1,11 @@
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\bin\Debug\net8.0\TextAnalysis.deps.json
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\bin\Debug\net8.0\TextAnalysis.dll
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\bin\Debug\net8.0\TextAnalysis.pdb
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.AssemblyInfoInputs.cache
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.AssemblyInfo.cs
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.csproj.CoreCompileInputs.cache
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.dll
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\refint\TextAnalysis.dll
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\TextAnalysis.pdb
+C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\TextAnalysis\obj\Debug\net8.0\ref\TextAnalysis.dll

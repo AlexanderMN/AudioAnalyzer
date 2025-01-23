@@ -1,0 +1,76 @@
+@model AudioAnalyzer.Web.Models.ViewModels.HomeViewModel;
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio analyzer</title>
+    <link rel="stylesheet" href="css/home-style.css">
+</head>
+<body class="body">
+<div class="container">
+    <div id="Header">Выберите или перетащите файл</div>
+    <div id="main" class="container">
+        <div id="sidebar">
+            <table id="options">
+                <tr>
+                    <td>
+                        <button disabled id="button-spectrogram" class="options-button">
+                            Спектрограмма аудиофайла
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button disabled id="button-basicinfo" class="options-button">
+                            Базовая информация о аудиофайле
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button disabled id="button-transcribe" class="options-button">
+                            Транскрибация аудиофайла
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button disabled id="button-summary" class="options-button">
+                            Краткое содержание аудиофайла
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button disabled id="button-search" class="options-button">
+                            Поиск по аудиофайлу
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form
+            action="/api/Home/Audio"
+            enctype="multipart/form-data"
+            method="post"
+            class="userInput"
+        >
+            <div id="dropArea">Перетащите сюда</div>
+            <div class="buttons">
+                <input
+                    id="fileInput"
+                    name="inputFile"
+                    type="file"
+                    multiple="multiple"
+                    accept=".wav"
+                />
+                <button id="submit-button" type="submit">Загрузить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/home-script.js"></script>
+</body>
+</html>

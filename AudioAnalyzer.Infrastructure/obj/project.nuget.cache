@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "m8FA3SAltjQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alex-nb\\.nuget\\packages\\rabbitmq.client\\7.0.0\\rabbitmq.client.7.0.0.nupkg.sha512",
+    "C:\\Users\\Alex-nb\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
+    "C:\\Users\\Alex-nb\\.nuget\\packages\\system.threading.ratelimiting\\8.0.0\\system.threading.ratelimiting.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

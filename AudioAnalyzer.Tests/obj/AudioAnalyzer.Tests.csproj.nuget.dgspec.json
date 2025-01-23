@@ -1,0 +1,215 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
+        "projectName": "AudioAnalyzer.Infrastructure",
+        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
+        "projectName": "AudioAnalyzer.Tests",
+        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
+        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj"
+              },
+              "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj": {
+                "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[8.0.0-alpha.1, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.12.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj",
+        "projectName": "TextAnalysis",
+        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj",
+        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

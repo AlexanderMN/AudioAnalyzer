@@ -1,0 +1,82 @@
+.body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.container {
+    position: relative;
+}
+
+div.container #Header {
+    position: relative;
+    width: 40%;
+    height: 10%;
+    text-align: center;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);
+}
+
+div.container #main {
+    position: relative;
+
+    height: 80%;
+    width: 100%;
+}
+
+#sidebar {
+    position: relative;
+    float: left;
+    width: 25%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+form.userInput {
+    position: relative;
+    float: left;
+    margin-left: 5%;
+    width: 60%;
+    height: 100%;
+}
+
+#dropArea {
+    outline: 1px solid gray;
+    border-radius: 15px;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 5%;
+    width: 100%;
+    height: 100%;
+
+    align-content: center;
+    text-align: center;
+}
+
+form.userInput div.buttons {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+div.buttons #fileInput {
+    position: absolute;
+    width: 50%;
+    margin: 0;
+    left: 0;
+}
+
+#submit-button {
+    position: absolute;
+    width: 30%;
+    margin: 0;
+    right: 0;
+}
+
+#options {
+    width: 100%;
+}
+
+.options-button {
+    width: 100%;
+}
