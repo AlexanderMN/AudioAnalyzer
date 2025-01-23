@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {}
+    "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
+    "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
         "projectName": "AudioAnalyzer.Infrastructure",
-        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\alexm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alexm\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,7 +39,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -66,24 +72,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {
+    "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
         "projectName": "AudioAnalyzer.Tests",
-        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
-        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Tests\\obj\\",
+        "projectPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Tests\\AudioAnalyzer.Tests.csproj",
+        "packagesPath": "C:\\Users\\alexm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alexm\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -99,11 +105,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj"
+              "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Infrastructure\\AudioAnalyzer.Infrastructure.csproj"
               },
-              "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj": {
-                "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj"
+              "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\TextAnalysis.csproj": {
+                "projectPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\TextAnalysis.csproj"
               }
             }
           }
@@ -112,7 +118,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -147,24 +159,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj": {
+    "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\TextAnalysis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj",
+        "projectUniqueName": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\TextAnalysis.csproj",
         "projectName": "TextAnalysis",
-        "projectPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\TextAnalysis.csproj",
-        "packagesPath": "C:\\Users\\Alex-nb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex-nb\\RiderProjects\\AudioAnalizerWeb\\TextAnalysis\\obj\\",
+        "projectPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\TextAnalysis.csproj",
+        "packagesPath": "C:\\Users\\alexm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\TextAnalysis\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alex-nb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alexm\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -186,7 +198,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -207,7 +225,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.112/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

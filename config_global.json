@@ -1,0 +1,12 @@
+{
+  "Broker": {
+    "IPAddress": "127.0.0.1",
+    "Port": 4369,
+    "Topics": [
+        "Transcription", 
+        "Summary", 
+        "Audio-url", 
+        "Spectrogram-url"
+    ]
+  }
+}

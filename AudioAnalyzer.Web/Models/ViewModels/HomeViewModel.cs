@@ -1,10 +1,13 @@
+using System.Net;
+
 namespace AudioAnalyzer.Web.Models.ViewModels;
 
 public class HomeViewModel
 {
-    public HomeViewModel(HttpResponseMessage response)
+    public HomeViewModel(HttpStatusCode httpStatusCode)
     {
-        Response = response;
+        
+        Response = new HttpResponseMessage(httpStatusCode);
     }
 
     public HttpResponseMessage Response { get; set; }

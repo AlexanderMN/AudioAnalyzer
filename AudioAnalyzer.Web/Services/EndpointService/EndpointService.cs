@@ -48,9 +48,6 @@ public class EndpointService<TKey> : IEndpointService<TKey> where TKey : ICompar
         formDataContent.Add(streamContent);
         
         httpRequestMessage.Content = formDataContent;
-        
-        //TODO fix this
-        //httpRequestMessage.Content.
 
         _httpClient.Timeout = new TimeSpan(0, 5, 0);
         return _httpClient.SendAsync(httpRequestMessage);

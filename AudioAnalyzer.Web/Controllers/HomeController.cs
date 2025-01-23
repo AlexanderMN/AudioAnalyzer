@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using AudioAnalyzer.Web.Models.Persistence.Repositories.AudioExtensions;
@@ -21,15 +22,19 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IEndpointService<string> _endpointService;
     private readonly IAudioExtensionRepository _audioExtensionRepository;
+    private readonly IMessageBroker _messageBroker;
+    
     private HttpClient _httpClient;
     
     public HomeController(ILogger<HomeController> logger, 
                           IEndpointService<string> endpointService,
-                          IAudioExtensionRepository audioExtensionRepository)
+                          IAudioExtensionRepository audioExtensionRepository,
+                          IMessageBroker messageBroker)
     {
         _logger = logger;
         _endpointService = endpointService;
         _audioExtensionRepository = audioExtensionRepository;
+        _messageBroker = messageBroker;
     }
     
     [Route("Index")]
@@ -52,7 +57,7 @@ public class HomeController : Controller
         
         List<string> extensions = [".mp3", ".wav", ".aiff"];
         
-        return View(new HomeViewModel(new HttpResponseMessage(HttpStatusCode.OK)));
+        return View(new HomeViewModel(HttpStatusCode.OK));
     }
 
     //TODO additionally check file extension and permissions to perform action
@@ -61,24 +66,25 @@ public class HomeController : Controller
     public async Task<ActionResult> Audio(IFormFile inputFile)
     {
         var knownExtensions = _audioExtensionRepository.GetAllAudioExtensions();
-
         var audioExtensionSectionName = _audioExtensionRepository.GetAudioExtensionsSectionName();
+        
         //TODO fix this
         var audioFile = Request.Form.Files[0];
         if (!knownExtensions.Contains(audioFile.ContentType))
-            return View(new HomeViewModel(new HttpResponseMessage(HttpStatusCode.BadRequest)));
-        
-        var uri = _endpointService.GetUriFromEndpointId("AudioRecognizer", "/asr");
-        //TODO: remove magic strings
+        {
+            return View(new HomeViewModel(HttpStatusCode.BadRequest));
+        }
         
         var fileHeaders = audioFile.Headers.ToDictionary();
         fileHeaders.Add("audio_blob", audioFile.FileName);
-
-        var requestHeaders = new System.Collections.Generic.Dictionary<string, string>() {{audioExtensionSectionName, ".wav"}};
         
-        var dataStream = audioFile.OpenReadStream();
-        
-        var responseTask = _endpointService.PostFileToEndpointAsync(uri, dataStream, requestHeaders, fileHeaders);
+        //TODO: remove magic strings
+        var responseTask = _endpointService.PostFileToEndpointAsync(
+            uri: _endpointService.GetUriFromEndpointId("AudioRecognizer", "/asr"),
+            dataStream: audioFile.OpenReadStream(),
+            requestHeaders: new System.Collections.Generic.Dictionary<string, string>()
+                { { audioExtensionSectionName, ".wav" } },
+            fileHeaders: fileHeaders);
         
         if (await Task.WhenAny(responseTask, Task.Delay(1000000)) == responseTask)
         {
@@ -94,7 +100,7 @@ public class HomeController : Controller
                 
                 //TODO make async
                 var obj = JsonSerializer.Deserialize<AnalyzerResponseJson>(responseText, JsonSerializerOptions.Default);
-
+                
                 return View();
             }
             else
