@@ -12,6 +12,7 @@ using AudioAnalyzer.Web.Models.ViewModels;
 using AudioAnalyzer.Web.Services.EndpointService;
 using Microsoft.AspNetCore.Mvc;
 using AudioAnalyzer.Web.Services;
+using AudioAnalyzer.Web.Services.FileService;
 using Microsoft.Extensions.Primitives;
 
 namespace AudioAnalyzer.Web.Controllers;
@@ -23,18 +24,21 @@ public class HomeController : Controller
     private readonly IEndpointService<string> _endpointService;
     private readonly IAudioExtensionRepository _audioExtensionRepository;
     private readonly IMessageBroker _messageBroker;
+    private readonly IFileService _fileService;
     
     private HttpClient _httpClient;
     
     public HomeController(ILogger<HomeController> logger, 
                           IEndpointService<string> endpointService,
                           IAudioExtensionRepository audioExtensionRepository,
-                          IMessageBroker messageBroker)
+                          IMessageBroker messageBroker,
+                          IFileService fileService)
     {
         _logger = logger;
         _endpointService = endpointService;
         _audioExtensionRepository = audioExtensionRepository;
         _messageBroker = messageBroker;
+        _fileService = fileService;
     }
     
     [Route("Index")]
@@ -75,43 +79,58 @@ public class HomeController : Controller
             return View(new HomeViewModel(HttpStatusCode.BadRequest));
         }
         
-        var fileHeaders = audioFile.Headers.ToDictionary();
-        fileHeaders.Add("audio_blob", audioFile.FileName);
+        Guid audioId = Guid.NewGuid();
+        var fileName = $"{audioId}.wav";
+        
+        //TODO add file support
+        var ftpResponse =  _fileService.UploadFileToFTP(
+            uri: _endpointService.GetUriFromEndpointId("FTPServer", EndpointProtocol.ftp,
+                $"/audioFiles/{fileName}"),
+            stream: audioFile.OpenReadStream());
+
+
+        if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
+        {
+            _messageBroker.Publish("Audio-url", fileName);
+            return View(new HomeViewModel(HttpStatusCode.Accepted));
+        }
+        
+        return View(new HomeViewModel(HttpStatusCode.BadRequest));
         
         //TODO: remove magic strings
-        var responseTask = _endpointService.PostFileToEndpointAsync(
-            uri: _endpointService.GetUriFromEndpointId("AudioRecognizer", "/asr"),
-            dataStream: audioFile.OpenReadStream(),
-            requestHeaders: new System.Collections.Generic.Dictionary<string, string>()
-                { { audioExtensionSectionName, ".wav" } },
-            fileHeaders: fileHeaders);
         
-        if (await Task.WhenAny(responseTask, Task.Delay(1000000)) == responseTask)
-        {
-            var response = await responseTask;
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStreamAsync();
-
-                byte[] buffer = new byte[responseStream.Length];
-                int readCount = responseStream.Read(buffer);
-                
-                string responseText = Encoding.UTF8.GetString(buffer).TrimEnd('\0');
-                
-                //TODO make async
-                var obj = JsonSerializer.Deserialize<AnalyzerResponseJson>(responseText, JsonSerializerOptions.Default);
-                
-                return View();
-            }
-            else
-            {
-                return View();
-            }   
-        }
-        else
-        {
-            return View();
-        }
+        
+        // if (await Task.WhenAny(responseTask, Task.Delay(1000000)) == responseTask)
+        // {
+        //     var response = await responseTask;
+        //     if (response.IsSuccessStatusCode)
+        //     {
+        //         var responseStream = await response.Content.ReadAsStreamAsync();
+        //
+        //         byte[] buffer = new byte[responseStream.Length];
+        //         int readCount = responseStream.Read(buffer);
+        //         
+        //         string responseText = Encoding.UTF8.GetString(buffer).TrimEnd('\0');
+        //         
+        //         //TODO make async
+        //         var obj = JsonSerializer.Deserialize<AnalyzerResponseJson>(responseText, JsonSerializerOptions.Default);
+        //
+        //         if (obj is { } analyzerResponse)
+        //         {
+        //             
+        //         }
+        //         
+        //         return View();
+        //     }
+        //     else
+        //     {
+        //         return View();
+        //     }   
+        // }
+        // else
+        // {
+        //     return View();
+        // }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

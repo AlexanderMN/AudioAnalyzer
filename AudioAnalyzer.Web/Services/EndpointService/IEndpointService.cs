@@ -4,7 +4,13 @@ namespace AudioAnalyzer.Web.Services.EndpointService;
 
 public interface IEndpointService <TKey>
 {
-    public string GetUriFromEndpointId(TKey endPointId, string internalPath = "");
-    public Task<HttpResponseMessage> PostFileToEndpointAsync(string uri, Stream dataStream, Dictionary<string, string> requestHeaders, Dictionary<string, StringValues> fileHeaders);
+    public string GetUriFromEndpointId(TKey endPointId, EndpointProtocol endpointProtocol, string internalPath = "");
     public Task<HttpResponse> GetDataFromEndpoint(string uri, Stream dataStream, HeaderDictionary headers);
+}
+
+public enum EndpointProtocol
+{
+    http,
+    https,
+    ftp
 }

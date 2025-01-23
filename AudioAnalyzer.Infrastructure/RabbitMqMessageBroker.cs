@@ -7,6 +7,11 @@ public class RabbitMqMessageBroker : IMessageBroker
 {
     private IConnection? _connection;
     private IChannel? _channel;
+
+    RabbitMqMessageBroker()
+    {
+        
+    }
     
     public async void Start(string stringUri)
     {

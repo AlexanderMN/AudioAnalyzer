@@ -117,7 +117,10 @@
           "RabbitMQ.Client": "7.0.0"
         },
         "runtime": {
-          "AudioAnalyzer.Infrastructure.dll": {}
+          "AudioAnalyzer.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

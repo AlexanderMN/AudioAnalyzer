@@ -1,3 +1,4 @@
+using System.Net;
 using AudioAnalyzer.Web.Models.Persistence.Repositories.Endpoints;
 using Microsoft.Extensions.Primitives;
 
@@ -14,43 +15,14 @@ public class EndpointService<TKey> : IEndpointService<TKey> where TKey : ICompar
         _httpClient = httpClient;
     }
 
-    public string GetUriFromEndpointId(TKey endPointId, string internalPath = "")
+    public string GetUriFromEndpointId(TKey endPointId, EndpointProtocol endpointProtocol, string internalPath = "")
     {
         var endpoint = _endpointRepository.GetEndpoint(endPointId);
             
-        var uri = "http://" + 
-                  endpoint.Address.ToString() + ":" + 
+        var uri = endpointProtocol + "://" + 
+                  endpoint.Address + ":" + 
                   endpoint.Port + internalPath;
         return uri;
-    }
-
-    public Task<HttpResponseMessage> PostFileToEndpointAsync(string uri, Stream dataStream, 
-        Dictionary<string, string> requestHeaders, Dictionary<string, StringValues> fileHeaders)
-    {
-        var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
-        
-        foreach (var header in requestHeaders)
-        {
-            httpRequestMessage.Headers.Add(header.Key, header.Value.ToString());
-        }
-        
-        var streamContent = new StreamContent(dataStream);
-        
-        
-        MultipartFormDataContent formDataContent = new MultipartFormDataContent();
-
-        foreach (var fileHeader in fileHeaders)
-        {
-            streamContent.Headers.Add(fileHeader.Key, fileHeader.Value.ToString());
-        }
-        //streamContent.Headers.Add("Content-Length", dataStream.Length.ToString());
-        
-        formDataContent.Add(streamContent);
-        
-        httpRequestMessage.Content = formDataContent;
-
-        _httpClient.Timeout = new TimeSpan(0, 5, 0);
-        return _httpClient.SendAsync(httpRequestMessage);
     }
 
     public Task<HttpResponse> GetDataFromEndpoint(string uri, Stream dataStream, HeaderDictionary headers)

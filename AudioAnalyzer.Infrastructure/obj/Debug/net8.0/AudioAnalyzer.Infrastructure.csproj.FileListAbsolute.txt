@@ -10,3 +10,16 @@ C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\AudioAnalyzer.Infrastructure\obj
 C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\refint\AudioAnalyzer.Infrastructure.dll
 C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.pdb
 C:\Users\Alex-nb\RiderProjects\AudioAnalizerWeb\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\ref\AudioAnalyzer.Infrastructure.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Infrastructure.deps.json
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Infrastructure.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Infrastructure.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.AssemblyInfo.cs
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.sourcelink.json
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\refint\AudioAnalyzer.Infrastructure.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\ref\AudioAnalyzer.Infrastructure.dll

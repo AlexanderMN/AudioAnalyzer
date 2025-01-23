@@ -4,11 +4,12 @@ namespace AudioAnalyzer.Web.Models.ViewModels;
 
 public class HomeViewModel
 {
-    public HomeViewModel(HttpStatusCode httpStatusCode)
+    public HomeViewModel(HttpStatusCode httpStatusCode, string errorMessage = null)
     {
-        
         Response = new HttpResponseMessage(httpStatusCode);
+        ErrorMessage = errorMessage;
     }
 
     public HttpResponseMessage Response { get; set; }
+    public string ErrorMessage { get; set; }
 }
