@@ -1,0 +1,107 @@
+div.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    position: relative;
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);
+}
+
+#body {
+    position: relative;
+    width: 100%;
+    height: 80%;
+}
+
+#sidebar {
+    position: relative;
+    float: left;
+    width: 25%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+#options {
+    width: 100%;
+}
+
+.options-button {
+    width: 100%;
+}
+
+#main {
+    position: relative;
+    text-align: center;
+    float: left;
+    margin-left: 5%;
+    width: 60%;
+    height: 100%;
+}
+
+#input-header{
+    position: relative;
+    height: 5%;
+}
+#input-user-input {
+    position: relative;
+    width: 100%;
+    height: 95%;
+}
+
+#input-drop-area {
+    outline: 1px solid gray;
+    border-radius: 15px;
+    position: relative;
+    margin-bottom: 5%;
+    width: 100%;
+    height: 85%;
+
+    align-content: center;
+    text-align: center;
+}
+
+#input-buttons {
+    position: relative;
+    height: 5%;
+}
+
+#input-file-input {
+    position: absolute;
+    width: 50%;
+    margin: 0;
+    left: 0;
+}
+
+#input-submit-button {
+    position: absolute;
+    width: 30%;
+    margin: 0;
+    right: 0;
+}
+
+#canvas-container{
+    position: relative;
+    max-width: 800px;
+    overflow: scroll;
+}
+
+#canvas{
+    position: relative;
+    width: 800px;
+    height: 80px;
+    border:1px solid #eee;
+}
+
+
+#footer{
+    position: relative;
+    width: 100%;
+    height: 10%;
+}

@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AudioAnalyzer.Infrastructure;
+using AudioAnalyzer.Infrastructure.Broker;
+using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using AudioAnalyzer.Web.Models.Persistence.Repositories.AudioExtensions;
@@ -12,7 +14,6 @@ using AudioAnalyzer.Web.Models.ViewModels;
 using AudioAnalyzer.Web.Services.EndpointService;
 using Microsoft.AspNetCore.Mvc;
 using AudioAnalyzer.Web.Services;
-using AudioAnalyzer.Web.Services.FileService;
 using Microsoft.Extensions.Primitives;
 
 namespace AudioAnalyzer.Web.Controllers;
@@ -26,7 +27,7 @@ public class HomeController : Controller
     private readonly IMessageBroker _messageBroker;
     private readonly IFileService _fileService;
     
-    private HttpClient _httpClient;
+    private HomeViewModel _homeViewModel;
     
     public HomeController(ILogger<HomeController> logger, 
                           IEndpointService<string> endpointService,
@@ -39,6 +40,8 @@ public class HomeController : Controller
         _audioExtensionRepository = audioExtensionRepository;
         _messageBroker = messageBroker;
         _fileService = fileService;
+
+        _homeViewModel = new HomeViewModel();
     }
     
     [Route("Index")]
@@ -60,10 +63,30 @@ public class HomeController : Controller
         //TODO: map file extensions from appsettings 
         
         List<string> extensions = [".mp3", ".wav", ".aiff"];
-        
-        return View(new HomeViewModel(HttpStatusCode.OK));
+
+        _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.OK);
+        return View(_homeViewModel);
     }
 
+    [HttpGet]
+    [Route("Input")]
+    public IActionResult Input()
+    {
+        return PartialView("Input");
+    }
+
+    private void OnTranscribe(object state, BrokerEventArgs args)
+    {
+        int charsWritten = 0;
+        Span<char> chars = stackalloc char[4096];
+        if (Encoding.UTF8.TryGetChars(args.Message, chars, out charsWritten))
+        {
+            _homeViewModel.TranscribedText = chars.ToString();
+            ViewData["TranscribedText"] = _homeViewModel.TranscribedText;
+        }
+    }
+    
+    
     //TODO additionally check file extension and permissions to perform action
     [HttpPost]
     [Route("Audio")]
@@ -76,7 +99,8 @@ public class HomeController : Controller
         var audioFile = Request.Form.Files[0];
         if (!knownExtensions.Contains(audioFile.ContentType))
         {
-            return View(new HomeViewModel(HttpStatusCode.BadRequest));
+            _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            return View(_homeViewModel);
         }
         
         Guid audioId = Guid.NewGuid();
@@ -91,8 +115,14 @@ public class HomeController : Controller
 
         if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
         {
-            _messageBroker.Publish("Audio-url", fileName);
-            return View(new HomeViewModel(HttpStatusCode.Accepted));
+            await _messageBroker.AddConsumer("Transcribe", OnTranscribe);
+            await _messageBroker.Subscribe("Transcribe");
+            await _messageBroker.Publish("Audio-url", fileName);
+            
+            
+            _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);
+            
+            return View(_homeViewModel);
         }
         
         return View(new HomeViewModel(HttpStatusCode.BadRequest));

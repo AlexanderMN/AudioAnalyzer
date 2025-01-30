@@ -3,7 +3,8 @@ using AudioAnalyzer.Web.Models.Persistence.Repositories.Endpoints;
 using AudioAnalyzer.Web.Services.EndpointService;
 using Microsoft.AspNetCore.Http.Features;
 using AudioAnalyzer.Infrastructure;
-using AudioAnalyzer.Web.Services.FileService;
+using AudioAnalyzer.Infrastructure.Broker;
+using AudioAnalyzer.Infrastructure.FileService;
 
 namespace AudioAnalyzer.Web;
 
@@ -26,7 +27,10 @@ public class WebStartUp
         _builder.Services.AddSingleton<IEndpointRepository<int>, LocalEndpointRepository<int>>();
         _builder.Services.AddSingleton<IEndpointService<string>, EndpointService<string>>();
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
+        
         _builder.Services.AddSingleton<IMessageBroker, RabbitMqMessageBroker>();
+        
+        
         _builder.Services.AddSingleton<IFileService, FileService>();
         
         _builder.Services.Configure<FormOptions>(x =>

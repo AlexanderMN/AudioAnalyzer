@@ -1,0 +1,22 @@
+<div>
+    <div id="input-header">Выберите или перетащите файл</div>
+    <form
+        action="/api/Home/Audio"
+        enctype="multipart/form-data"
+        method="post"
+        id="input-user-input"
+    >
+        <div id="input-drop-area">Перетащите сюда</div>
+        <div id="input-buttons">
+            <input
+                id="input-file-input"
+                name="inputFile"
+                type="file"
+                multiple="multiple"
+                accept=".wav"
+            />
+            <button id="input-submit-button" type="submit">Загрузить</button>
+        </div>
+    </form>
+</div>
+<script src="/js/input.js"></script>

@@ -1,7 +1,6 @@
 using System.Net;
-using Microsoft.Extensions.Primitives;
 
-namespace AudioAnalyzer.Web.Services.FileService;
+namespace AudioAnalyzer.Infrastructure.FileService;
 
 public interface IFileService
 {

@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio analyzer</title>
-    <link rel="stylesheet" href="css/home-style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/home_onload.js"></script>
 </head>
-<body class="body">
+<body>
 <div class="container">
-    <div id="Header">Выберите или перетащите файл</div>
-    <div id="main" class="container">
+    <div id="header">Header</div>
+    <div id="body">
         <div id="sidebar">
             <table id="options">
                 <tr>
@@ -49,28 +51,14 @@
                     </td>
                 </tr>
             </table>
+            <script src="/js/sidebar.js"></script>
         </div>
-        <form
-            action="/api/Home/Audio"
-            enctype="multipart/form-data"
-            method="post"
-            class="userInput"
-        >
-            <div id="dropArea">Перетащите сюда</div>
-            <div class="buttons">
-                <input
-                    id="fileInput"
-                    name="inputFile"
-                    type="file"
-                    multiple="multiple"
-                    accept=".wav"
-                />
-                <button id="submit-button" type="submit">Загрузить</button>
-            </div>
-        </form>
+        <div id="main">
+
+        </div>
+    </div>
+    <div id="footer">
     </div>
 </div>
-
-<script src="js/home-script.js"></script>
 </body>
 </html>
