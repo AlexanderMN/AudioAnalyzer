@@ -4,5 +4,5 @@ namespace AudioAnalyzer.Infrastructure.FileService;
 
 public interface IFileService
 {
-    public FtpWebResponse UploadFileToFTP(string uri, Stream stream);
+    public Task<FtpWebResponse> UploadFileToFTP(string uri, Stream stream);
 }

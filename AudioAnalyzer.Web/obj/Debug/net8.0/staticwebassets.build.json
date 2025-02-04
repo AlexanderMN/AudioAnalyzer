@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BtXG8y3+0T05wo6Gj6sl9XUAiXG3gjaWQGE+T8tR4fA=",
+  "Hash": "HsIYypshTBmTVEggjRhen2Kk9UvNbxfjTS1JgBnv3tg=",
   "Source": "AudioAnalyzer.Web",
   "BasePath": "_content/AudioAnalyzer.Web",
   "Mode": "Default",
@@ -73,8 +73,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "6w158jpolf",
-      "Integrity": "KqNlgE/r8IvgTaWehVdL2jNsbfTvGy56wmB1yJChP4k=",
+      "Fingerprint": "yfghku23sa",
+      "Integrity": "fhkpxKHZrq4/EkP2W+q0ABAh6mHXGDdfn4mz/7sqfeU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style.css"
@@ -115,8 +115,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tkvgwad4oz",
-      "Integrity": "3VsbupkpxOVe3DAf8eN/drMK4cJaMEmMw8amCBMqbh8=",
+      "Fingerprint": "jl1h3l5r3u",
+      "Integrity": "V4nfNl2TRbEN9Gd3SbE4kLwY8dNXqIij/4HRLzrTvxs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\basicInfo.js"
@@ -136,8 +136,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "i45e5wbuow",
-      "Integrity": "jhnojlmlTnCE6ZLxQo8sWsnX+gODx4JpEsXIVhInwDU=",
+      "Fingerprint": "noxcer1vli",
+      "Integrity": "eeD6wX3RUUer+J8gKiO34OowHwXHM7UD5Jg93V9tS6g=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\home_onload.js"
@@ -157,8 +157,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "8ljac5bn3v",
-      "Integrity": "VE4jLnD0fez+wdq34kCx2gRcksLadUcFCxJwb0Mbrfo=",
+      "Fingerprint": "6hwrw1qj0u",
+      "Integrity": "1v5ezQV1rGDmJO1ewhvjZKvop9wiiCLf2XgfxL6v94w=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\home-script.js"
@@ -178,8 +178,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "rsss6k7f0u",
-      "Integrity": "y0Y6UiyCweMxOmLUok2QR/AykuaejmDc3/YstehQHe8=",
+      "Fingerprint": "oa0uatd42u",
+      "Integrity": "APVOoP6arn/Mtu7oS6KfKnIuK4ZQV+cOleHFzjHcvF8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\input.js"
@@ -241,8 +241,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "upmzdjq4ys",
-      "Integrity": "PqlMYCnFBunb9edrjgERO3fktb9rN0mZ/kOKSh5PGy8=",
+      "Fingerprint": "cgrp3ok72r",
+      "Integrity": "PJqd9wIvtdByGvEPhOQTW/f2z9oet+H7wuu2PZsLDA0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\sidebar.js"
@@ -1653,51 +1653,6 @@
       ]
     },
     {
-      "Route": "css/style.6w158jpolf.css",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\style.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1594"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KqNlgE/r8IvgTaWehVdL2jNsbfTvGy56wmB1yJChP4k=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "6w158jpolf"
-        },
-        {
-          "Name": "label",
-          "Value": "css/style.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-KqNlgE/r8IvgTaWehVdL2jNsbfTvGy56wmB1yJChP4k="
-        }
-      ]
-    },
-    {
       "Route": "css/style.css",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\style.css",
       "Selectors": [],
@@ -1708,7 +1663,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1594"
+          "Value": "1598"
         },
         {
           "Name": "Content-Type",
@@ -1716,11 +1671,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KqNlgE/r8IvgTaWehVdL2jNsbfTvGy56wmB1yJChP4k=\""
+          "Value": "\"fhkpxKHZrq4/EkP2W+q0ABAh6mHXGDdfn4mz/7sqfeU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:02 GMT"
+          "Value": "Mon, 03 Feb 2025 15:58:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1730,7 +1685,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-KqNlgE/r8IvgTaWehVdL2jNsbfTvGy56wmB1yJChP4k="
+          "Value": "sha256-fhkpxKHZrq4/EkP2W+q0ABAh6mHXGDdfn4mz/7sqfeU="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.yfghku23sa.css",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\style.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1598"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fhkpxKHZrq4/EkP2W+q0ABAh6mHXGDdfn4mz/7sqfeU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 03 Feb 2025 15:58:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "yfghku23sa"
+        },
+        {
+          "Name": "label",
+          "Value": "css/style.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fhkpxKHZrq4/EkP2W+q0ABAh6mHXGDdfn4mz/7sqfeU="
         }
       ]
     },
@@ -1817,6 +1817,51 @@
       ]
     },
     {
+      "Route": "js/basicInfo.jl1h3l5r3u.js",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\basicInfo.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "885"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"V4nfNl2TRbEN9Gd3SbE4kLwY8dNXqIij/4HRLzrTvxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 03 Feb 2025 19:57:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jl1h3l5r3u"
+        },
+        {
+          "Name": "label",
+          "Value": "js/basicInfo.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-V4nfNl2TRbEN9Gd3SbE4kLwY8dNXqIij/4HRLzrTvxs="
+        }
+      ]
+    },
+    {
       "Route": "js/basicInfo.js",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\basicInfo.js",
       "Selectors": [],
@@ -1827,7 +1872,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "697"
+          "Value": "885"
         },
         {
           "Name": "Content-Type",
@@ -1835,11 +1880,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"3VsbupkpxOVe3DAf8eN/drMK4cJaMEmMw8amCBMqbh8=\""
+          "Value": "\"V4nfNl2TRbEN9Gd3SbE4kLwY8dNXqIij/4HRLzrTvxs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:43 GMT"
+          "Value": "Mon, 03 Feb 2025 19:57:24 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1849,97 +1894,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-3VsbupkpxOVe3DAf8eN/drMK4cJaMEmMw8amCBMqbh8="
-        }
-      ]
-    },
-    {
-      "Route": "js/basicInfo.tkvgwad4oz.js",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\basicInfo.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "697"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"3VsbupkpxOVe3DAf8eN/drMK4cJaMEmMw8amCBMqbh8=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:43 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "tkvgwad4oz"
-        },
-        {
-          "Name": "label",
-          "Value": "js/basicInfo.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-3VsbupkpxOVe3DAf8eN/drMK4cJaMEmMw8amCBMqbh8="
-        }
-      ]
-    },
-    {
-      "Route": "js/home_onload.i45e5wbuow.js",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\home_onload.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "141"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"jhnojlmlTnCE6ZLxQo8sWsnX+gODx4JpEsXIVhInwDU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:38:24 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "i45e5wbuow"
-        },
-        {
-          "Name": "label",
-          "Value": "js/home_onload.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-jhnojlmlTnCE6ZLxQo8sWsnX+gODx4JpEsXIVhInwDU="
+          "Value": "sha256-V4nfNl2TRbEN9Gd3SbE4kLwY8dNXqIij/4HRLzrTvxs="
         }
       ]
     },
@@ -1954,7 +1909,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "141"
+          "Value": "275"
         },
         {
           "Name": "Content-Type",
@@ -1962,11 +1917,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"jhnojlmlTnCE6ZLxQo8sWsnX+gODx4JpEsXIVhInwDU=\""
+          "Value": "\"eeD6wX3RUUer+J8gKiO34OowHwXHM7UD5Jg93V9tS6g=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:38:24 GMT"
+          "Value": "Mon, 03 Feb 2025 19:48:39 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1976,13 +1931,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-jhnojlmlTnCE6ZLxQo8sWsnX+gODx4JpEsXIVhInwDU="
+          "Value": "sha256-eeD6wX3RUUer+J8gKiO34OowHwXHM7UD5Jg93V9tS6g="
         }
       ]
     },
     {
-      "Route": "js/home-script.8ljac5bn3v.js",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\home-script.js",
+      "Route": "js/home_onload.noxcer1vli.js",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\home_onload.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1991,7 +1946,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "707"
+          "Value": "275"
         },
         {
           "Name": "Content-Type",
@@ -1999,11 +1954,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"VE4jLnD0fez+wdq34kCx2gRcksLadUcFCxJwb0Mbrfo=\""
+          "Value": "\"eeD6wX3RUUer+J8gKiO34OowHwXHM7UD5Jg93V9tS6g=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 23 Jan 2025 00:10:49 GMT"
+          "Value": "Mon, 03 Feb 2025 19:48:39 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2013,7 +1968,52 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "8ljac5bn3v"
+          "Value": "noxcer1vli"
+        },
+        {
+          "Name": "label",
+          "Value": "js/home_onload.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-eeD6wX3RUUer+J8gKiO34OowHwXHM7UD5Jg93V9tS6g="
+        }
+      ]
+    },
+    {
+      "Route": "js/home-script.6hwrw1qj0u.js",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\home-script.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "713"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1v5ezQV1rGDmJO1ewhvjZKvop9wiiCLf2XgfxL6v94w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 03 Feb 2025 15:57:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6hwrw1qj0u"
         },
         {
           "Name": "label",
@@ -2021,7 +2021,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-VE4jLnD0fez+wdq34kCx2gRcksLadUcFCxJwb0Mbrfo="
+          "Value": "sha256-1v5ezQV1rGDmJO1ewhvjZKvop9wiiCLf2XgfxL6v94w="
         }
       ]
     },
@@ -2036,7 +2036,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "707"
+          "Value": "713"
         },
         {
           "Name": "Content-Type",
@@ -2044,11 +2044,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"VE4jLnD0fez+wdq34kCx2gRcksLadUcFCxJwb0Mbrfo=\""
+          "Value": "\"1v5ezQV1rGDmJO1ewhvjZKvop9wiiCLf2XgfxL6v94w=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 23 Jan 2025 00:10:49 GMT"
+          "Value": "Mon, 03 Feb 2025 15:57:14 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2058,7 +2058,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-VE4jLnD0fez+wdq34kCx2gRcksLadUcFCxJwb0Mbrfo="
+          "Value": "sha256-1v5ezQV1rGDmJO1ewhvjZKvop9wiiCLf2XgfxL6v94w="
         }
       ]
     },
@@ -2073,7 +2073,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1294"
+          "Value": "1141"
         },
         {
           "Name": "Content-Type",
@@ -2081,11 +2081,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"y0Y6UiyCweMxOmLUok2QR/AykuaejmDc3/YstehQHe8=\""
+          "Value": "\"APVOoP6arn/Mtu7oS6KfKnIuK4ZQV+cOleHFzjHcvF8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:54 GMT"
+          "Value": "Mon, 03 Feb 2025 23:57:54 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2095,12 +2095,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-y0Y6UiyCweMxOmLUok2QR/AykuaejmDc3/YstehQHe8="
+          "Value": "sha256-APVOoP6arn/Mtu7oS6KfKnIuK4ZQV+cOleHFzjHcvF8="
         }
       ]
     },
     {
-      "Route": "js/input.rsss6k7f0u.js",
+      "Route": "js/input.oa0uatd42u.js",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\input.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2110,7 +2110,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1294"
+          "Value": "1141"
         },
         {
           "Name": "Content-Type",
@@ -2118,11 +2118,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"y0Y6UiyCweMxOmLUok2QR/AykuaejmDc3/YstehQHe8=\""
+          "Value": "\"APVOoP6arn/Mtu7oS6KfKnIuK4ZQV+cOleHFzjHcvF8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:13:54 GMT"
+          "Value": "Mon, 03 Feb 2025 23:57:54 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2132,7 +2132,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "rsss6k7f0u"
+          "Value": "oa0uatd42u"
         },
         {
           "Name": "label",
@@ -2140,7 +2140,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-y0Y6UiyCweMxOmLUok2QR/AykuaejmDc3/YstehQHe8="
+          "Value": "sha256-APVOoP6arn/Mtu7oS6KfKnIuK4ZQV+cOleHFzjHcvF8="
         }
       ]
     },
@@ -2309,6 +2309,51 @@
       ]
     },
     {
+      "Route": "js/sidebar.cgrp3ok72r.js",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\sidebar.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1078"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PJqd9wIvtdByGvEPhOQTW/f2z9oet+H7wuu2PZsLDA0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 02 Feb 2025 15:37:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cgrp3ok72r"
+        },
+        {
+          "Name": "label",
+          "Value": "js/sidebar.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PJqd9wIvtdByGvEPhOQTW/f2z9oet+H7wuu2PZsLDA0="
+        }
+      ]
+    },
+    {
       "Route": "js/sidebar.js",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\sidebar.js",
       "Selectors": [],
@@ -2319,7 +2364,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1083"
+          "Value": "1078"
         },
         {
           "Name": "Content-Type",
@@ -2327,11 +2372,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"PqlMYCnFBunb9edrjgERO3fktb9rN0mZ/kOKSh5PGy8=\""
+          "Value": "\"PJqd9wIvtdByGvEPhOQTW/f2z9oet+H7wuu2PZsLDA0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:15:22 GMT"
+          "Value": "Sun, 02 Feb 2025 15:37:44 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2341,52 +2386,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-PqlMYCnFBunb9edrjgERO3fktb9rN0mZ/kOKSh5PGy8="
-        }
-      ]
-    },
-    {
-      "Route": "js/sidebar.upmzdjq4ys.js",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\sidebar.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1083"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"PqlMYCnFBunb9edrjgERO3fktb9rN0mZ/kOKSh5PGy8=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 28 Jan 2025 12:15:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "upmzdjq4ys"
-        },
-        {
-          "Name": "label",
-          "Value": "js/sidebar.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-PqlMYCnFBunb9edrjgERO3fktb9rN0mZ/kOKSh5PGy8="
+          "Value": "sha256-PJqd9wIvtdByGvEPhOQTW/f2z9oet+H7wuu2PZsLDA0="
         }
       ]
     },

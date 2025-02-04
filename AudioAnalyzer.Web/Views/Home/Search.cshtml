@@ -1,0 +1,10 @@
+@model AudioAnalyzer.Web.Models.ViewModels.SearchViewModel
+
+<div>
+    <div>Введите текст для поиска</div>
+</div>
+
+<div>@Model.TranscribedText</div>
+<canvas id="canvas" width="800" height="80"></canvas>
+
+<script src="js/search_text.js"></script>

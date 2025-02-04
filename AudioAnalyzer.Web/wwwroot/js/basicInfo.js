@@ -7,9 +7,15 @@ var length = document.getElementById("length");
 var sampleRate = document.getElementById("sampleRate");
 var numberOfChannels = document.getElementById("numberOfChannels");
 
+let fileParams = audioFile.name.split(".");
+let extension = fileParams.pop();
+let name = fileParams;
+
 audioBufferPromise.then(
     audioBufer =>
     {
+        fileName.innerHTML = name;
+        fileExtension.innerHTML = extension;
         duration.innerHTML = audioBufer.duration;
         length.innerHTML = audioBufer.length;
         sampleRate.innerHTML = audioBufer.sampleRate;

@@ -7,13 +7,12 @@ using System.Text.Json.Serialization;
 using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Infrastructure.Broker;
 using AudioAnalyzer.Infrastructure.FileService;
+using AudioAnalyzer.Infrastructure.ServiceCommunication;
+using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
-using AudioAnalyzer.Web.Models.Persistence.Repositories.AudioExtensions;
 using AudioAnalyzer.Web.Models.ViewModels;
-using AudioAnalyzer.Web.Services.EndpointService;
 using Microsoft.AspNetCore.Mvc;
-using AudioAnalyzer.Web.Services;
 using Microsoft.Extensions.Primitives;
 
 namespace AudioAnalyzer.Web.Controllers;
@@ -22,25 +21,21 @@ namespace AudioAnalyzer.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IEndpointService<string> _endpointService;
-    private readonly IAudioExtensionRepository _audioExtensionRepository;
-    private readonly IMessageBroker _messageBroker;
-    private readonly IFileService _fileService;
+    private readonly IBrokerCommunication _brokerCommunication;
+    private readonly IFileServiceCommunication _fileServiceCommunication;
     
     private HomeViewModel _homeViewModel;
+    private SearchViewModel _searchViewModel;
     
     public HomeController(ILogger<HomeController> logger, 
-                          IEndpointService<string> endpointService,
-                          IAudioExtensionRepository audioExtensionRepository,
-                          IMessageBroker messageBroker,
-                          IFileService fileService)
+                          IBrokerCommunication brokerCommunication,
+                          IFileServiceCommunication fileServiceCommunication
+                          )
     {
         _logger = logger;
-        _endpointService = endpointService;
-        _audioExtensionRepository = audioExtensionRepository;
-        _messageBroker = messageBroker;
-        _fileService = fileService;
-
+        _brokerCommunication = brokerCommunication;
+        _fileServiceCommunication = fileServiceCommunication;
+        
         _homeViewModel = new HomeViewModel();
     }
     
@@ -75,14 +70,39 @@ public class HomeController : Controller
         return PartialView("Input");
     }
 
+    [HttpGet]
+    [Route("BasicInfo")]
+    public IActionResult BasicInfo()
+    {
+        return PartialView("BasicInfo");
+    }
+
+    [HttpGet]
+    [Route("Search")]
+    public async Task<IActionResult> Search()
+    {
+        _searchViewModel = new SearchViewModel("");
+        
+        string? fileName = HttpContext.Session.GetString("FileName");
+
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            await _brokerCommunication.ExchangeMessagesAsync(topicToSendTo: "Audio-url",
+                                                             messageToSend: fileName,
+                                                             topicToAwaitFrom: "Transcribe",
+                                                             onReceive: OnTranscribe);
+        }
+
+        return PartialView("Search", _searchViewModel);
+    }
+    
     private void OnTranscribe(object state, BrokerEventArgs args)
     {
         int charsWritten = 0;
         Span<char> chars = stackalloc char[4096];
         if (Encoding.UTF8.TryGetChars(args.Message, chars, out charsWritten))
         {
-            _homeViewModel.TranscribedText = chars.ToString();
-            ViewData["TranscribedText"] = _homeViewModel.TranscribedText;
+            _searchViewModel.TranscribedText = chars.ToString();
         }
     }
     
@@ -92,75 +112,32 @@ public class HomeController : Controller
     [Route("Audio")]
     public async Task<ActionResult> Audio(IFormFile inputFile)
     {
-        var knownExtensions = _audioExtensionRepository.GetAllAudioExtensions();
-        var audioExtensionSectionName = _audioExtensionRepository.GetAudioExtensionsSectionName();
-        
         //TODO fix this
         var audioFile = Request.Form.Files[0];
-        if (!knownExtensions.Contains(audioFile.ContentType))
-        {
-            _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            return View(_homeViewModel);
-        }
+        // if (!knownExtensions.Contains(audioFile.ContentType))
+        // {
+        //     _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+        //     return View(_homeViewModel);
+        // }
         
         Guid audioId = Guid.NewGuid();
         var fileName = $"{audioId}.wav";
         
+        HttpContext.Session.SetString("FileName", fileName);
+        
         //TODO add file support
-        var ftpResponse =  _fileService.UploadFileToFTP(
-            uri: _endpointService.GetUriFromEndpointId("FTPServer", EndpointProtocol.ftp,
-                $"/audioFiles/{fileName}"),
-            stream: audioFile.OpenReadStream());
 
+        var ftpResponse = await _fileServiceCommunication.SendDataToFileServiceAsync(
+            fileName, 
+            audioFile.OpenReadStream());
 
         if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
         {
-            await _messageBroker.AddConsumer("Transcribe", OnTranscribe);
-            await _messageBroker.Subscribe("Transcribe");
-            await _messageBroker.Publish("Audio-url", fileName);
-            
-            
             _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            
             return View(_homeViewModel);
         }
         
         return View(new HomeViewModel(HttpStatusCode.BadRequest));
-        
-        //TODO: remove magic strings
-        
-        
-        // if (await Task.WhenAny(responseTask, Task.Delay(1000000)) == responseTask)
-        // {
-        //     var response = await responseTask;
-        //     if (response.IsSuccessStatusCode)
-        //     {
-        //         var responseStream = await response.Content.ReadAsStreamAsync();
-        //
-        //         byte[] buffer = new byte[responseStream.Length];
-        //         int readCount = responseStream.Read(buffer);
-        //         
-        //         string responseText = Encoding.UTF8.GetString(buffer).TrimEnd('\0');
-        //         
-        //         //TODO make async
-        //         var obj = JsonSerializer.Deserialize<AnalyzerResponseJson>(responseText, JsonSerializerOptions.Default);
-        //
-        //         if (obj is { } analyzerResponse)
-        //         {
-        //             
-        //         }
-        //         
-        //         return View();
-        //     }
-        //     else
-        //     {
-        //         return View();
-        //     }   
-        // }
-        // else
-        // {
-        //     return View();
-        // }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

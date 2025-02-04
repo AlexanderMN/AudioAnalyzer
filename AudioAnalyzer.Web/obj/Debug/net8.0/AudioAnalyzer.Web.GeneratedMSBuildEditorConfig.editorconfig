@@ -20,12 +20,12 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/BasicInfo/basicInfo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzaWNJbmZvXGJhc2ljSW5mby5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Audio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdWRpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/BasicInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCYXNpY0luZm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Index.cshtml]
@@ -40,14 +40,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Search/search.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXHNlYXJjaC5jc2h0bWw=
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZWFyY2guY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Spectrogram/spectrogram.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY3Ryb2dyYW1cc3BlY3Ryb2dyYW0uY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Spectrogram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTcGVjdHJvZ3JhbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Summary/Summary.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VtbWFyeVxTdW1tYXJ5LmNzaHRtbA==
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Summary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdW1tYXJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

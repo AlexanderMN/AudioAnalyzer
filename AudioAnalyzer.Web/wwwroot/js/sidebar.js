@@ -6,15 +6,15 @@ const searchButton = document.getElementById("button-search");
 const main = document.getElementById("main");
 
 function changeMainArea(newAreaHTMLFileName){
-    $("#main").load(newAreaHTMLFileName);
+    $("#main").load("/api/Home/" + newAreaHTMLFileName);
 }
 
 function spectrogramButtonClick(){
-    changeMainArea("spectrogram.html");
+    changeMainArea("Spectrogram");
 }
 
-function basicinfoButtonClick(){
-    changeMainArea("basicInfo.html");
+function basicInfoButtonClick(){
+    changeMainArea("BasicInfo");
 }
 
 function transcribeButtonClick(){
@@ -22,16 +22,16 @@ function transcribeButtonClick(){
 }
 
 function summaryButtonClick(){
-    changeMainArea("summary.html");
+    changeMainArea("Summary");
 }
 
 function searchButtonClick(){
-    changeMainArea("search.html");
+    changeMainArea("Search");
 }
 
 
 spectrogramButton.onclick = spectrogramButtonClick;
-basicInfoButton.onclick = basicinfoButtonClick;
+basicInfoButton.onclick = basicInfoButtonClick;
 transcribeButton.onclick = transcribeButtonClick;
 summaryButton.onclick = summaryButtonClick;
 searchButton.onclick = searchButtonClick;

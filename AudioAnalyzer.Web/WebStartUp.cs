@@ -1,10 +1,11 @@
-using AudioAnalyzer.Web.Models.Persistence.Repositories.AudioExtensions;
-using AudioAnalyzer.Web.Models.Persistence.Repositories.Endpoints;
-using AudioAnalyzer.Web.Services.EndpointService;
+using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
+using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
 using Microsoft.AspNetCore.Http.Features;
 using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Infrastructure.Broker;
 using AudioAnalyzer.Infrastructure.FileService;
+using AudioAnalyzer.Infrastructure.ServiceCommunication;
+using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 
 namespace AudioAnalyzer.Web;
 
@@ -27,11 +28,14 @@ public class WebStartUp
         _builder.Services.AddSingleton<IEndpointRepository<int>, LocalEndpointRepository<int>>();
         _builder.Services.AddSingleton<IEndpointService<string>, EndpointService<string>>();
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
-        
-        _builder.Services.AddSingleton<IMessageBroker, RabbitMqMessageBroker>();
-        
-        
         _builder.Services.AddSingleton<IFileService, FileService>();
+        _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
+        _builder.Services.AddSingleton<IMessageBroker, RabbitMqMessageBroker>();
+        _builder.Services.AddSingleton<IBrokerCommunication, BrokerCommunication>();
+
+        _builder.Services.AddMvc()
+                .AddSessionStateTempDataProvider();
+        _builder.Services.AddSession();
         
         _builder.Services.Configure<FormOptions>(x =>
         {
@@ -65,6 +69,7 @@ public class WebStartUp
 
         _app.UseRouting();
 
+        _app.UseSession();
         _app.UseAuthorization();
 
         _app.MapControllers();

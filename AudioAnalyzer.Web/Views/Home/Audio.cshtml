@@ -17,35 +17,35 @@
             <table id="options">
                 <tr>
                     <td>
-                        <button disabled id="button-spectrogram" class="options-button">
+                        <button id="button-spectrogram" class="options-button">
                             Спектрограмма аудиофайла
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button disabled id="button-basicinfo" class="options-button">
+                        <button id="button-basicinfo" class="options-button">
                             Базовая информация о аудиофайле
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button disabled id="button-transcribe" class="options-button">
+                        <button id="button-transcribe" class="options-button">
                             Транскрибация аудиофайла
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button disabled id="button-summary" class="options-button">
+                        <button id="button-summary" class="options-button">
                             Краткое содержание аудиофайла
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button disabled id="button-search" class="options-button">
+                        <button id="button-search" class="options-button">
                             Поиск по аудиофайлу
                         </button>
                     </td>
@@ -54,10 +54,15 @@
             <script src="/js/sidebar.js"></script>
         </div>
         <div id="main">
-
+            
         </div>
     </div>
     <div id="footer">
+        <div class="audio-player">
+            <audio id="audio" controls>
+                
+            </audio>
+        </div>
     </div>
 </div>
 </body>

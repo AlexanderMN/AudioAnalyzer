@@ -9,12 +9,9 @@ public class RabbitMqMessageBroker : IMessageBroker
 {
     private IConnection? _connection;
     private IChannel? _channel;
-    public List<string> Topics;
-    public  ConcurrentDictionary<string, AsyncEventingBasicConsumer> Consumers;
     
     public RabbitMqMessageBroker()
     {
-        Consumers = new ConcurrentDictionary<string, AsyncEventingBasicConsumer>();
         Start();
     }
     
@@ -40,33 +37,35 @@ public class RabbitMqMessageBroker : IMessageBroker
         _channel?.Dispose();
         
     }
-
-
-    public async Task<bool> AddConsumer(string topic, Action<object, BrokerEventArgs> callback)
+    
+    public async Task Subscribe(string topic, Action<object, BrokerEventArgs> callback, TaskCompletionSource completion)
     {
-        if (_channel == null) 
-            return false;
-        
-        await _channel.QueueDeclareAsync(queue: topic);
+        if (_channel == null ) 
+            return;
+           
+        await _channel.QueueDeclareAsync(
+            queue: topic, 
+            durable: true,
+            exclusive: false,
+            autoDelete: false);
+            
         var consumer = new AsyncEventingBasicConsumer(_channel);
-
+        
         consumer.ReceivedAsync += (model, ea) =>
         {
             BrokerEventArgs eventArgs = new BrokerEventArgs(ea.RoutingKey, ea.Body.ToArray());
             callback(model, eventArgs);
+            completion.SetResult();
+            
+            
+            
             return Task.CompletedTask;
         };
-        
-        return Consumers.TryAdd(topic, consumer);
-    }
-    
-    public async Task Subscribe(string topic)
-    {
         
         await _channel.BasicConsumeAsync(
             queue: topic,
             autoAck: true,
-            consumer: Consumers[topic]);
+            consumer: consumer);
 
         return;
     }

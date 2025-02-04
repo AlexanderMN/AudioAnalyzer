@@ -14,4 +14,11 @@
       <ProjectReference Include="..\AudioAnalyzer.Infrastructure\AudioAnalyzer.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Views\BasicInfo\" />
+      <Folder Include="Views\Search\" />
+      <Folder Include="Views\Spectrogram\" />
+      <Folder Include="Views\Summary\" />
+    </ItemGroup>
+
 </Project>

@@ -8,11 +8,9 @@ public class HomeViewModel
     {
         Response = new HttpResponseMessage(httpStatusCode);
         ErrorMessage = errorMessage;
-        TranscribedText = "";
     }
 
     public HttpResponseMessage Response { get; set; }
     public string ErrorMessage { get; set; }
-
-    public string TranscribedText;
+    public string FileName { get; set; }
 }
