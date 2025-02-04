@@ -35,12 +35,8 @@ dropArea.ondrop = function (evt) {
 
 userSubmitArea.onsubmit = function (evt) {
     audioFile = fileInput.files[0];
-    
     let urlObj = URL.createObjectURL(fileInput.files[0]);
     audio.src = urlObj;
-
-    evt.preventDefault();
-    
 }
 
 

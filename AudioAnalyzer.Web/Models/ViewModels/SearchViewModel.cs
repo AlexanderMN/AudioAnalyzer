@@ -1,11 +1,18 @@
+using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+
 namespace AudioAnalyzer.Web.Models.ViewModels;
 
-public class SearchViewModel
+public class SearchViewModel: ViewModelBase
 {
-    public string TranscribedText;
+    public AnalyzerResponseJson AudioAnalyzerResponse { get; set; }
 
-    public SearchViewModel(string transcribedText)
+    public SearchViewModel(AnalyzerResponseJson audioAnalyzerResponse):base("Search")
     {
-        TranscribedText = transcribedText;
+        AudioAnalyzerResponse = audioAnalyzerResponse;
     }
+}
+
+public enum SearchErrorCodes
+{
+    CouldNotTranscribeFile
 }

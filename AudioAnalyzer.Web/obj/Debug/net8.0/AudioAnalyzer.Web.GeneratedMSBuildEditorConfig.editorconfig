@@ -51,3 +51,7 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Summary.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdW1tYXJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Home/Transcribe.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUcmFuc2NyaWJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 

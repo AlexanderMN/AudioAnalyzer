@@ -86,3 +86,13 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Au
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.exe
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Newtonsoft.Json.dll

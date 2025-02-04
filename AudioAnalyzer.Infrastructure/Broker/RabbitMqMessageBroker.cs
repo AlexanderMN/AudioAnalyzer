@@ -57,8 +57,6 @@ public class RabbitMqMessageBroker : IMessageBroker
             callback(model, eventArgs);
             completion.SetResult();
             
-            
-            
             return Task.CompletedTask;
         };
         

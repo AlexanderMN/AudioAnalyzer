@@ -107,3 +107,54 @@ div.container {
 }
 
 
+#search-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#search-request-container{
+    position: relative;
+    width: 100%;
+    height: 40%;
+}
+
+#search-result-container{
+    position: relative;
+    width: 100%;
+    height: 60%;
+}
+
+#search-input-container, #search-label-container{
+    width: 100%;
+}
+
+#search-input-container{
+    height: 70%;
+}
+
+#search-label-container{
+    height: 30%;
+}
+
+#search-container-input, #search-text{
+    width: 100%;
+    height: 100%;
+}
+
+#search-result-table {
+    margin-top: 5%;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid purple;
+    border-radius: 10%;
+}
+
+#search-result-table td{
+    border: 1px solid purple;
+}
+
+#search-result-table th{
+    border: 1px solid purple;
+}

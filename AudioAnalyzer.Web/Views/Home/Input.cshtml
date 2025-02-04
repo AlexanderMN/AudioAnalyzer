@@ -1,7 +1,9 @@
+@model AudioAnalyzer.Web.Models.ViewModels.InputViewModel
+
 <div>
     <div id="input-header">Выберите или перетащите файл</div>
     <form
-        action="/api/Home/Audio"
+        action="/api/Home/Audio/Input"
         enctype="multipart/form-data"
         method="post"
         id="input-user-input"
@@ -13,8 +15,7 @@
                 name="inputFile"
                 type="file"
                 multiple="multiple"
-                accept=".wav"
-            />
+                accept=".wav"/>
             <button id="input-submit-button" type="submit">Загрузить</button>
         </div>
     </form>

@@ -7,7 +7,23 @@
     <title>Audio analyzer</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/home_onload.js"></script>
+    <script>
+        
+        const audioContext = new AudioContext();
+        let audioFile;
+        let arrayBuffer;
+        let audio;
+
+        $(document).ready(function () {
+            $("#main").load("/api/Home/Audio/@Model.CurrentViewModel.Name");
+
+            audio = document.querySelector("audio")
+
+            // Example: Add custom play/pause buttons
+
+        });
+    
+    </script>
 </head>
 <body>
 <div class="container">

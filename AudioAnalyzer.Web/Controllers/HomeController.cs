@@ -1,19 +1,13 @@
 using System.Diagnostics;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Infrastructure.Broker;
-using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
-using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 
 namespace AudioAnalyzer.Web.Controllers;
 
@@ -24,9 +18,9 @@ public class HomeController : Controller
     private readonly IBrokerCommunication _brokerCommunication;
     private readonly IFileServiceCommunication _fileServiceCommunication;
     
-    private HomeViewModel _homeViewModel;
+    private readonly HomeViewModel _homeViewModel;
     private SearchViewModel _searchViewModel;
-    
+    private TranscribeViewModel _transcribeViewModel;
     public HomeController(ILogger<HomeController> logger, 
                           IBrokerCommunication brokerCommunication,
                           IFileServiceCommunication fileServiceCommunication
@@ -60,28 +54,49 @@ public class HomeController : Controller
         List<string> extensions = [".mp3", ".wav", ".aiff"];
 
         _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.OK);
+        _homeViewModel.CurrentViewModel = new InputViewModel();
         return View(_homeViewModel);
     }
 
     [HttpGet]
-    [Route("Input")]
-    public IActionResult Input()
-    {
-        return PartialView("Input");
-    }
-
-    [HttpGet]
-    [Route("BasicInfo")]
+    [Route("Audio/BasicInfo")]
     public IActionResult BasicInfo()
     {
         return PartialView("BasicInfo");
     }
 
     [HttpGet]
-    [Route("Search")]
+    [Route("Audio/Search")]
     public async Task<IActionResult> Search()
     {
-        _searchViewModel = new SearchViewModel("");
+        _searchViewModel = new SearchViewModel(new AnalyzerResponseJson());
+        
+        string? fileName = HttpContext.Session.GetString("FileName");
+
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            await _brokerCommunication.ExchangeMessagesAsync(topicToSendTo: "Audio-url",
+                                                             messageToSend: fileName,
+                                                             topicToAwaitFrom: "Transcribe",
+                                                             onReceive: OnSearch);
+        }
+
+        return PartialView("Search", _searchViewModel);
+    }
+
+    public void OnSearch(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+
+        _searchViewModel.AudioAnalyzerResponse = jsonResponse ?? new AnalyzerResponseJson();
+    }
+
+    [HttpGet]
+    [Route("Audio/Transcribe")]
+    public async Task<IActionResult> Transcribe()
+    {
+        _transcribeViewModel = new TranscribeViewModel("");
         
         string? fileName = HttpContext.Session.GetString("FileName");
 
@@ -92,25 +107,35 @@ public class HomeController : Controller
                                                              topicToAwaitFrom: "Transcribe",
                                                              onReceive: OnTranscribe);
         }
-
-        return PartialView("Search", _searchViewModel);
+        
+        return PartialView("Transcribe", _transcribeViewModel);
     }
     
     private void OnTranscribe(object state, BrokerEventArgs args)
     {
-        int charsWritten = 0;
-        Span<char> chars = stackalloc char[4096];
-        if (Encoding.UTF8.TryGetChars(args.Message, chars, out charsWritten))
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+
+        if (jsonResponse != null)
         {
-            _searchViewModel.TranscribedText = chars.ToString();
+            _transcribeViewModel.TranscribedText = jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text;
+        }
+        else
+        {
+            _transcribeViewModel.TranscribedText = text;
         }
     }
-    
-    
+
+    [HttpGet]
+    [Route("Audio/Input")]
+    public IActionResult Input()
+    {
+        return PartialView("Input");
+    }
     //TODO additionally check file extension and permissions to perform action
     [HttpPost]
-    [Route("Audio")]
-    public async Task<ActionResult> Audio(IFormFile inputFile)
+    [Route("Audio/Input")]
+    public async Task<ActionResult> Input(IFormFile inputFile)
     {
         //TODO fix this
         var audioFile = Request.Form.Files[0];
@@ -134,15 +159,9 @@ public class HomeController : Controller
         if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
         {
             _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            return View(_homeViewModel);
+            return View("Audio", _homeViewModel);
         }
         
-        return View(new HomeViewModel(HttpStatusCode.BadRequest));
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View("Audio", _homeViewModel);
     }
 }

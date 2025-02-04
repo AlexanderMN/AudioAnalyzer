@@ -4,7 +4,7 @@ let arrayBuffer;
 let audio;
 
 $(document).ready(function () {
-    $("#main").load("/api/Home/Input");
+    $("#main").load("/api/Home/Audio/Input");
     
     audio = document.querySelector("audio")
 

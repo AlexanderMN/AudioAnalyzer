@@ -1,10 +1,35 @@
 @model AudioAnalyzer.Web.Models.ViewModels.SearchViewModel
+<head>
+    <title>Search</title>
+</head>
+<body>
 
-<div>
-    <div>Введите текст для поиска</div>
+<div id="search-container">
+    <div id="search-request-container">
+        <div id="search-label-container">
+            <label id="search-text" for="search-container-input">Введите текст для поиска:</label>
+        </div>
+        <div id="search-input-container">
+            <input id="search-container-input" type="text" name="text"/>
+        </div>
+    </div>
+    <div id="search-result-container">
+        <table id="search-result-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Время</th>
+                    <th style="width: 80%;">Текст</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div>@Model.TranscribedText</div>
-<canvas id="canvas" width="800" height="80"></canvas>
 
-<script src="js/search_text.js"></script>
+</body>
+
+<div>@Model.AudioAnalyzerResponse.AudioResponses[0].AnalyzedTexts[0].Text</div>
+
