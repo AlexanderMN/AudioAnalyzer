@@ -16,9 +16,7 @@ public class BrokerCommunication : IBrokerCommunication
                                             string topicToAwaitFrom,
                                             Action<object, BrokerEventArgs> onReceive)
     {
-        TaskCompletionSource completion = new TaskCompletionSource();
-        await _messageBroker.Subscribe(topicToAwaitFrom, onReceive, completion);
         await _messageBroker.Publish(topicToSendTo, messageToSend);
-        await completion.Task;
+        
     }
 }

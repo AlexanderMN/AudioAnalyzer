@@ -15,14 +15,12 @@ namespace AudioAnalyzer.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IBrokerCommunication _brokerCommunication;
     private readonly IFileServiceCommunication _fileServiceCommunication;
     
     private readonly HomeViewModel _homeViewModel;
     private SearchViewModel _searchViewModel;
     private TranscribeViewModel _transcribeViewModel;
     public HomeController(ILogger<HomeController> logger, 
-                          IBrokerCommunication brokerCommunication,
                           IFileServiceCommunication fileServiceCommunication
                           )
     {
@@ -54,7 +52,6 @@ public class HomeController : Controller
         List<string> extensions = [".mp3", ".wav", ".aiff"];
 
         _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.OK);
-        _homeViewModel.CurrentViewModel = new InputViewModel();
         return View(_homeViewModel);
     }
 
@@ -84,14 +81,6 @@ public class HomeController : Controller
         return PartialView("Search", _searchViewModel);
     }
 
-    public void OnSearch(object state, BrokerEventArgs args)
-    {
-        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
-
-        _searchViewModel.AudioAnalyzerResponse = jsonResponse ?? new AnalyzerResponseJson();
-    }
-
     [HttpGet]
     [Route("Audio/Transcribe")]
     public async Task<IActionResult> Transcribe()
@@ -109,21 +98,6 @@ public class HomeController : Controller
         }
         
         return PartialView("Transcribe", _transcribeViewModel);
-    }
-    
-    private void OnTranscribe(object state, BrokerEventArgs args)
-    {
-        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
-
-        if (jsonResponse != null)
-        {
-            _transcribeViewModel.TranscribedText = jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text;
-        }
-        else
-        {
-            _transcribeViewModel.TranscribedText = text;
-        }
     }
 
     [HttpGet]
@@ -159,9 +133,9 @@ public class HomeController : Controller
         if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
         {
             _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            return View("Audio", _homeViewModel);
+            return Ok();
         }
         
-        return View("Audio", _homeViewModel);
+        return BadRequest();
     }
 }

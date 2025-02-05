@@ -9,11 +9,11 @@ using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 
 namespace AudioAnalyzer.Web;
 
-public class WebStartUp
+public class StartUp
 {
     private WebApplicationBuilder _builder;
     private WebApplication? _app;
-    public WebStartUp(WebApplicationBuilder builder)
+    public StartUp(WebApplicationBuilder builder)
     {
         _builder = builder;
     }
@@ -30,8 +30,8 @@ public class WebStartUp
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
         _builder.Services.AddSingleton<IFileService, FileService>();
         _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
-        _builder.Services.AddSingleton<IMessageBroker, RabbitMqMessageBroker>();
-        _builder.Services.AddSingleton<IBrokerCommunication, BrokerCommunication>();
+        
+        _builder.Services.AddSingleton<RabbitMqMessageBroker>();
 
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
@@ -64,6 +64,8 @@ public class WebStartUp
             _app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         }
+
+        _app.UseRabbitMq();
         
         _app.UseStaticFiles();
 

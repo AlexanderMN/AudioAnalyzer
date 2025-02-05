@@ -6,10 +6,10 @@ using AudioAnalyzer.Web;
 
 var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
-WebStartUp webStartUp = new WebStartUp(webApplicationBuilder);
+StartUp startUp = new StartUp(webApplicationBuilder);
 
-webStartUp.ConfigureServices();
-webStartUp.ConfigureHost();
-webStartUp.Build();
-webStartUp.ConfigureMiddleware();
-webStartUp.Run();
+startUp.ConfigureServices();
+startUp.ConfigureHost();
+startUp.Build();
+startUp.ConfigureMiddleware();
+startUp.Run();

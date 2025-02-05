@@ -19,6 +19,8 @@ function readInput(){
 fileInput.addEventListener('change', readInput);
 
 dropArea.ondrop = function (evt) {
+    evt.preventDefault();
+    
     // pretty simple -- but not for IE :(
     fileInput.files = evt.dataTransfer.files;
 
@@ -30,13 +32,18 @@ dropArea.ondrop = function (evt) {
     }
 
     readInput();
-    evt.preventDefault();
 };
 
-userSubmitArea.onsubmit = function (evt) {
-    audioFile = fileInput.files[0];
-    let urlObj = URL.createObjectURL(fileInput.files[0]);
-    audio.src = urlObj;
+userSubmitArea.onsubmit = async function (evt) {
+    evt.preventDefault();
+    let formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+     let response = await fetch('/api/Home/Audio/Input', {method: "POST", body: formData});
+     if (response.ok) {
+         audioFile = fileInput.files[0];
+         audio.src = URL.createObjectURL(fileInput.files[0]);
+     }
 }
 
 

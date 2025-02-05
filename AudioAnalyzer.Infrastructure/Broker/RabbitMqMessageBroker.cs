@@ -1,18 +1,19 @@
 using System.Collections.Concurrent;
 using System.Text;
+using System.Xml.Schema;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace AudioAnalyzer.Infrastructure.Broker;
 
-public class RabbitMqMessageBroker : IMessageBroker
+public class RabbitMqMessageBroker
 {
     private IConnection? _connection;
     private IChannel? _channel;
     
     public RabbitMqMessageBroker()
     {
-        Start();
+        
     }
     
     public async Task Start()
@@ -34,11 +35,9 @@ public class RabbitMqMessageBroker : IMessageBroker
     public void Stop()
     {
         _connection?.Dispose();
-        _channel?.Dispose();
-        
     }
     
-    public async Task Subscribe(string topic, Action<object, BrokerEventArgs> callback, TaskCompletionSource completion)
+    public async Task Subscribe(string topic, Action<object, BrokerEventArgs> callback)
     {
         if (_channel == null ) 
             return;
@@ -48,15 +47,14 @@ public class RabbitMqMessageBroker : IMessageBroker
             durable: true,
             exclusive: false,
             autoDelete: false);
-            
+        
         var consumer = new AsyncEventingBasicConsumer(_channel);
         
-        consumer.ReceivedAsync += (model, ea) =>
+        consumer.ReceivedAsync += (model,  ea) =>
         {
             BrokerEventArgs eventArgs = new BrokerEventArgs(ea.RoutingKey, ea.Body.ToArray());
             callback(model, eventArgs);
-            completion.SetResult();
-            
+
             return Task.CompletedTask;
         };
         
