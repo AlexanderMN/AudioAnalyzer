@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "A0BXK4B+87ubEMOcSX2/HVwk24kCzoY5XkBOVMxlSFQ=",
+  "Hash": "E9n5XQRvQO0jjwLDrqxs73ju0uiF1zHuBsvAj3W+E6s=",
   "Source": "AudioAnalyzer.Web",
   "BasePath": "_content/AudioAnalyzer.Web",
   "Mode": "Default",
@@ -2085,7 +2085,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Feb 2025 15:31:17 GMT"
+          "Value": "Thu, 06 Feb 2025 14:07:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2122,7 +2122,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Feb 2025 15:31:17 GMT"
+          "Value": "Thu, 06 Feb 2025 14:07:42 GMT"
         },
         {
           "Name": "Cache-Control",

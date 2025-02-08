@@ -6,6 +6,7 @@ using AudioAnalyzer.Infrastructure.Broker;
 using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
+using AudioAnalyzer.Web.Hubs;
 
 namespace AudioAnalyzer.Web;
 
@@ -30,8 +31,17 @@ public class StartUp
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
         _builder.Services.AddSingleton<IFileService, FileService>();
         _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
+
+        _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
+        _builder.Services.AddSignalR();
+        _builder.Services.AddSingleton<FileUploadHub>();
         
-        _builder.Services.AddSingleton<RabbitMqMessageBroker>();
+        _builder.Services.Configure<RabbitMqSetting>(_builder.Configuration
+                                                             .GetSection("RemoteEndpoints")
+                                                             .GetSection("Broker"));
+        
+        _builder.Services.AddScoped<IRabbitMqPublisher, RabbitMqMessagePublisher>();
+        _builder.Services.AddHostedService<RabbitMqMessageConsumer>();
 
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
@@ -65,7 +75,6 @@ public class StartUp
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         }
 
-        _app.UseRabbitMq();
         
         _app.UseStaticFiles();
 
@@ -73,12 +82,19 @@ public class StartUp
 
         _app.UseSession();
         _app.UseAuthorization();
+        
+        //_app.UseRabbitMq();
+    }
 
+    public void MapEndpoints()
+    {
         _app.MapControllers();
 
         _app.MapDefaultControllerRoute();
-    }
 
+        _app.MapHub<FileUploadHub>("/hubs/fileUpload");
+    }
+    
     public void Run()
     {
         _app.Run();

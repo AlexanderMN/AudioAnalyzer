@@ -12,4 +12,5 @@ startUp.ConfigureServices();
 startUp.ConfigureHost();
 startUp.Build();
 startUp.ConfigureMiddleware();
+startUp.MapEndpoints();
 startUp.Run();

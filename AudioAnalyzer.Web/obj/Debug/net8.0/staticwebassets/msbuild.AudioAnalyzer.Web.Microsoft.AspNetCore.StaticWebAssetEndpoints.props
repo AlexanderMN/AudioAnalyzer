@@ -88,13 +88,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\input.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1337"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 05 Feb 2025 15:31:17 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1337"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU=\u0022"},{"Name":"Last-Modified","Value":"Thu, 06 Feb 2025 14:07:42 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AudioAnalyzer.Web/js/input.saq4o2ujb2.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\input.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"saq4o2ujb2"},{"Name":"integrity","Value":"sha256-JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU="},{"Name":"label","Value":"_content/AudioAnalyzer.Web/js/input.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1337"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 05 Feb 2025 15:31:17 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1337"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JF413th3fCsS\u002BoXlSXNzVC2Ok6Gug52eQXwutq634fU=\u0022"},{"Name":"Last-Modified","Value":"Thu, 06 Feb 2025 14:07:42 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/AudioAnalyzer.Web/js/search_onload.5ipweew5fc.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\search_onload.js'))</AssetFile>

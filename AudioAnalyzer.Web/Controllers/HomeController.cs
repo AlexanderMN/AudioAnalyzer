@@ -3,7 +3,9 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using AudioAnalyzer.Infrastructure.Broker;
+using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
+using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
@@ -15,20 +17,24 @@ namespace AudioAnalyzer.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IRabbitMqPublisher _rabbitMqPublisher;
     private readonly IFileServiceCommunication _fileServiceCommunication;
+    private readonly FileUploadHub _fileUploadHub;
     
     private readonly HomeViewModel _homeViewModel;
     private SearchViewModel _searchViewModel;
     private TranscribeViewModel _transcribeViewModel;
     public HomeController(ILogger<HomeController> logger, 
-                          IFileServiceCommunication fileServiceCommunication
+                          IRabbitMqPublisher rabbitMqPublisher,
+                          IFileServiceCommunication fileServiceCommunication,
+                          FileUploadHub fileUploadHub
                           )
     {
         _logger = logger;
-        _brokerCommunication = brokerCommunication;
-        _fileServiceCommunication = fileServiceCommunication;
-        
+        _rabbitMqPublisher = rabbitMqPublisher;
+        _fileServiceCommunication = fileServiceCommunication; ;
         _homeViewModel = new HomeViewModel();
+        _fileUploadHub = fileUploadHub;
     }
     
     [Route("Index")]
@@ -72,14 +78,14 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(fileName))
         {
-            await _brokerCommunication.ExchangeMessagesAsync(topicToSendTo: "Audio-url",
-                                                             messageToSend: fileName,
-                                                             topicToAwaitFrom: "Transcribe",
-                                                             onReceive: OnSearch);
+            await _fileUploadHub.RegisterClient(fileName);
+            await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
+            
         }
 
         return PartialView("Search", _searchViewModel);
     }
+
 
     [HttpGet]
     [Route("Audio/Transcribe")]
@@ -91,10 +97,8 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(fileName))
         {
-            await _brokerCommunication.ExchangeMessagesAsync(topicToSendTo: "Audio-url",
-                                                             messageToSend: fileName,
-                                                             topicToAwaitFrom: "Transcribe",
-                                                             onReceive: OnTranscribe);
+            
+            await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
         }
         
         return PartialView("Transcribe", _transcribeViewModel);

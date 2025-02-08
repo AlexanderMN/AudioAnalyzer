@@ -31,3 +31,9 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debu
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAna.9A9C7A1B.Up2Date
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
