@@ -1,17 +1,23 @@
-"use strict";
+let connection = new signalR.HubConnectionBuilder()
+    .withUrl("/hubs/fileUpload")
+    .build();
 
-let connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+let transcribedText = document.getElementById("transcribed-text");
+connection.on("FileTranscribed", function (user, message) {
+    transcribedText.innerHTML = message;
+});
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+}
 
-//Disable the send button until connection is established.
-document.getElementById("sendButton").disabled = true;
-
-connection.on("ReceiveMessage", function (user, message) {
-    let li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
-    li.textContent = `${user} says ${message}`;
+connection.onclose(async () => {
+    await start();
 });
 
-await connection.start();
+start();

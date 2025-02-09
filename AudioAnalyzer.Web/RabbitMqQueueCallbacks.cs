@@ -1,53 +1,56 @@
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using AudioAnalyzer.Infrastructure.Broker;
+using AudioAnalyzer.Web.Hubs;
+using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 
 namespace AudioAnalyzer.Web;
 
 public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
 {
-    
-    public RabbitMqQueueCallbacks()
+    private FileUploadHub _fileUploadHub;
+    public RabbitMqQueueCallbacks(FileUploadHub fileUploadHub)
     {
+        _fileUploadHub = fileUploadHub;
         RegisterDelegates();
     }
     
     public void RegisterDelegates()
     {
         var eventMethods = typeof(RabbitMqQueueCallbacks).GetMethods(BindingFlags.NonPublic | 
-                                                             BindingFlags.Static | 
+                                                             BindingFlags.Instance | 
                                                              BindingFlags.DeclaredOnly);
 
         foreach (var eventMethod in eventMethods)
         {
-            var eventDelegate = Delegate.CreateDelegate(typeof(Action<object, BrokerEventArgs>), eventMethod);
+            var eventDelegate = Delegate.CreateDelegate(
+                type: typeof(Func<object, BrokerEventArgs, Task>), this, eventMethod, true);
             Callbacks.Add(eventDelegate.Method.Name, eventDelegate);
         }
     }
     
     
-    private static void Search(object state, BrokerEventArgs args)
+    private async Task Search(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        Console.WriteLine(text);
-        // var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
-        //
-        // _searchViewModel.AudioAnalyzerResponse = jsonResponse ?? new AnalyzerResponseJson();
+        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+        
+        if (jsonResponse == null)
+            return;
+        
+        await _fileUploadHub.SendFileProcessedMessage(jsonResponse.AudioResponses[0].Filename, text);
     }
 
-    private static void Transcribe(object state, BrokerEventArgs args)
+    private async Task Transcribe(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
         Console.WriteLine(text);
-        // var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
-        //
-        // if (jsonResponse != null)
-        // {
-        //     _transcribeViewModel.TranscribedText = jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text;
-        // }
-        // else
-        // {
-        //     _transcribeViewModel.TranscribedText = text;
-        // }
+        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+        
+        if (jsonResponse == null)
+            return;
+        
+        await _fileUploadHub.SendFileProcessedMessage(jsonResponse.AudioResponses[0].Filename, text);
     }
 }

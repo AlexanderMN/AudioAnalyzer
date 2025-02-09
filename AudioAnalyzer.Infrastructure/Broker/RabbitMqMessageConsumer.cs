@@ -42,7 +42,7 @@ public class RabbitMqMessageConsumer: IHostedService
         _connection?.Dispose();
     }
 
-    public async Task Subscribe(string topic, Action<object, BrokerEventArgs> callback)
+    public async Task Subscribe(string topic, Func<object, BrokerEventArgs, Task> callback)
     {
         if (_channel == null ) 
             return;
@@ -55,12 +55,10 @@ public class RabbitMqMessageConsumer: IHostedService
         
         var consumer = new AsyncEventingBasicConsumer(_channel);
         
-        consumer.ReceivedAsync += (model,  ea) =>
+        consumer.ReceivedAsync += async (model,  ea) =>
         {
             BrokerEventArgs eventArgs = new BrokerEventArgs(ea.RoutingKey, ea.Body.ToArray());
-            callback(model, eventArgs);
-
-            return Task.CompletedTask;
+            await callback(model, eventArgs);
         };
         
         await _channel.BasicConsumeAsync(
@@ -74,7 +72,7 @@ public class RabbitMqMessageConsumer: IHostedService
         
         foreach (var eventDelegate in BrokerQueueCallbacks.Callbacks)
         {
-            await Subscribe(eventDelegate.Key, (Action<object, BrokerEventArgs>)eventDelegate.Value);
+            await Subscribe(eventDelegate.Key, (Func<object, BrokerEventArgs, Task>)eventDelegate.Value);
         }
     }
 

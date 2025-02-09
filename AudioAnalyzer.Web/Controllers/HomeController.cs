@@ -78,7 +78,6 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(fileName))
         {
-            await _fileUploadHub.RegisterClient(fileName);
             await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
             
         }
@@ -97,7 +96,6 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(fileName))
         {
-            
             await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
         }
         
