@@ -9,6 +9,7 @@ using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioAnalyzer.Web.Controllers;
@@ -70,7 +71,7 @@ public class HomeController : Controller
 
     [HttpGet]
     [Route("Audio/Search")]
-    public async Task<IActionResult> Search()
+    public async Task<IActionResult> Search(string filename)
     {
         _searchViewModel = new SearchViewModel(new AnalyzerResponseJson());
         
@@ -135,7 +136,7 @@ public class HomeController : Controller
         if (ftpResponse.StatusCode == FtpStatusCode.ClosingData)
         {
             _homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            return Ok();
+            return Ok(fileName);
         }
         
         return BadRequest();

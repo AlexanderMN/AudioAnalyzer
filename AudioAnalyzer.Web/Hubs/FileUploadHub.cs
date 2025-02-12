@@ -11,7 +11,7 @@ public class FileUploadHub : Hub
     private readonly ConcurrentDictionary<string, User> _connections = new();
 
     // Notify a specific client when the file processing is done
-    public async Task SendFileProcessedMessage(string fileRequestId, string message)
+    public async Task SendFileTranscribedMessage(string fileRequestId, string message)
     {
         if (_connections.TryGetValue(fileRequestId, out var user))
         {
@@ -22,7 +22,16 @@ public class FileUploadHub : Hub
     
     public override async Task OnConnectedAsync()
     {
-        _connections.TryAdd()
+        var fileId = Context.GetHttpContext()?.Request.Query["fileId"];
+        if(string.IsNullOrEmpty(fileId))
+            return;
+        
+        _connections.TryAdd(fileId!, new User
+        {
+            ConnectionId = Context.ConnectionId, 
+            UploadedFileName = fileId!
+        });
+        
         await base.OnConnectedAsync();
     }
 

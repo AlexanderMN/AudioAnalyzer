@@ -39,7 +39,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileProcessedMessage(jsonResponse.AudioResponses[0].Filename, text);
+        await _fileUploadHub.SendFileTranscribedMessage(jsonResponse.AudioResponses[0].Filename, text);
     }
 
     private async Task Transcribe(object state, BrokerEventArgs args)
@@ -51,6 +51,6 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileProcessedMessage(jsonResponse.AudioResponses[0].Filename, text);
+        await _fileUploadHub.SendFileTranscribedMessage(jsonResponse.AudioResponses[0].Filename, text);
     }
 }

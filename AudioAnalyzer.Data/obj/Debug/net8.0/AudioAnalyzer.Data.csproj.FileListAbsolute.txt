@@ -17,3 +17,14 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\M
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\obj\Debug\net8.0\AudioAnalyzer.Data.csproj.AssemblyReference.cache
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\obj\Debug\net8.0\AudioAna.DDA08238.Up2Date
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Data\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll

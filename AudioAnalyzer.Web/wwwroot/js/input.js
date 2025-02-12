@@ -41,6 +41,10 @@ userSubmitArea.onsubmit = async function (evt) {
 
      let response = await fetch('/api/Home/Audio/Input', {method: "POST", body: formData});
      if (response.ok) {
+         
+         response.text().then(data => {
+             uploadedFileId = data;
+         })
          audioFile = fileInput.files[0];
          audio.src = URL.createObjectURL(fileInput.files[0]);
      }

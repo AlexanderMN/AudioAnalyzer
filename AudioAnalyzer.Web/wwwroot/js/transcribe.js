@@ -1,5 +1,5 @@
 let connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hubs/fileUpload")
+    .withUrl("/hubs/fileUpload?fileId=" + uploadedFileId)
     .build();
 
 let transcribedText = document.getElementById("transcribed-text");

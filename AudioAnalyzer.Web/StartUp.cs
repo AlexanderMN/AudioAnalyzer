@@ -1,3 +1,5 @@
+using System.Configuration;
+using System.Text;
 using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
 using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
 using Microsoft.AspNetCore.Http.Features;
@@ -7,6 +9,9 @@ using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 using AudioAnalyzer.Web.Hubs;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AudioAnalyzer.Web;
 
@@ -46,6 +51,31 @@ public class StartUp
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
         _builder.Services.AddSession();
+
+
+        var config = _builder.Configuration;
+        
+        _builder.Services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = config["Jwt:Issuer"], 
+                ValidAudience = config["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey
+                    (Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true
+            };
+        });
+
+        _builder.Services.AddAuthorization();
         
         _builder.Services.Configure<FormOptions>(x =>
         {
@@ -81,7 +111,11 @@ public class StartUp
         _app.UseRouting();
 
         _app.UseSession();
+        
+        _app.UseAuthentication();
         _app.UseAuthorization();
+        
+        
         
         //_app.UseRabbitMq();
     }
