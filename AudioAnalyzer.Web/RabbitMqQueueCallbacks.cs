@@ -39,18 +39,18 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileTranscribedMessage(jsonResponse.AudioResponses[0].Filename, text);
+        await _fileUploadHub.SendFileText(jsonResponse.AudioResponses[0].Filename, text);
     }
 
     private async Task Transcribe(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        Console.WriteLine(text);
         var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
         
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileTranscribedMessage(jsonResponse.AudioResponses[0].Filename, text);
+        await _fileUploadHub.SendFileText(fileRequestId: jsonResponse.AudioResponses[0].Filename, 
+                                          text: jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text);
     }
 }

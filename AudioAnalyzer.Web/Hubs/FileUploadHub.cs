@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
+using System.Text.Json;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Web.Models;
+using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AudioAnalyzer.Web.Hubs;
@@ -11,14 +13,31 @@ public class FileUploadHub : Hub
     private readonly ConcurrentDictionary<string, User> _connections = new();
 
     // Notify a specific client when the file processing is done
-    public async Task SendFileTranscribedMessage(string fileRequestId, string message)
+    public async Task SendFileText(string fileRequestId, string text)
     {
+        if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(fileRequestId))
+            return;
+        
+        
         if (_connections.TryGetValue(fileRequestId, out var user))
         {
-            await Clients.Client(user.ConnectionId).SendAsync("FileTranscribed", user, message);
+            await Clients.Client(user.ConnectionId).SendAsync("FileText", user, text);
         }
     }
-    
+
+
+    public async Task SendFileTextForSearch(string fileRequestId, AnalyzedText analyzedText)
+    {
+        if (string.IsNullOrEmpty(fileRequestId))
+            return;
+
+        var text = JsonSerializer.Serialize(analyzedText);
+        
+        if (_connections.TryGetValue(fileRequestId, out var user))
+        {
+            await Clients.Client(user.ConnectionId).SendAsync("FileTextForSearch", text);
+        }
+    }
     
     public override async Task OnConnectedAsync()
     {

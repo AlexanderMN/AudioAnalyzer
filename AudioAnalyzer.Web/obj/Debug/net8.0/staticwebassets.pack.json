@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\js\\input.js"
     },
     {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\search.js",
+      "PackagePath": "staticwebassets\\js\\search.js"
+    },
+    {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\search_onload.js",
       "PackagePath": "staticwebassets\\js\\search_onload.js"
     },
