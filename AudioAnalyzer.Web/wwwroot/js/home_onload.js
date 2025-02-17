@@ -9,11 +9,21 @@ let uploadedFileId;
 
 
 let transcribedText;
-let textForSearch;
+
+let textForSearch = {r: [{
+    response: [{
+        text: String,
+        words: [{
+            word: String,
+            start: Number,
+            end: Number
+        }]
+    }]
+}
+]}
 
 let transcribedTextContainer;
 let textForSearchContainer;
-
 
 
 
@@ -49,7 +59,7 @@ function initUploadHubConnection() {
     });
     
     fileHubConnection.on("FileTextForSearch", function (user, message) {
-        textForSearch = message;
+        textForSearch = JSON.parse(message);
     })
 
     fileHubConnection.onclose(async () => {

@@ -28,7 +28,7 @@ public class RabbitMqMessagePublisher : IRabbitMqPublisher
         
         await channel.QueueDeclareAsync(queue: topic, durable: false, exclusive: false, autoDelete: false,
                                          arguments: null);
-            
+        
         var body = Encoding.UTF8.GetBytes(message);
         if (channel != null)
             await channel.BasicPublishAsync(exchange: String.Empty, routingKey: topic, body: body);
