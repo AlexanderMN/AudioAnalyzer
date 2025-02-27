@@ -7,7 +7,8 @@ using AudioAnalyzer.Infrastructure.FileService;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models;
-using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+using AudioAnalyzer.Web.Models.AudioRequest;
+using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,16 +72,23 @@ public class HomeController : Controller
 
     [HttpGet]
     [Route("Audio/Search")]
-    public async Task<IActionResult> Search(string filename)
+    public IActionResult Search(string filename)
     {
-        _searchViewModel = new SearchViewModel(new AnalyzerResponseJson());
+        _searchViewModel = new SearchViewModel(new TranscribedResponseJson());
         
         string? fileName = HttpContext.Session.GetString("FileName");
 
         if (!string.IsNullOrEmpty(fileName))
         {
-            await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
+            var transcribeRequest = new AudioTranscribeRequest
+            {
+                AudioFileName = fileName,
+                Task = "Search"
+            };
+            var message = JsonSerializer.Serialize(transcribeRequest);
             
+            _rabbitMqPublisher.PublishMessageAsync(message: message, 
+                                                         topic: "Audio-url");
         }
 
         return PartialView("Search", _searchViewModel);
@@ -94,10 +102,18 @@ public class HomeController : Controller
         _transcribeViewModel = new TranscribeViewModel("");
         
         string? fileName = HttpContext.Session.GetString("FileName");
-
         if (!string.IsNullOrEmpty(fileName))
         {
-            await _rabbitMqPublisher.PublishMessageAsync(fileName, "Audio-url");
+            var transcribeRequest = new AudioTranscribeRequest
+            {
+                AudioFileName = fileName,
+                Task = "Transcribe"
+            };
+            
+            var message = JsonSerializer.Serialize(transcribeRequest);
+            
+            await _rabbitMqPublisher.PublishMessageAsync(message: message, 
+                                                         topic: BrokerQueues.AudioFileQueue);
         }
         
         return PartialView("Transcribe", _transcribeViewModel);

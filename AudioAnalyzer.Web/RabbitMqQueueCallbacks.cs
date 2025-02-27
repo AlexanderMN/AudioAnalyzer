@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using AudioAnalyzer.Infrastructure.Broker;
 using AudioAnalyzer.Web.Hubs;
-using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 
 namespace AudioAnalyzer.Web;
 
@@ -34,18 +34,18 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
     private async Task Search(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+        var jsonResponse = JsonSerializer.Deserialize<TranscribedResponseJson>(text);
         
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileText(jsonResponse.AudioResponses[0].Filename, text);
+        await _fileUploadHub.SendFileTextForSearch(jsonResponse.AudioResponses[0].Filename, jsonResponse);
     }
 
     private async Task Transcribe(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var jsonResponse = JsonSerializer.Deserialize<AnalyzerResponseJson>(text);
+        var jsonResponse = JsonSerializer.Deserialize<TranscribedResponseJson>(text);
         
         if (jsonResponse == null)
             return;

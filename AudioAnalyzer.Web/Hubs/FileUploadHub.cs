@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Web.Models;
-using AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AudioAnalyzer.Web.Hubs;
@@ -21,21 +21,21 @@ public class FileUploadHub : Hub
         
         if (_connections.TryGetValue(fileRequestId, out var user))
         {
-            await Clients.Client(user.ConnectionId).SendAsync("FileText", user, text);
+            await Clients.Client(user.ConnectionId).SendAsync(FileHubMethodNames.FileText, user, text);
         }
     }
 
 
-    public async Task SendFileTextForSearch(string fileRequestId, AnalyzedText analyzedText)
+    public async Task SendFileTextForSearch(string fileRequestId, TranscribedResponseJson transcribedText)
     {
         if (string.IsNullOrEmpty(fileRequestId))
             return;
 
-        var text = JsonSerializer.Serialize(analyzedText);
+        var text = JsonSerializer.Serialize(transcribedText);
         
         if (_connections.TryGetValue(fileRequestId, out var user))
         {
-            await Clients.Client(user.ConnectionId).SendAsync("FileTextForSearch", text);
+            await Clients.Client(user.ConnectionId).SendAsync(FileHubMethodNames.FileTextForSearch, text);
         }
     }
     
@@ -63,4 +63,10 @@ public class FileUploadHub : Hub
         
         await base.OnDisconnectedAsync(exception);
     }
+}
+
+public static class FileHubMethodNames
+{
+    public const string FileTextForSearch = "FileTextForSearch";
+    public const string FileText = "FileText";
 }

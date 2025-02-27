@@ -1,14 +1,26 @@
+let searchSubmitForm = document.getElementById("search-submit-form")
 let userTextInput = document.getElementById("search-container-input");
 let searchResultTable = document.getElementById("search-result-table");
 
 function arrayContainsWords(array, words, startIndex){
 
+    if (words.length === 1){
+        return array[startIndex].includes(words[0])
+    }
+
     for (let i = 0; i < words.length; i++){
-        if (array[i + startIndex] !== words[i]){
+        if (array[i+ startIndex] === words[i])
+            continue;
+
+        if (!array[i + startIndex].includes(words[i])){
             return false;
         }
+
+        if (i !== 0 && i !== words.length - 1)
+            return false;
+
     }
-    
+
     return true;
 }
 
@@ -17,72 +29,84 @@ function getIndicesOf(searchWords, listOfWords) {
     if (searchWords.length === 0) {
         return [];
     }
-    
+
     if (searchWords.length > searchWords.length) {
         return [];
     }
-    
+
     let startIndex = 0, index, indices = [];
-    
+
     for (let i = 0; i < listOfWords.length; i++){
-        
+
         if (arrayContainsWords(listOfWords, searchWords, i)){
             indices.push(i);
-            i+= searchWords.length;
         }
     }
-    
+
     return indices;
 }
 
-userTextInput.onsubmit = async function (evt) {
+searchSubmitForm.onsubmit = async function (evt) {
     evt.preventDefault();
-    
+
     let inputText = userTextInput.value;
-    
+
     let response = textForSearch.r[0].response[0];
     let words = response.words.map(p => p.word);
 
-    
-    
-    let searchWords = inputText.trim().toLowerCase().split(" ");
+    let searchWords = inputText.toLowerCase().split(/\s+/);
     let indexes = getIndicesOf(searchWords, words);
-    
+
     for (let i = 0; i < indexes.length; i++){
         let tableRow = document.createElement("tr");
-        
+
         tableRow.insertCell(0);
         tableRow.insertCell(1);
-        
+
         let numberOfExtraWords = 5;
-        
-        let highLightStartIndex = indexes[i]
-        let highLightEndIndex = indexes[i] + searchWords.length;
-        
-        let extraWordsAtStart = 
-            highLightStartIndex > numberOfExtraWords ?
-            highLightStartIndex - numberOfExtraWords : 0;
-        
+
+        let IndexOfFirstWordContainingOccurence = indexes[i]
+        let IndexOfLastWordContainingOccurence = indexes[i] + searchWords.length;
+
+        let extraWordsAtStart =
+            IndexOfFirstWordContainingOccurence> numberOfExtraWords ?
+                numberOfExtraWords : IndexOfFirstWordContainingOccurence;
+
         let extraWordsAtEnd =
-            highLightEndIndex < indexes.length - 1 - numberOfExtraWords ? 
-            highLightEndIndex + numberOfExtraWords : indexes.length - 1;
-        
-        let startIndex = highLightStartIndex + extraWordsAtStart;
-        let endIndex = highLightEndIndex + extraWordsAtEnd;
-                
-        let wordsSlice = response.words.slice(startIndex, endIndex);
-        let startTime = wordsSlice[0].start;
-        let endTime = wordsSlice.at(-1).end;
-        
-        let textToShow = words.slice(startIndex, endIndex).join(" ");
-        
-        tableRow.cells[0].innerHTML = "начало: " + startTime + "\n" + "конец: " + endTime;
+            IndexOfLastWordContainingOccurence + numberOfExtraWords < words.length - 1 ?
+                numberOfExtraWords : words.length - 1 - IndexOfLastWordContainingOccurence;
+
+        let startIndex = IndexOfFirstWordContainingOccurence - extraWordsAtStart;
+        let endIndex = IndexOfLastWordContainingOccurence + extraWordsAtEnd;
+
+        let firstWord = response.words[IndexOfFirstWordContainingOccurence]
+        let startTime = firstWord.start;
+
+        let stringContainingOccurence = words.slice(IndexOfFirstWordContainingOccurence, IndexOfLastWordContainingOccurence).join(" ");
+
+        let correctedInput = searchWords.join(" ");
+        let indexOfOccurence = stringContainingOccurence.indexOf(correctedInput);
+        let indexOfLastOccurence = indexOfOccurence + correctedInput.length;
+
+        let wordsBeforeHighlight = words.slice(startIndex, IndexOfFirstWordContainingOccurence).join(" ");
+
+        let wordsContainingHighlight = stringContainingOccurence.slice(0, indexOfOccurence)
+            + "<mark>"
+            + stringContainingOccurence.slice(indexOfOccurence, indexOfLastOccurence)
+            + "</mark>"
+            + stringContainingOccurence.slice(indexOfLastOccurence);
+
+        let wordsAfterHighlight = words.slice(IndexOfLastWordContainingOccurence, endIndex).join(" ");
+
+        let textToShow = wordsBeforeHighlight.concat(" ", wordsContainingHighlight, " ", wordsAfterHighlight);
+
+        tableRow.cells[0].innerHTML = startTime;
         tableRow.cells[1].innerHTML = textToShow;
-        
-        
+
+
         searchResultTable.appendChild(tableRow);
     }
-    
+
     console.log(indexes);
 }
 

@@ -67,7 +67,7 @@ public class RabbitMqMessageConsumer: IHostedService
             consumer: consumer);
     }
 
-    protected async Task ExecuteAsync(CancellationToken stoppingToken)
+    private async Task SubscribeToAllQueuesAsync(CancellationToken stoppingToken)
     {
         
         foreach (var eventDelegate in BrokerQueueCallbacks.Callbacks)
@@ -78,8 +78,8 @@ public class RabbitMqMessageConsumer: IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await this.Start();
-        await ExecuteAsync(cancellationToken);
+        await Start();
+        await SubscribeToAllQueuesAsync(cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

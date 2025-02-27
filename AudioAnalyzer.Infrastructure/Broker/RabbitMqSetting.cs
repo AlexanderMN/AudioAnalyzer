@@ -8,8 +8,9 @@ public class RabbitMqSetting
     public int Port { get; set; }
 }
 
-public static class RabbitMqQueues
+public static class BrokerQueues
 {
+    public const string AudioFileQueue = "Audio-url";
     public const string SearchQueue = "Search";
     public const string TranscribeQueue = "Transcribe";
 }

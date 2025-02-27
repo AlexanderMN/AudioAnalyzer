@@ -6,8 +6,6 @@ let audio;
 
 
 let uploadedFileId;
-
-
 let transcribedText;
 
 let textForSearch = {r: [{
@@ -53,6 +51,7 @@ function initUploadHubConnection() {
         .build();
 
     fileHubConnection.on("FileText", function (user, message) {
+        console.log("entered FileText");
         if (transcribedTextContainer instanceof HTMLElement) {
             transcribedTextContainer.innerHTML = message;
         }
@@ -60,6 +59,8 @@ function initUploadHubConnection() {
     
     fileHubConnection.on("FileTextForSearch", function (user, message) {
         textForSearch = JSON.parse(message);
+        console.log("entered FileTextForSearch");
+        
     })
 
     fileHubConnection.onclose(async () => {

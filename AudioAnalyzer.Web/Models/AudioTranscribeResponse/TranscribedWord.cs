@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+namespace AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 
 [Serializable]
-public class AnalyzedWord
+public class TranscribedWord
 {
     [JsonPropertyName("word")]
     public string word { get; set; }

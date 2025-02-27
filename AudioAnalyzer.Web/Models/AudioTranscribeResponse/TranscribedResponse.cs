@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioAnalyzerResponse;
+namespace AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 
 [Serializable]
-public class AudioResponse
+public class TranscribedResponse
 {
     [JsonPropertyName("filename")]
     public string Filename { get; set; }
@@ -12,5 +12,5 @@ public class AudioResponse
     public int ResponseCode { get; set; }
     
     [JsonPropertyName("response")]
-    public List<AnalyzedText> AnalyzedTexts { get; set; }
+    public List<TranscribedText> AnalyzedTexts { get; set; }
 }

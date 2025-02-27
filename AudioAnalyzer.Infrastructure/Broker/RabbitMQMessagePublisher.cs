@@ -21,7 +21,7 @@ public class RabbitMqMessagePublisher : IRabbitMqPublisher
             HostName = _rabbitMqSetting.HostName,
             UserName = _rabbitMqSetting.UserName,
             Password = _rabbitMqSetting.Password,
-            Port = _rabbitMqSetting.Port,
+            Port = _rabbitMqSetting.Port
         };
         await using var connection = await factory.CreateConnectionAsync();
         await using var channel = await connection.CreateChannelAsync();
