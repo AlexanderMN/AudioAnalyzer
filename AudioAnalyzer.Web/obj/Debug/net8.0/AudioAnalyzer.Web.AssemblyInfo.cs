@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AudioAnalyzer.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ea6a9c814c63a1cb5053e52f63c8f89acc6ec7c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7f8ed4ce5739236828eb4538f7b7198a2af65d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("AudioAnalyzer.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AudioAnalyzer.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

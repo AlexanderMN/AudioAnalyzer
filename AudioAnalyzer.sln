@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Tests", "Audi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Data", "AudioAnalyzer.Data\AudioAnalyzer.Data.csproj", "{6BFAEC74-9B38-4EB1-869F-004177AAD3D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Core", "AudioAnalyzer.Core\AudioAnalyzer.Core.csproj", "{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{6BFAEC74-9B38-4EB1-869F-004177AAD3D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BFAEC74-9B38-4EB1-869F-004177AAD3D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BFAEC74-9B38-4EB1-869F-004177AAD3D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -51,9 +51,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
-              "version": "[9.0.1, )"
+              "version": "[8.0.13, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",

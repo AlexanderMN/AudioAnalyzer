@@ -23,9 +23,6 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debu
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\refint\AudioAnalyzer.Infrastructure.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAnalyzer.Infrastructure.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\ref\AudioAnalyzer.Infrastructure.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.deps.json
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.runtimeconfig.json
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.exe
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAna.9A9C7A1B.Up2Date

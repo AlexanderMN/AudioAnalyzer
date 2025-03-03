@@ -5,6 +5,9 @@ namespace AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 [Serializable]
 public class TranscribedResponse
 {
+    [JsonPropertyName("userId")]
+    public int UserId { get; set; }
+    
     [JsonPropertyName("filename")]
     public string Filename { get; set; }
     

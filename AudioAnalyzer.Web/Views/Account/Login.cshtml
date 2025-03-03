@@ -1,0 +1,29 @@
+@model AudioAnalyzer.Web.Models.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title>Вход</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <label for="loginInput">Логин:</label>
+        <div id="loginInput">
+            @Html.EditorFor(model => model.Username)
+            @Html.ValidationMessageFor(model => model.Username)
+        </div>
+
+        <label for="passwordInput">Пароль:</label>
+        <div id="passwordInput">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+        
+        <button type="submit">Войти</button>
+    }
+</div>
+</body>
+</html>

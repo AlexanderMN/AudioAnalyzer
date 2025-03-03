@@ -1,0 +1,36 @@
+@model AudioAnalyzer.Web.Models.ViewModels.RegisterViewModel
+
+<!DOCTYPE "html">
+
+<html lang="ru">
+<head>
+    <title>Регистрация</title>
+</head>
+<body>
+
+<div>
+    @using(Html.BeginForm("Register", "Account", FormMethod.Post)){
+        <label for="loginInput"></label>
+        
+        <div id="loginInput">
+            @Html.EditorFor(model => model.Username)
+            @Html.ValidationMessageFor(model => model.Username)
+        </div>
+
+        <label for="passwordInput"></label>
+        <div id="passwordInput">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <label for="emailInput"></label>
+        <div id="emailInput">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        
+        <button formaction="">Создать</button>
+    }
+</div>
+</body>
+</html>

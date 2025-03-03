@@ -39,7 +39,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileTextForSearch(jsonResponse.AudioResponses[0].Filename, jsonResponse);
+        await _fileUploadHub.SendTranscribedTextForSearch(jsonResponse.AudioResponses[0].UserId, jsonResponse);
     }
 
     private async Task Transcribe(object state, BrokerEventArgs args)
@@ -50,7 +50,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (jsonResponse == null)
             return;
         
-        await _fileUploadHub.SendFileText(fileRequestId: jsonResponse.AudioResponses[0].Filename, 
+        await _fileUploadHub.SendTranscribedText(userId: jsonResponse.AudioResponses[0].UserId, 
                                           text: jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text);
     }
 }

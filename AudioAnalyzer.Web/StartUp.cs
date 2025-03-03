@@ -1,5 +1,7 @@
 using System.Configuration;
 using System.Text;
+using AudioAnalyzer.Core;
+using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
 using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
 using Microsoft.AspNetCore.Http.Features;
@@ -12,6 +14,7 @@ using AudioAnalyzer.Web.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioAnalyzer.Web;
 
@@ -27,7 +30,16 @@ public class StartUp
     public void ConfigureServices()
     {
         // Add services to the container.
+        
+        _builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                });
+        
         _builder.Services.AddControllersWithViews();
+        _builder.Services.AddRazorPages();
+        
         _builder.Services.AddSingleton<HttpClient>();
         _builder.Services.AddSingleton<IAudioExtensionRepository, LocalAudioExtensionRepository>();
         _builder.Services.AddSingleton<IEndpointRepository<string>, LocalEndpointRepository<string>>();
@@ -35,8 +47,11 @@ public class StartUp
         _builder.Services.AddSingleton<IEndpointService<string>, EndpointService<string>>();
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
         _builder.Services.AddSingleton<IFileService, FileService>();
+        _builder.Services.AddSingleton<AudioFileNameHandler>();
         _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
 
+        _builder.Services.AddDbContext<DataBaseContext>(opt =>
+                                                            opt.UseInMemoryDatabase("AudioAnalyzerDb"));
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
         _builder.Services.AddSignalR();
         _builder.Services.AddSingleton<FileUploadHub>();
@@ -51,31 +66,30 @@ public class StartUp
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
         _builder.Services.AddSession();
-
-
-        var config = _builder.Configuration;
         
-        _builder.Services.AddAuthentication(x =>
-        {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidIssuer = config["Jwt:Issuer"], 
-                ValidAudience = config["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true
-            };
-        });
-
-        _builder.Services.AddAuthorization();
+        // var config = _builder.Configuration;
+        //
+        // _builder.Services.AddAuthentication(x =>
+        // {
+        //     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        // }).AddJwtBearer(options =>
+        // {
+        //     options.TokenValidationParameters = new TokenValidationParameters
+        //     {
+        //         ValidIssuer = config["Jwt:Issuer"], 
+        //         ValidAudience = config["Jwt:Audience"],
+        //         IssuerSigningKey = new SymmetricSecurityKey
+        //             (Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
+        //         ValidateIssuer = true,
+        //         ValidateAudience = true,
+        //         ValidateLifetime = true,
+        //         ValidateIssuerSigningKey = true
+        //     };
+        // });
+        //
+        // _builder.Services.AddAuthorization();
         
         _builder.Services.Configure<FormOptions>(x =>
         {
@@ -86,6 +100,7 @@ public class StartUp
 
     public void ConfigureHost(string url = "https://127.0.0.1:7144", long maxFileSizeMbs = 500)
     {
+        
         _builder.WebHost.UseUrls(url);
         
         _builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = maxFileSizeMbs * 1024 * 1024);
@@ -127,6 +142,8 @@ public class StartUp
         _app.MapDefaultControllerRoute();
 
         _app.MapHub<FileUploadHub>("/hubs/fileUpload");
+        
+        _app.MapRazorPages();
     }
     
     public void Run()

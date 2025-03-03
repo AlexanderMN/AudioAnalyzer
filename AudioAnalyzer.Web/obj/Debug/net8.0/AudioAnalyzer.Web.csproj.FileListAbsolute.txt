@@ -81,9 +81,6 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\obj\Debug\net8.0\re
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\obj\Debug\net8.0\AudioAnalyzer.Web.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\obj\Debug\net8.0\AudioAnalyzer.Web.genruntimeconfig.cache
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\obj\Debug\net8.0\ref\AudioAnalyzer.Web.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.deps.json
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.runtimeconfig.json
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.exe
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Data.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
@@ -99,11 +96,8 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Ne
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\libman.json
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -123,3 +117,6 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\ru
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Core.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Core.pdb

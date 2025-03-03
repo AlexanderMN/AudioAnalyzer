@@ -6,7 +6,7 @@ const searchButton = document.getElementById("button-search");
 const main = document.getElementById("main");
 
 function changeMainArea(newAreaHTMLFileName){
-    $("#main").load("/api/Home/Audio/" + newAreaHTMLFileName);
+    $("#main").load("/api/Audio/" + newAreaHTMLFileName );
 }
 
 function spectrogramButtonClick(){

@@ -39,15 +39,10 @@ userSubmitArea.onsubmit = async function (evt) {
     let formData = new FormData();
     formData.append("file", fileInput.files[0]);
 
-     let response = await fetch('/api/Home/Audio/Input', {method: "POST", body: formData});
+     let response = await fetch('/api/Audio/Input', {method: "POST", body: formData});
      if (response.ok) {
-         
-         await response.text().then(data => {
-             uploadedFileId = data;
-             
-             initUploadHubConnection();
-             startFileHubConnection();
-         })
+         initUploadHubConnection();
+         await startFileHubConnection();
          
          audioFile = fileInput.files[0];
          audio.src = URL.createObjectURL(fileInput.files[0]);

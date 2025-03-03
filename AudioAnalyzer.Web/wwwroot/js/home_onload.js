@@ -4,8 +4,6 @@ let audioFile;
 let arrayBuffer;
 let audio;
 
-
-let uploadedFileId;
 let transcribedText;
 
 let textForSearch = {r: [{
@@ -29,7 +27,7 @@ let fileHubConnection;
 
 
 $(document).ready(function () {
-    $("#main").load("/api/Home/Audio/Input");
+    $("#main").load("/api/Audio/Input");
     
     audio = document.querySelector("audio");
 
@@ -47,19 +45,19 @@ async function startFileHubConnection() {
 }
 function initUploadHubConnection() {
     fileHubConnection = new signalR.HubConnectionBuilder()
-        .withUrl("/hubs/fileUpload?fileId=" + uploadedFileId)
+        .withUrl("/hubs/fileUpload")
         .build();
 
-    fileHubConnection.on("FileText", function (user, message) {
-        console.log("entered FileText");
+    fileHubConnection.on("TranscribedText", function (user, message) {
+        console.log("entered TranscribedText");
         if (transcribedTextContainer instanceof HTMLElement) {
             transcribedTextContainer.innerHTML = message;
         }
     });
     
-    fileHubConnection.on("FileTextForSearch", function (user, message) {
+    fileHubConnection.on("TranscribedTextForSearch", function (user, message) {
         textForSearch = JSON.parse(message);
-        console.log("entered FileTextForSearch");
+        console.log("entered TranscribedTextForSearch");
         
     })
 
