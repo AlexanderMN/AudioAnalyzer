@@ -120,3 +120,6 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\ru
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Core.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioAnalyzer.Core.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Npgsql.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

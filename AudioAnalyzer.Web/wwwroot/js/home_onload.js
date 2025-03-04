@@ -4,8 +4,6 @@ let audioFile;
 let arrayBuffer;
 let audio;
 
-let transcribedText;
-
 let textForSearch = {r: [{
     response: [{
         text: String,
@@ -48,14 +46,14 @@ function initUploadHubConnection() {
         .withUrl("/hubs/fileUpload")
         .build();
 
-    fileHubConnection.on("TranscribedText", function (user, message) {
+    fileHubConnection.on("TranscribedText", function (message) {
         console.log("entered TranscribedText");
         if (transcribedTextContainer instanceof HTMLElement) {
             transcribedTextContainer.innerHTML = message;
         }
     });
     
-    fileHubConnection.on("TranscribedTextForSearch", function (user, message) {
+    fileHubConnection.on("TranscribedTextForSearch", function (message) {
         textForSearch = JSON.parse(message);
         console.log("entered TranscribedTextForSearch");
         

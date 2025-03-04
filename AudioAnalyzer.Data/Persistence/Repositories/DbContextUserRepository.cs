@@ -1,20 +1,21 @@
 using AudioAnalyzer.Data.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace AudioAnalyzer.Data.Persistence.Repositories;
 
 public class DbContextUserRepository : IRepository<User>
 {
     private readonly DataBaseContext _context;
-
-    public DbContextUserRepository(DataBaseContext context)
+    public DbContextUserRepository(DbContextOptions<DataBaseContext> options,
+                                   IConfiguration configuration)
     {
-        _context = context;
+        _context = new DataBaseContext(options, configuration);
     }
 
     public void Dispose()
     {
-        
+        _context.Dispose();   
     }
 
     public IEnumerable<User> GetEntityList()
@@ -28,10 +29,10 @@ public class DbContextUserRepository : IRepository<User>
         {
             return _context.Users
                            .Include(u => u.UploadedFiles)
-                           .FirstOrDefault(u => u.UserId == id);
+                           .FirstOrDefault(u => u.Id == id);
         }
         
-        return _context.Users.FirstOrDefault(u => u.UserId == id);
+        return _context.Users.FirstOrDefault(u => u.Id == id);
     }
 
     public void Create(User item)
@@ -46,7 +47,7 @@ public class DbContextUserRepository : IRepository<User>
 
     public void Delete(int id)
     {
-        var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+        var user = _context.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
             return;
         _context.Users.Remove(user);

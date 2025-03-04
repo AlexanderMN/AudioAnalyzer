@@ -2,6 +2,8 @@ using System.Configuration;
 using System.Text;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
+using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Persistence.Repositories;
 using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
 using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
 using Microsoft.AspNetCore.Http.Features;
@@ -50,11 +52,16 @@ public class StartUp
         _builder.Services.AddSingleton<AudioFileNameHandler>();
         _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
 
-        _builder.Services.AddDbContext<DataBaseContext>(opt =>
-                                                            opt.UseInMemoryDatabase("AudioAnalyzerDb"));
+        var dbOptionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
+        _builder.Services.AddSingleton(dbOptionsBuilder.Options);
+        
+        _builder.Services.AddDbContext<DataBaseContext>();
+        
+        
+        _builder.Services.AddSingleton<IRepository<User>, DbContextUserRepository>();
+        _builder.Services.AddSingleton<FileUploadHub>();
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
         _builder.Services.AddSignalR();
-        _builder.Services.AddSingleton<FileUploadHub>();
         
         _builder.Services.Configure<RabbitMqSetting>(_builder.Configuration
                                                              .GetSection("RemoteEndpoints")

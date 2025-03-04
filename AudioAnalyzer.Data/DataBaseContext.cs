@@ -1,19 +1,28 @@
 using System.Collections.ObjectModel;
 using AudioAnalyzer.Data.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace AudioAnalyzer.Data;
 
-public class DataBaseContext : DbContext
+public sealed class DataBaseContext : DbContext
 {
-    public DataBaseContext(DbContextOptions options) : base(options)
+    IConfiguration _configuration;
+    
+    public DataBaseContext(DbContextOptions options, IConfiguration config) : base(options)
     {
-        CreateUsers();   
+        _configuration = config;
+        var wavCrated = Database.EnsureCreated();
+        
+        if (wavCrated)
+        {
+            CreateUsers();   
+        }
     }
 
     public DbSet<User> Users { get; set; }
     public DbSet<UploadedFile> UploadedFiles { get; set; }
-
+    public DbSet<Endpoint> Endpoints { get; set; }
     private void CreateUsers()
     {
         var user = new User
@@ -27,9 +36,15 @@ public class DataBaseContext : DbContext
         Users.Add(user);
         SaveChanges();
     }
+
+    private void CreateEndpoints()
+    {
+        
+    }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
         base.OnConfiguring(optionsBuilder);
     }
 

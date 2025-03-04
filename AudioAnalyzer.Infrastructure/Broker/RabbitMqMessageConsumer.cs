@@ -27,7 +27,7 @@ public class RabbitMqMessageConsumer: IHostedService
     {
         var factory = new ConnectionFactory
         {
-            HostName = _rabbitMqSetting.HostName,
+            HostName = _rabbitMqSetting.IpAddress,
             Port = _rabbitMqSetting.Port,
             UserName = _rabbitMqSetting.UserName,
             Password = _rabbitMqSetting.Password,

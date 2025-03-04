@@ -14,8 +14,6 @@ public class FileUploadHub : Hub
     IRepository<User> _userRepository;
     // Store connection IDs with corresponding client identifiers (like file request ID)
     private readonly ConcurrentDictionary<User, byte> _activeUsers;
-
-    
     public FileUploadHub(IRepository<User> userRepository)
     {
         _userRepository = userRepository;
@@ -93,7 +91,7 @@ public class FileUploadHub : Hub
 
     private User GetUserFromActiveConnections(int userId)
     {
-        return _activeUsers.Keys.FirstOrDefault(u => u.UserId == userId);
+        return _activeUsers.Keys.FirstOrDefault(u => u.Id == userId);
     }
 }
 

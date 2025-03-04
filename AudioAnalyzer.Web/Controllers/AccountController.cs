@@ -40,7 +40,7 @@ public class AccountController : Controller
             return View(model);
         
         
-        await Authenticate(user.UserId);
+        await Authenticate(user.Id);
         return RedirectToAction("Audio", "Audio");
     }
 

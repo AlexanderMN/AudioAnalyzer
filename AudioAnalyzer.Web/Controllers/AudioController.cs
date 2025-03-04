@@ -72,32 +72,14 @@ public class AudioController : Controller
     {
         _searchViewModel = new SearchViewModel(new TranscribedResponseJson());
 
-        var user = await GetUserAsync();
+        var (user, fileName) = await GetUserLastFileNameTupleAsync();
 
-        if (user == null)
-            return PartialView("Search");
-        
-        var file = user.UploadedFiles.LastOrDefault();
+        if (string.IsNullOrEmpty(fileName) || user is null) 
+            return PartialView("Search", _searchViewModel);
 
-        if (file == null || file.IsProcessed)
-            return PartialView("Search");
-
-        var fileName = $"{file.UploadedFileName}.{file.UploadedFileType}";
-        
-        if (!string.IsNullOrEmpty(fileName))
-        {
-            
-            var transcribeRequest = new AudioTranscribeRequest
-            {
-                UserId = user.UserId,
-                AudioFileName = fileName,
-                Task = "Search"
-            };
-            var message = JsonSerializer.Serialize(transcribeRequest);
-            
-            _rabbitMqPublisher.PublishMessageAsync(message: message, 
-                                                         topic: "Audio-url");
-        }
+        await SendTranscribeTask(user: user,
+                                    fileName: fileName,
+                                    finalTask: BrokerQueues.SearchQueue);
 
         return PartialView("Search", _searchViewModel);
     }
@@ -107,30 +89,17 @@ public class AudioController : Controller
     [Route("Transcribe")]
     public async Task<IActionResult> Transcribe()
     {
-        
         _transcribeViewModel = new TranscribeViewModel("");
-
-        //TODO: fix fileName
-        var fileName = await GetUserLastFileNameAsync();
-
-        var user = GetUserAsync();
         
+        var (user, fileName) = await GetUserLastFileNameTupleAsync();
         
-        if (string.IsNullOrEmpty(fileName)) 
+        if (string.IsNullOrEmpty(fileName) || user is null) 
             return PartialView("Transcribe", _transcribeViewModel);
-        
-        var transcribeRequest = new AudioTranscribeRequest
-        {
-            
-            AudioFileName = fileName,
-            Task = "Transcribe"
-        };
-            
-        var message = JsonSerializer.Serialize(transcribeRequest);
-            
-        await _rabbitMqPublisher.PublishMessageAsync(message: message, 
-                                                     topic: BrokerQueues.AudioFileQueue);
 
+        await SendTranscribeTask(user: user, 
+                              fileName: fileName, 
+                              finalTask: BrokerQueues.TranscribeQueue);
+        
         return PartialView("Transcribe", _transcribeViewModel);
     }
 
@@ -158,7 +127,7 @@ public class AudioController : Controller
         
         //TODO add file support
 
-        var fileName = $"{audioFile.Name}.{audioFile.Extension}";
+        var fileName = $"{audioFile.Name}{audioFile.Extension}";
         
         var ftpResponse = await _fileServiceCommunication.SendDataToFileServiceAsync(
             fileName, 
@@ -188,7 +157,7 @@ public class AudioController : Controller
         var user = await _db.Users
                             .Include(u => u.UploadedFiles)
                             .FirstOrDefaultAsync(cancellationToken: cancellationToken, 
-                                                 predicate: u => u.UserId == userId);
+                                                 predicate: u => u.Id == userId);
         return user;
     }
     
@@ -203,21 +172,38 @@ public class AudioController : Controller
         {
             UploadedFileName = audioFile.Name,
             UploadedFileType = audioFile.Extension,
-            UserId = user.UserId,
+            UserId = user.Id,
             IsProcessed = false
         });
+        
+        await _db.SaveChangesAsync();
         
         return true;
     }
 
-    private async Task<string?> GetUserLastFileNameAsync()
+    private async Task<(User?, string?)> GetUserLastFileNameTupleAsync()
     {
         var user = await GetUserAsync();
         
         var file = user?.UploadedFiles.LastOrDefault();
         if (file == null || file.IsProcessed)
-            return string.Empty;
+            return (user, string.Empty);
         
-        return file.UploadedFileName;
+        return (user, $"{file.UploadedFileName}{file.UploadedFileType}");
+    }
+
+    private async Task SendTranscribeTask(User user, string fileName, string finalTask)
+    {
+        var transcribeRequest = new AudioTranscribeRequest
+        {
+            UserId = user.Id,
+            AudioFileName = fileName,
+            Task = finalTask
+        };
+            
+        var message = JsonSerializer.Serialize(transcribeRequest);
+            
+        await _rabbitMqPublisher.PublishMessageAsync(message: message, 
+                                                     topic: BrokerQueues.AudioFileQueue);
     }
 }

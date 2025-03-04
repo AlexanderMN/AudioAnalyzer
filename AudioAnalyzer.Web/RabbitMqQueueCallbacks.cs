@@ -12,6 +12,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
     private FileUploadHub _fileUploadHub;
     public RabbitMqQueueCallbacks(FileUploadHub fileUploadHub)
     {
+        
         _fileUploadHub = fileUploadHub;
         RegisterDelegates();
     }

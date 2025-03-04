@@ -18,7 +18,7 @@ public class RabbitMqMessagePublisher : IRabbitMqPublisher
     {
         var factory = new ConnectionFactory
         {
-            HostName = _rabbitMqSetting.HostName,
+            HostName = _rabbitMqSetting.IpAddress,
             UserName = _rabbitMqSetting.UserName,
             Password = _rabbitMqSetting.Password,
             Port = _rabbitMqSetting.Port
