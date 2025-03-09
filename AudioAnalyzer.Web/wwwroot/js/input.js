@@ -46,5 +46,6 @@ userSubmitArea.onsubmit = async function (evt) {
          
          audioFile = fileInput.files[0];
          audio.src = URL.createObjectURL(fileInput.files[0]);
+         
      }
 }

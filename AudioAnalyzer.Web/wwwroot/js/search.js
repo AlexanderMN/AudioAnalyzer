@@ -1,7 +1,7 @@
 let searchSubmitForm = document.getElementById("search-submit-form")
 let userTextInput = document.getElementById("search-container-input");
 let searchResultTable = document.getElementById("search-result-table");
-
+let searchTbody = document.getElementById("search-tbody");
 function arrayContainsWords(array, words, startIndex){
 
     if (words.length === 1){
@@ -48,7 +48,8 @@ function getIndicesOf(searchWords, listOfWords) {
 
 searchSubmitForm.onsubmit = async function (evt) {
     evt.preventDefault();
-
+    
+    
     let inputText = userTextInput.value;
 
     let response = textForSearch.r[0].response[0];
@@ -59,10 +60,12 @@ searchSubmitForm.onsubmit = async function (evt) {
 
     for (let i = 0; i < indexes.length; i++){
         let tableRow = document.createElement("tr");
-
         tableRow.insertCell(0);
         tableRow.insertCell(1);
-
+        
+        tableRow.cells[0].setAttribute("style", "width:20%");
+        tableRow.cells[1].setAttribute("style", "width:80%");
+        
         let numberOfExtraWords = 5;
 
         let IndexOfFirstWordContainingOccurence = indexes[i]
@@ -99,12 +102,13 @@ searchSubmitForm.onsubmit = async function (evt) {
         let wordsAfterHighlight = words.slice(IndexOfLastWordContainingOccurence, endIndex).join(" ");
 
         let textToShow = wordsBeforeHighlight.concat(" ", wordsContainingHighlight, " ", wordsAfterHighlight);
-
-        tableRow.cells[0].innerHTML = startTime;
+        
+        tableRow.cells[0].innerHTML = String("<a href = \"javascript:setAudioTime(" + startTime + ");\"> " +
+            startTime + "</a>")
         tableRow.cells[1].innerHTML = textToShow;
 
 
-        searchResultTable.appendChild(tableRow);
+        searchTbody.appendChild(tableRow);
     }
 
     console.log(indexes);

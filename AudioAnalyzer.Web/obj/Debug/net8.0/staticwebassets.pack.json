@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\account-style.css",
+      "PackagePath": "staticwebassets\\css\\account-style.css"
+    },
+    {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\home-style.css",
       "PackagePath": "staticwebassets\\css\\home-style.css"
     },

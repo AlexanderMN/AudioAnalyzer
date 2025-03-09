@@ -1,5 +1,23 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\account-style.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>AudioAnalyzer.Web</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/AudioAnalyzer.Web</BasePath>
+      <RelativePath>css/account-style.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>r71626b7xb</Fingerprint>
+      <Integrity>p9VNbUDLmRMkRwk9RSecFIXrtz+gZIOzOYrrIctgH9o=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\account-style.css'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\home-style.css'))">
       <SourceType>Package</SourceType>
       <SourceId>AudioAnalyzer.Web</SourceId>
@@ -48,8 +66,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>e2qvhtg35h</Fingerprint>
-      <Integrity>SmV85ID900ay2CMW1GHgu8ZZzv40tAXJNudobsMxy3I=</Integrity>
+      <Fingerprint>i41hmhm7p6</Fingerprint>
+      <Integrity>DgYbVDr9obySBKbJSXC5C+h9cuBzu8ShU2nZ7jXZSD8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\style.css'))</OriginalItemSpec>
@@ -120,8 +138,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>e2h0caexzi</Fingerprint>
-      <Integrity>ZmqCxjoKzehlFmED5+IxFGEQ8gqRAXhByz9LQsijauw=</Integrity>
+      <Fingerprint>j5a99le25s</Fingerprint>
+      <Integrity>WefO+3IakXL5Gs0lmfnJvKuCxAEnVcEkFkWlkOANkl8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\home_onload.js'))</OriginalItemSpec>
@@ -138,8 +156,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>48lb4fy7hp</Fingerprint>
-      <Integrity>NECXG+gmEF9580zyK4Xy0d1lnUek625kcTCd7A2GhNw=</Integrity>
+      <Fingerprint>ypcxutv5kn</Fingerprint>
+      <Integrity>pmDHgxN3JUJN2OLiqXyx04YYNMURnNcbzx9JJNXsBnU=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\input.js'))</OriginalItemSpec>
@@ -156,8 +174,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8p3b38sael</Fingerprint>
-      <Integrity>fCoQRar3T5p8w+gtsHeKaEeA9QDNECW0wOQAkcSrH6Y=</Integrity>
+      <Fingerprint>l0o57tmlhi</Fingerprint>
+      <Integrity>1aMraJNg0nozmcG/F5z10tKZjWGJciGZSsnHt98NfjE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\search.js'))</OriginalItemSpec>

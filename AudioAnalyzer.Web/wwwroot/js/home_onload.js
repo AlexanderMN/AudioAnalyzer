@@ -63,3 +63,7 @@ function initUploadHubConnection() {
         await startFileHubConnection();
     });
 }
+
+function setAudioTime(timestamp) {
+    audio.currentTime = timestamp;
+}

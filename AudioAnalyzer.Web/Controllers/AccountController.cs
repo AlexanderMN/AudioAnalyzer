@@ -34,7 +34,8 @@ public class AccountController : Controller
         if (!ModelState.IsValid) 
             return View(model);
         
-        var user = _dataBaseContext.Users.FirstOrDefault(u => u.UserName == model.Username);
+        var user = _dataBaseContext.Users.FirstOrDefault(u => u.UserName == model.Username 
+                                                              && u.Password == model.Password);
 
         if (user == null) 
             return View(model);
