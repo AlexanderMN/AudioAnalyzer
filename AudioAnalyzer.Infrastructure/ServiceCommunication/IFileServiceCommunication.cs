@@ -4,5 +4,5 @@ namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 
 public interface IFileServiceCommunication
 {
-    public Task<FtpWebResponse> SendDataToFileServiceAsync(string fileName, Stream fileStream);
+    public Task<FtpWebResponse?> SendDataToFileServiceAsync(string fileName, Stream fileStream);
 }

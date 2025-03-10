@@ -1,5 +1,4 @@
 var audioBufferPromise = audioContext.decodeAudioData(arrayBuffer);
-
 var fileName = document.getElementById("fileName");
 var fileExtension = document.getElementById("fileExtension");
 var duration = document.getElementById("duration");

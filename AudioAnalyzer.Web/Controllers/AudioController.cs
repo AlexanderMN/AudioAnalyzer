@@ -133,7 +133,8 @@ public class AudioController : Controller
             fileName, 
             requestAudioFile.OpenReadStream());
 
-        if (ftpResponse.StatusCode != FtpStatusCode.ClosingData) 
+        if (ftpResponse is null ||
+            ftpResponse.StatusCode != FtpStatusCode.ClosingData) 
             return BadRequest();
         
         if (!await TrySaveUserFileAsync(audioFile))

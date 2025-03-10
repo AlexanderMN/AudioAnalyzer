@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text.Json;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Web.Models;
 using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 
@@ -50,8 +49,6 @@ public class FileUploadHub : Hub
         
         if (user == null)
             return;
-
-        var lastUploadedFile = user.UploadedFiles.LastOrDefault()?.UploadedFileName;
         
         user.ConnectionId = Context.ConnectionId;
         _activeUsers.TryAdd(user, Byte.MinValue);
@@ -59,7 +56,7 @@ public class FileUploadHub : Hub
     }
 
     // Optionally, allow clients to unregister or disconnect
-    public override async Task OnDisconnectedAsync(Exception exception)
+    public override async Task OnDisconnectedAsync(Exception? exception)
     {
         // Clean up connection when client disconnects
         var user = GetUserFromActiveConnectionsByContext();
@@ -89,7 +86,7 @@ public class FileUploadHub : Hub
             includeRelatedEntities: true);
     }
 
-    private User GetUserFromActiveConnections(int userId)
+    private User? GetUserFromActiveConnections(int userId)
     {
         return _activeUsers.Keys.FirstOrDefault(u => u.Id == userId);
     }

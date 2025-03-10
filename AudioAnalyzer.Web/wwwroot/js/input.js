@@ -1,7 +1,7 @@
-const dropArea = document.getElementById("input-drop-area");
-const fileInput = document.getElementById("input-file-input");
-const userSubmitArea = document.getElementById("input-user-input");
-const fileInputBuffer = null;
+var dropArea = document.getElementById("input-drop-area");
+var fileInput = document.getElementById("input-file-input");
+var userSubmitArea = document.getElementById("input-user-input");
+var fileInputBuffer = null;
 
 dropArea.ondragover = dropArea.ondragenter = function (evt) {
     evt.preventDefault();
@@ -41,9 +41,11 @@ userSubmitArea.onsubmit = async function (evt) {
 
      let response = await fetch('/api/Audio/Input', {method: "POST", body: formData});
      if (response.ok) {
-         initUploadHubConnection();
-         await startFileHubConnection();
-         
+         if (fileHubConnection == null) {
+             initUploadHubConnection();      
+             await startFileHubConnection(); 
+         }
+          
          audioFile = fileInput.files[0];
          audio.src = URL.createObjectURL(fileInput.files[0]);
          

@@ -54,4 +54,11 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         await _fileUploadHub.SendTranscribedText(userId: jsonResponse.AudioResponses[0].UserId, 
                                           text: jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text);
     }
+
+    private async Task Summarize(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        
+        
+    }
 }

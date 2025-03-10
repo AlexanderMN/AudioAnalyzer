@@ -1,10 +1,30 @@
 //in-browser
-const audioContext = new AudioContext();
-let audioFile;
-let arrayBuffer;
-let audio;
 
-let textForSearch = {r: [{
+var SingletonFactory = (function (){
+    function SingletonClass(){
+        document.getElementById();
+    }
+    var instances = new Map()
+    return {
+        getInstance : function (variable){
+            name = Object.keys(variable)[0];
+            if (!instances.has(name)) {
+                instances.set(name, new SingletonClass());
+            }
+            return instances.get(name);
+        },
+        setInstance : function (variable, value){
+            name = Object.keys(variable)[0];
+            instances.set(name, value);
+        }
+    }
+})();
+
+var audioContext = new AudioContext();
+var audioFile;
+var arrayBuffer;
+var audio;
+var textForSearch = {r: [{
     response: [{
         text: String,
         words: [{
@@ -16,12 +36,9 @@ let textForSearch = {r: [{
 }
 ]}
 
-let transcribedTextContainer;
-let textForSearchContainer;
-
-
-
-let fileHubConnection;
+var transcribedTextContainer;
+var textForSearchContainer;
+var fileHubConnection;
 
 
 $(document).ready(function () {

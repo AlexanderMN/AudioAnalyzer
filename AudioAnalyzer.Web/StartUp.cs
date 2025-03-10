@@ -48,7 +48,11 @@ public class StartUp
         _builder.Services.AddSingleton<IEndpointRepository<int>, LocalEndpointRepository<int>>();
         _builder.Services.AddSingleton<IEndpointService<string>, EndpointService<string>>();
         _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
-        _builder.Services.AddSingleton<IFileService, FileService>();
+        _builder.Services.Configure<FtpSettings>(_builder.Configuration
+                                                         .GetSection("RemoteEndpoints")
+                                                         .GetSection("FTPServer"));
+        
+        _builder.Services.AddSingleton<IFtpClient, FtpClient>();
         _builder.Services.AddSingleton<AudioFileNameHandler>();
         _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
 

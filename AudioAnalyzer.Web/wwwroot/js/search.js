@@ -1,7 +1,7 @@
-let searchSubmitForm = document.getElementById("search-submit-form")
-let userTextInput = document.getElementById("search-container-input");
-let searchResultTable = document.getElementById("search-result-table");
-let searchTbody = document.getElementById("search-tbody");
+var searchSubmitForm = document.getElementById("search-submit-form")
+var userTextInput = document.getElementById("search-container-input");
+var searchResultTable = document.getElementById("search-result-table");
+var searchTbody = document.getElementById("search-tbody");
 function arrayContainsWords(array, words, startIndex){
 
     if (words.length === 1){
@@ -48,6 +48,7 @@ function getIndicesOf(searchWords, listOfWords) {
 
 searchSubmitForm.onsubmit = async function (evt) {
     evt.preventDefault();
+    
     
     
     let inputText = userTextInput.value;

@@ -7,17 +7,17 @@ namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 public class FileServiceCommunication: IFileServiceCommunication
 {
     IEndpointService<string> _endpointService;
-    IFileService _fileService;
+    IFtpClient _ftpClient;
 
-    public FileServiceCommunication(IEndpointService<string> endpointService, IFileService fileService)
+    public FileServiceCommunication(IEndpointService<string> endpointService, IFtpClient ftpClient)
     {
         _endpointService = endpointService;
-        _fileService = fileService;
+        _ftpClient = ftpClient;
     }
 
-    public async Task<FtpWebResponse> SendDataToFileServiceAsync(string fileName, Stream fileStream)
+    public async Task<FtpWebResponse?> SendDataToFileServiceAsync(string fileName, Stream fileStream)
     {
-        var ftpResponse = await _fileService.UploadFileToFTP(
+        var ftpResponse = await _ftpClient.UploadFileToFTPServer(
             uri: _endpointService.GetUriFromEndpointId("FTPServer", EndpointProtocol.ftp,
                                                        $"/audioFiles/{fileName}"),
             stream: fileStream);
