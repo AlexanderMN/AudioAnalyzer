@@ -1,0 +1,12 @@
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\bin\Debug\net8.0\AudioParser.deps.json
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\bin\Debug\net8.0\AudioParser.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\bin\Debug\net8.0\AudioParser.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.AssemblyInfoInputs.cache
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.AssemblyInfo.cs
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.csproj.CoreCompileInputs.cache
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.sourcelink.json
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\refint\AudioParser.dll
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\AudioParser.pdb
+C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioParser\obj\Debug\net8.0\ref\AudioParser.dll

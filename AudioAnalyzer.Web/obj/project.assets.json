@@ -1995,7 +1995,6 @@
         "dependencies": {
           "AudioAnalyzer.Core": "1.0.0",
           "AudioAnalyzer.Data": "1.0.0",
-          "AudioParser": "1.0.0",
           "FFMpegCore": "5.2.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
           "RabbitMQ.Client": "7.0.0"
@@ -2005,16 +2004,6 @@
         },
         "runtime": {
           "bin/placeholder/AudioAnalyzer.Infrastructure.dll": {}
-        }
-      },
-      "AudioParser/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/AudioParser.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AudioParser.dll": {}
         }
       }
     }
@@ -5937,11 +5926,6 @@
       "type": "project",
       "path": "../AudioAnalyzer.Infrastructure/AudioAnalyzer.Infrastructure.csproj",
       "msbuildProject": "../AudioAnalyzer.Infrastructure/AudioAnalyzer.Infrastructure.csproj"
-    },
-    "AudioParser/1.0.0": {
-      "type": "project",
-      "path": "../AudioParser/AudioParser.csproj",
-      "msbuildProject": "../AudioParser/AudioParser.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6066,5 +6050,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+    }
+  ]
 }
