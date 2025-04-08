@@ -1,9 +1,10 @@
 using System.Net;
+using AudioAnalyzer.Data.Persistence.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
 
-public class LocalEndpointRepository<TKey> : IEndpointRepository<TKey> where TKey : IComparable<TKey>, IEquatable<TKey>
+public class LocalEndpointRepository : IRepository<Endpoint> 
 {
     private IConfiguration _configuration;
 
@@ -12,29 +13,9 @@ public class LocalEndpointRepository<TKey> : IEndpointRepository<TKey> where TKe
         _configuration = configuration;
     }
 
-    public IDictionary<TKey, IPEndPoint> GetEndpoints() 
+    public IPEndPoint GetEndpoint(string id)
     {
-        var endpoints = new Dictionary<TKey, IPEndPoint>();
-        
-        var remoteEndpointSections = GetRemoteEndpointsSection().GetChildren();
-        
-        foreach (var remoteEndpointSection in remoteEndpointSections)
-        {
-            
-            if (remoteEndpointSection.Value is TKey endpointId && 
-                TryExtractEndpointFromSction(remoteEndpointSection, out IPEndPoint endpoint))
-            {
-                endpoints.Add(endpointId, endpoint);
-            }
-            
-        }
-        
-        return endpoints;
-    }
-
-    public IPEndPoint GetEndpoint(TKey id)
-    {
-        var sectionId = id as string;
+        var sectionId = id;
 
         if (sectionId == null)
             return null;
@@ -65,5 +46,59 @@ public class LocalEndpointRepository<TKey> : IEndpointRepository<TKey> where TKe
         }
         
         return false;
+    }
+
+    public void Dispose()
+    {
+        _configuration = null;
+    }
+
+    public IEnumerable<Endpoint> GetEntityList()
+    {
+        var endpoints = new List<Endpoint>();
+        
+        var remoteEndpointSections = GetRemoteEndpointsSection().GetChildren();
+        
+        foreach (var remoteEndpointSection in remoteEndpointSections)
+        {
+            
+            if (TryExtractEndpointFromSction(remoteEndpointSection, out IPEndPoint endpoint))
+            {
+
+            }
+            
+        }
+        
+        return endpoints;
+    }
+
+    public List<Endpoint> GetEntityList(Func<Endpoint, bool>? predicate = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Endpoint?> GetEntity(int id, bool includeRelatedEntities)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Create(Endpoint item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Update(Endpoint item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SaveAsync()
+    {
+        throw new NotImplementedException();
     }
 }

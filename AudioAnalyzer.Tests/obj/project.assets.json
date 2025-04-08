@@ -1053,6 +1053,16 @@
           }
         }
       },
+      "AudioAnalyzer.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/AudioAnalyzer.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AudioAnalyzer.Core.dll": {}
+        }
+      },
       "AudioAnalyzer.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -1072,7 +1082,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "AudioAnalyzer.Core": "1.0.0",
           "AudioAnalyzer.Data": "1.0.0",
+          "AudioParser": "1.0.0",
           "FFMpegCore": "5.2.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
           "RabbitMQ.Client": "7.0.0"
@@ -1082,6 +1094,16 @@
         },
         "runtime": {
           "bin/placeholder/AudioAnalyzer.Infrastructure.dll": {}
+        }
+      },
+      "AudioParser/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/AudioParser.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AudioParser.dll": {}
         }
       },
       "TextAnalysis/1.0.0": {
@@ -2527,6 +2549,11 @@
         "xunit.extensibility.execution.nuspec"
       ]
     },
+    "AudioAnalyzer.Core/1.0.0": {
+      "type": "project",
+      "path": "../AudioAnalyzer.Core/AudioAnalyzer.Core.csproj",
+      "msbuildProject": "../AudioAnalyzer.Core/AudioAnalyzer.Core.csproj"
+    },
     "AudioAnalyzer.Data/1.0.0": {
       "type": "project",
       "path": "../AudioAnalyzer.Data/AudioAnalyzer.Data.csproj",
@@ -2536,6 +2563,11 @@
       "type": "project",
       "path": "../AudioAnalyzer.Infrastructure/AudioAnalyzer.Infrastructure.csproj",
       "msbuildProject": "../AudioAnalyzer.Infrastructure/AudioAnalyzer.Infrastructure.csproj"
+    },
+    "AudioParser/1.0.0": {
+      "type": "project",
+      "path": "../AudioParser/AudioParser.csproj",
+      "msbuildProject": "../AudioParser/AudioParser.csproj"
     },
     "TextAnalysis/1.0.0": {
       "type": "project",

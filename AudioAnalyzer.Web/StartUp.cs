@@ -1,22 +1,18 @@
-using System.Configuration;
-using System.Text;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Data.Persistence.Repositories;
 using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
 using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
-using Microsoft.AspNetCore.Http.Features;
 using AudioAnalyzer.Infrastructure;
-using AudioAnalyzer.Infrastructure.Broker;
-using AudioAnalyzer.Infrastructure.FileService;
+using Microsoft.AspNetCore.Http.Features;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
-using AudioAnalyzer.Infrastructure.ServiceCommunication.EndpointService;
 using AudioAnalyzer.Web.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using RabbitMqInfrastructure.Broker;
+using RabbitMqInfrastructure.Ftp;
+using Endpoint = AudioAnalyzer.Data.Persistence.Models.Endpoint;
 
 namespace AudioAnalyzer.Web;
 
@@ -29,7 +25,7 @@ public class StartUp
         _builder = builder;
     }
 
-    public void ConfigureServices()
+    public WebApplicationBuilder ConfigureServices()
     {
         // Add services to the container.
         
@@ -38,83 +34,60 @@ public class StartUp
                 {
                     options.LoginPath = new PathString("/Account/Login");
                 });
-        
+
+        _builder.Services.AddScoped<FtpStructureBuilder>();
         _builder.Services.AddControllersWithViews();
         _builder.Services.AddRazorPages();
         
         _builder.Services.AddSingleton<HttpClient>();
         _builder.Services.AddSingleton<IAudioExtensionRepository, LocalAudioExtensionRepository>();
-        _builder.Services.AddSingleton<IEndpointRepository<string>, LocalEndpointRepository<string>>();
-        _builder.Services.AddSingleton<IEndpointRepository<int>, LocalEndpointRepository<int>>();
-        _builder.Services.AddSingleton<IEndpointService<string>, EndpointService<string>>();
-        _builder.Services.AddSingleton<IEndpointService<int>, EndpointService<int>>();
+        _builder.Services.AddScoped<EndpointService>();
+        
+        //TODO add remote ftpSettings configuration
         _builder.Services.Configure<FtpSettings>(_builder.Configuration
                                                          .GetSection("RemoteEndpoints")
                                                          .GetSection("FTPServer"));
         
         _builder.Services.AddSingleton<IFtpClient, FtpClient>();
         _builder.Services.AddSingleton<AudioFileNameHandler>();
-        _builder.Services.AddSingleton<IFileServiceCommunication, FileServiceCommunication>();
-
-        var dbOptionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
-        _builder.Services.AddSingleton(dbOptionsBuilder.Options);
-        
+        _builder.Services.AddScoped<IFileServiceCommunication, FileServiceCommunication>();
         _builder.Services.AddDbContext<DataBaseContext>();
-        
-        
-        _builder.Services.AddSingleton<IRepository<User>, DbContextUserRepository>();
-        _builder.Services.AddSingleton<FileUploadHub>();
+
+        _builder.Services.AddScoped<IRepository<EndPointType>, DbContextEndpointTypeRepository>();
+        _builder.Services.AddScoped<IRepository<Endpoint>, DbContextEndpointRepository>();
+        _builder.Services.AddScoped<IRepository<User>, DbContextUserRepository>();
+        _builder.Services.AddScoped<FileUploadHub>();
+        _builder.Services.AddSingleton<FileUploadHubConnectionContext>();
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
         _builder.Services.AddSignalR();
         
-        _builder.Services.Configure<RabbitMqSetting>(_builder.Configuration
+        //TODO add remote broker configuration
+        _builder.Services.AddSingleton<RabbitMqSetting>(_builder.Configuration
                                                              .GetSection("RemoteEndpoints")
-                                                             .GetSection("Broker"));
+                                                             .GetSection("Broker").Get<RabbitMqSetting>()!);
         
         _builder.Services.AddScoped<IRabbitMqPublisher, RabbitMqMessagePublisher>();
-        _builder.Services.AddHostedService<RabbitMqMessageConsumer>();
 
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
         _builder.Services.AddSession();
-        
-        // var config = _builder.Configuration;
-        //
-        // _builder.Services.AddAuthentication(x =>
-        // {
-        //     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        // }).AddJwtBearer(options =>
-        // {
-        //     options.TokenValidationParameters = new TokenValidationParameters
-        //     {
-        //         ValidIssuer = config["Jwt:Issuer"], 
-        //         ValidAudience = config["Jwt:Audience"],
-        //         IssuerSigningKey = new SymmetricSecurityKey
-        //             (Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
-        //         ValidateIssuer = true,
-        //         ValidateAudience = true,
-        //         ValidateLifetime = true,
-        //         ValidateIssuerSigningKey = true
-        //     };
-        // });
-        //
-        // _builder.Services.AddAuthorization();
         
         _builder.Services.Configure<FormOptions>(x =>
         {
             x.ValueLengthLimit = int.MaxValue;
             x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
         });
+        
+        return _builder;
     }
 
-    public void ConfigureHost(string url = "https://127.0.0.1:7144", long maxFileSizeMbs = 500)
+    public WebApplicationBuilder ConfigureHost(string url = "https://127.0.0.1:7144", long maxFileSizeMbs = 500)
     {
-        
         _builder.WebHost.UseUrls(url);
         
         _builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = maxFileSizeMbs * 1024 * 1024);
+        
+        return _builder;
     }
 
     public void Build()
@@ -124,6 +97,11 @@ public class StartUp
 
     public void ConfigureMiddleware()
     {
+        if (_app is null)
+        {
+            throw new ApplicationException("The application needs to be configured before this method");
+        }
+        
         // Configure the HTTP request pipeline.
         if (!_app.Environment.IsDevelopment())
         {
@@ -148,6 +126,11 @@ public class StartUp
 
     public void MapEndpoints()
     {
+        if (_app is null)
+        {
+            throw new ApplicationException("The application needs to be configured before this method");
+        }
+        
         _app.MapControllers();
 
         _app.MapDefaultControllerRoute();
@@ -157,8 +140,55 @@ public class StartUp
         _app.MapRazorPages();
     }
     
-    public void Run()
+    public WebApplication Run()
     {
+        if (_app is null)
+        {
+            throw new ApplicationException("The application needs to be configured before this method");
+        }
+        
+        _app.Lifetime.ApplicationStarted.Register(OnAppStarted);
+        _app.Lifetime.ApplicationStopping.Register(OnAppStopping);
         _app.Run();
+        return _app;
+    }
+
+    private void OnAppStarted()
+    {
+        if (_app is null)
+        {
+            throw new ApplicationException("Application has not been configured");
+        }
+        
+        IRepository<Endpoint> endpointRepository = new DbContextEndpointRepository(
+            new DataBaseContext(_app.Configuration));
+
+        IFtpClient ftpClient = new FtpClient();
+        
+        var ftpStructureBuilder = new FtpStructureBuilder(
+            ftpClient: ftpClient,
+            dbEndpointRepository: endpointRepository);
+
+        ftpStructureBuilder.CreateDefaultFolders().Wait();
+        
+        RabbitMqMessageConsumer consumer = new RabbitMqMessageConsumer(
+            rabbitMqSetting: _app.Services.GetService<RabbitMqSetting>()!,
+            brokerQueueCallbacks: _app.Services.GetService<BrokerQueueCallbacks>()!);
+
+        consumer.StartAsync(CancellationToken.None).Wait();
+    }
+
+    private void OnAppStopping()
+    {
+        if (_app is null)
+        {
+            throw new ApplicationException("Application has not been configured");
+        }
+        
+        RabbitMqMessageConsumer consumer = new RabbitMqMessageConsumer(
+            rabbitMqSetting: _app.Services.GetService<RabbitMqSetting>()!,
+            brokerQueueCallbacks: _app.Services.GetService<BrokerQueueCallbacks>()!);
+        
+        consumer.StopAsync(CancellationToken.None).Wait();
     }
 }

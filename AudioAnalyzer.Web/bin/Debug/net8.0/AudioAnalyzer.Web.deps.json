@@ -16,7 +16,8 @@
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.13",
           "NAudio": "2.2.1",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.11",
-          "System.Configuration.ConfigurationManager": "6.0.0"
+          "System.Configuration.ConfigurationManager": "6.0.0",
+          "RabbitMqInfrastructure": "1.0.0.0"
         },
         "runtime": {
           "AudioAnalyzer.Web.dll": {}
@@ -1095,7 +1096,9 @@
       },
       "AudioAnalyzer.Infrastructure/1.0.0": {
         "dependencies": {
+          "AudioAnalyzer.Core": "1.0.0",
           "AudioAnalyzer.Data": "1.0.0",
+          "AudioParser": "1.0.0",
           "FFMpegCore": "5.2.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
           "RabbitMQ.Client": "7.0.0"
@@ -1103,6 +1106,22 @@
         "runtime": {
           "AudioAnalyzer.Infrastructure.dll": {
             "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "AudioParser/1.0.0": {
+        "runtime": {
+          "AudioParser.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "RabbitMqInfrastructure/1.0.0.0": {
+        "runtime": {
+          "RabbitMqInfrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1904,6 +1923,16 @@
     },
     "AudioAnalyzer.Infrastructure/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AudioParser/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RabbitMqInfrastructure/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

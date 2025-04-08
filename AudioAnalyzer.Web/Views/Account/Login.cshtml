@@ -44,9 +44,13 @@
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
 
-            <button id="form-button" type="submit">Войти</button>
+            <button class="form-button" type="submit">Войти</button>
         }
     </div>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Get))
+    {
+        <button class="form-button" type="submit" >Регистрация</button>
+    }
 </div>
 </body>
 </html>

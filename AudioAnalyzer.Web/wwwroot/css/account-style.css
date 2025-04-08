@@ -41,13 +41,16 @@ html, body {
     position: relative;
     left: 0;
     width: 100%;
+    height: 100px;
 }
 
 #login-input,
-#password-input {
+#password-input,
+#email-input {
     position: relative;
     left: 50%;
     width: 100%;
+    height: 30px;
     margin-bottom: 20px;
     transform: translate(-50%, 0);
 }
@@ -58,7 +61,7 @@ html, body {
     height: 100%;
 }
 
-#form-button {
+.form-button {
     position: relative;
     width: 35%;
     font-size: 14px;

@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\img\\DefaultUserImg.webp",
+      "PackagePath": "staticwebassets\\img\\DefaultUserImg.webp"
+    },
+    {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\basicInfo.js",
       "PackagePath": "staticwebassets\\js\\basicInfo.js"
     },

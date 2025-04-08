@@ -15,7 +15,21 @@
     <div id="header">Header</div>
     <div id="body">
         <div id="sidebar">
-            <table id="options">
+            <div id="user-account-div">
+                <div>
+                    Профиль
+                </div>
+                <div id="user-img-name-container">
+                    <img id="user-account-picture"
+                         width="50" height="50"
+                         src="/img/DefaultUserImg.webp"
+                         alt="user img"/>
+                    <label id="user-name-label" for="user-account-picture">
+                        @Model.UserName
+                    </label>
+                </div>
+            </div>
+            <table id="options-table">
                 <tr>
                     <td>
                         <button id="button-input" class="options-button">

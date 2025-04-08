@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,10 +15,11 @@ namespace AudioAnalyzer.Web.Controllers;
 public class AccountController : Controller
 {
     private readonly DataBaseContext _dataBaseContext;
-
-    public AccountController(DataBaseContext dataBaseContext)
+    private readonly FtpStructureBuilder _ftpStructureBuilder;
+    public AccountController(DataBaseContext dataBaseContext, FtpStructureBuilder ftpStructureBuilder)
     {
         _dataBaseContext = dataBaseContext;
+        _ftpStructureBuilder = ftpStructureBuilder;
     }
 
     [HttpGet]
@@ -64,15 +66,20 @@ public class AccountController : Controller
                                                              u.Email == model.Email);
         if (user == null)
         {
-            _dataBaseContext.Users.Add(new User
+            user = new User
             {
                 UserName = model.Username,
                 Email = model.Email,
                 Password = model.Password
-            });
-                
-            await _dataBaseContext.SaveChangesAsync();
-                
+            };
+            
+            _dataBaseContext.Users.Add(user);
+
+            if (await _dataBaseContext.SaveChangesAsync() == 1)
+            {
+                await _ftpStructureBuilder.CreateUserFolders(user);
+            }
+
             return RedirectToAction("Login");
         }
         else

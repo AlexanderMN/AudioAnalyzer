@@ -1,46 +1,37 @@
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using AudioAnalyzer.Infrastructure.Broker;
 using AudioAnalyzer.Web.Hubs;
-using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
+using AudioAnalyzer.Web.Models.AudioResponse;
+using Microsoft.AspNetCore.SignalR;
+using RabbitMqInfrastructure.Broker;
 
 namespace AudioAnalyzer.Web;
 
+/// <summary>
+/// Class contains callbacks for message broker
+/// Each callback is added to BrokerQueueCallbacks property: Callbacks via reflection
+/// Each private method name should be the same as broker queue name
+/// </summary>
 public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
 {
-    private FileUploadHub _fileUploadHub;
-    public RabbitMqQueueCallbacks(FileUploadHub fileUploadHub)
+    private readonly FileUploadHubConnectionContext _connectionContext;
+    public RabbitMqQueueCallbacks(IHubContext<FileUploadHub> hubContext,
+                                  FileUploadHubConnectionContext connectionContext)
     {
-        
-        _fileUploadHub = fileUploadHub;
-        RegisterDelegates();
+        _connectionContext = connectionContext;
+        RegisterDelegates(typeof(RabbitMqQueueCallbacks));
     }
-    
-    public void RegisterDelegates()
-    {
-        var eventMethods = typeof(RabbitMqQueueCallbacks).GetMethods(BindingFlags.NonPublic | 
-                                                             BindingFlags.Instance | 
-                                                             BindingFlags.DeclaredOnly);
-
-        foreach (var eventMethod in eventMethods)
-        {
-            var eventDelegate = Delegate.CreateDelegate(
-                type: typeof(Func<object, BrokerEventArgs, Task>), this, eventMethod, true);
-            Callbacks.Add(eventDelegate.Method.Name, eventDelegate);
-        }
-    }
-    
     
     private async Task Search(object state, BrokerEventArgs args)
     {
-        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        string text = Encoding.UTF8.GetString(args.Message);
         var jsonResponse = JsonSerializer.Deserialize<TranscribedResponseJson>(text);
         
         if (jsonResponse == null)
             return;
-        
-        await _fileUploadHub.SendTranscribedTextForSearch(jsonResponse.AudioResponses[0].UserId, jsonResponse);
+        await _connectionContext.SendTranscribedTextForSearch(connectionContext: _connectionContext, 
+                                                       userId: jsonResponse.AudioResponses[0].UserId, 
+                                                       transcribedTextJson: jsonResponse);
     }
 
     private async Task Transcribe(object state, BrokerEventArgs args)
@@ -50,15 +41,29 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         
         if (jsonResponse == null)
             return;
-        
-        await _fileUploadHub.SendTranscribedText(userId: jsonResponse.AudioResponses[0].UserId, 
-                                          text: jsonResponse.AudioResponses[0].AnalyzedTexts[0].Text);
+        if (jsonResponse.AudioResponses[0].Response is TranscribedText transcribedText)
+        {
+            await _connectionContext.SendTranscribedText(connectionContext: _connectionContext, 
+                                                  userId: jsonResponse.AudioResponses[0].UserId, 
+                                                  text: transcribedText.Text);   
+        }
     }
 
     private async Task Summarize(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        
+    }
+
+    private async Task Spectrogram(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+    }
+
+    private async Task SplitResult(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+
+        var audioResponse = JsonSerializer.Deserialize<AudioResponse>(text);
         
     }
 }

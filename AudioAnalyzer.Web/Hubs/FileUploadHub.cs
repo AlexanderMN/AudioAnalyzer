@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
+using AudioAnalyzer.Web.Models.AudioResponse;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AudioAnalyzer.Web.Hubs;
@@ -12,46 +12,25 @@ public class FileUploadHub : Hub
 {
     IRepository<User> _userRepository;
     // Store connection IDs with corresponding client identifiers (like file request ID)
-    private readonly ConcurrentDictionary<User, byte> _activeUsers;
-    public FileUploadHub(IRepository<User> userRepository)
+    private readonly FileUploadHubConnectionContext _connectionContext;
+    public FileUploadHub(IRepository<User> userRepository,
+                         FileUploadHubConnectionContext connectionConnectionContext)
     {
         _userRepository = userRepository;
-        _activeUsers = new ConcurrentDictionary<User, byte>();
+        _connectionContext = connectionConnectionContext;
     }
 
     // Notify a specific client when the file processing is done
-    public async Task SendTranscribedText(int userId, string text)
-    {
-        var user = GetUserFromActiveConnections(userId);
-        
-        if (user == null)
-            return;
-        
-        await Clients.Client(user.ConnectionId).SendAsync(FileHubMethodNames.FileText, text);
-    }
-
-
-    public async Task SendTranscribedTextForSearch(int userId, TranscribedResponseJson transcribedTextJson)
-    {
-        var user = GetUserFromActiveConnections(userId);
-        
-        if (user == null)
-            return;
-        
-        var text = JsonSerializer.Serialize(transcribedTextJson);
-
-        await Clients.Client(user.ConnectionId).SendAsync(FileHubMethodNames.FileTextForSearch, text);
-    }
 
     public override async Task OnConnectedAsync()
     {
-        var user = GetUserFromDb();
+        var user = await GetUserFromDb();
         
         if (user == null)
             return;
         
         user.ConnectionId = Context.ConnectionId;
-        _activeUsers.TryAdd(user, Byte.MinValue);
+        _connectionContext.ActiveUsers.TryAdd(user, Byte.MinValue);
         await base.OnConnectedAsync();
     }
 
@@ -63,7 +42,7 @@ public class FileUploadHub : Hub
         
         if (user != null)
         {
-            _activeUsers.Remove(user, out _);
+            _connectionContext.ActiveUsers.Remove(user, out _);
         }
         
         await base.OnDisconnectedAsync(exception);
@@ -71,24 +50,19 @@ public class FileUploadHub : Hub
 
     private User? GetUserFromActiveConnectionsByContext()
     {
-        return _activeUsers.Keys.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);
+        return _connectionContext.ActiveUsers.Keys.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);
     }
 
-    private User? GetUserFromDb()
+    private async Task<User?> GetUserFromDb()
     {
         var userNameId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         
         if (!Int32.TryParse(userNameId, out var userId))
             return null;
 
-        return _userRepository.GetEntity(
+        return await _userRepository.GetEntity(
             id:userId, 
             includeRelatedEntities: true);
-    }
-
-    private User? GetUserFromActiveConnections(int userId)
-    {
-        return _activeUsers.Keys.FirstOrDefault(u => u.Id == userId);
     }
 }
 

@@ -1,4 +1,4 @@
-using AudioAnalyzer.Web.Models.AudioTranscribeResponse;
+using AudioAnalyzer.Web.Models.AudioResponse;
 
 namespace AudioAnalyzer.Web.Models.ViewModels;
 

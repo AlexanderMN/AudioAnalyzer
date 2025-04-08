@@ -12,5 +12,6 @@ public class User
     [NotMapped]
     public string ConnectionId { get; set; }
     
+    public IEnumerable<AudioRequest> Requests { get; set; }
     public IEnumerable<UploadedFile> UploadedFiles { get; set; }
 }

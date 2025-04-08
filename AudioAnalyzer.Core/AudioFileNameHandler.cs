@@ -2,21 +2,11 @@
 
 public class AudioFileNameHandler
 {
-    public AudioFile GenerateFileName(string filename)
+    public AudioFile ParseFileName(string filename)
     {
-        var audiofile = ParseFileName(filename);
-        
-        Guid audioId = Guid.NewGuid();
-        audiofile.Name = audioId.ToString();
-        
-        return audiofile;
-    }
-
-    private AudioFile ParseFileName(string filename)
-    {
-        string extension = Path.GetExtension(filename);
+        string extension = Path.GetExtension(filename)[1..];
         string name = Path.GetFileNameWithoutExtension(filename);
-
+        
         return new AudioFile
         {
             Extension = extension,

@@ -1,4 +1,4 @@
-using AudioAnalyzer.Infrastructure.Broker;
+using RabbitMqInfrastructure.Broker;
 
 namespace AudioAnalyzer.Web;
 

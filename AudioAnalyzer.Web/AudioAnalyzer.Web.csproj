@@ -21,4 +21,14 @@
       <ProjectReference Include="..\AudioAnalyzer.Infrastructure\AudioAnalyzer.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\img\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="RabbitMqInfrastructure">
+        <HintPath>..\..\InfrastructureTemplates\RabbitMqInfrastructure\bin\Debug\net8.0\RabbitMqInfrastructure.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

@@ -7,10 +7,9 @@ namespace AudioAnalyzer.Data.Persistence.Repositories;
 public class DbContextUserRepository : IRepository<User>
 {
     private readonly DataBaseContext _context;
-    public DbContextUserRepository(DbContextOptions<DataBaseContext> options,
-                                   IConfiguration configuration)
+    public DbContextUserRepository(DataBaseContext context)
     {
-        _context = new DataBaseContext(options, configuration);
+        _context = context;
     }
 
     public void Dispose()
@@ -18,21 +17,24 @@ public class DbContextUserRepository : IRepository<User>
         _context.Dispose();   
     }
 
-    public IEnumerable<User> GetEntityList()
+    public List<User> GetEntityList(Func<User, bool>? predicate = null)
     {
-        return _context.Users.ToList();
+        return predicate != null ? 
+            _context.Users.Where(predicate).ToList() : 
+            _context.Users.ToList();
     }
 
-    public User? GetEntity(int id, bool includeRelatedEntities = false)
+    public async Task<User?> GetEntity(int id, bool includeRelatedEntities = false)
     {
         if (includeRelatedEntities)
         {
-            return _context.Users
-                           .Include(u => u.UploadedFiles)
-                           .FirstOrDefault(u => u.Id == id);
+            return await _context.Users
+                           .Include(u => u.Requests)
+                           .ThenInclude(r => r.FileRequestedEvents)
+                           .FirstOrDefaultAsync(u => u.Id == id, CancellationToken.None);
         }
         
-        return _context.Users.FirstOrDefault(u => u.Id == id);
+        return await _context.Users.FindAsync(id);
     }
 
     public void Create(User item)
@@ -45,9 +47,9 @@ public class DbContextUserRepository : IRepository<User>
         _context.Users.Update(item);
     }
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-        var user = _context.Users.FirstOrDefault(u => u.Id == id);
+        var user = await _context.Users.FindAsync(id);
         if (user == null)
             return;
         _context.Users.Remove(user);

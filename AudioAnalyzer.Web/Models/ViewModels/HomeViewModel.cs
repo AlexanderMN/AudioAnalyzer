@@ -14,4 +14,7 @@ public class HomeViewModel
     public string ErrorMessage { get; set; }
     public string FileName { get; set; }
     
+    public string UserName { get; set; }
+    public byte[] UserImage { get; set; }
+    
 }
