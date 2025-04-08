@@ -10,7 +10,6 @@
         "dependencies": {
           "AudioAnalyzer.Core": "1.0.0",
           "AudioAnalyzer.Data": "1.0.0",
-          "AudioParser": "1.0.0",
           "FFMpegCore": "5.2.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
           "RabbitMQ.Client": "7.0.0",
@@ -338,14 +337,6 @@
           }
         }
       },
-      "AudioParser/1.0.0": {
-        "runtime": {
-          "AudioParser.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "RabbitMqInfrastructure/1.0.0.0": {
         "runtime": {
           "RabbitMqInfrastructure.dll": {
@@ -557,11 +548,6 @@
       "sha512": ""
     },
     "AudioAnalyzer.Data/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "AudioParser/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

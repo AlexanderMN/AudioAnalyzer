@@ -25,13 +25,13 @@ public class AudioController : Controller
     private readonly IFileServiceCommunication _fileServiceCommunication;
     private readonly AudioFileNameHandler _audioFileNameHandler;
     private readonly DataBaseContext _db;
-    private readonly AudioRequestRepository _audioRequestRepository;
+    private readonly IRepository<AudioRequest> _audioRequestRepository;
 
     public AudioController(IRabbitMqPublisher rabbitMqPublisher, 
                            IFileServiceCommunication fileServiceCommunication, 
                            AudioFileNameHandler audioFileNameHandler,
                            DataBaseContext db, 
-                           AudioRequestRepository audioRequestRepository)
+                           IRepository<AudioRequest> audioRequestRepository)
     {
         _rabbitMqPublisher = rabbitMqPublisher;
         _fileServiceCommunication = fileServiceCommunication;
@@ -272,7 +272,7 @@ public class AudioController : Controller
             UserId = user.Id,
             FileIds = fileIds,
             CallbackQueue = callbackQueueName,
-            FolderPath = filePath
+            FilePath = filePath
         };
             
         var message = JsonSerializer.Serialize(audioRequest);

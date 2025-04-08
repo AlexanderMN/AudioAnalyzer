@@ -12,27 +12,6 @@ public sealed class DataBaseContext : DbContext
     public DataBaseContext(DbContextOptions options, IConfiguration config) : base(options)
     {
         _configuration = config;
-        
-        var created = Database.EnsureCreated();
-        if (!created) 
-            return;
-        
-        CreateEndpointTypes();
-        CreateEndpoints();
-        CreateUsers();
-    }
-    
-    public DataBaseContext(IConfiguration config)
-    {
-        _configuration = config;
-        
-        var created = Database.EnsureCreated();
-        if (!created) 
-            return;
-        
-        CreateEndpointTypes();
-        CreateEndpoints();
-        CreateUsers();
     }
 
     public DbSet<EndPointType> EndPointTypes { get; set; }
@@ -42,7 +21,7 @@ public sealed class DataBaseContext : DbContext
     public DbSet<AudioRequest> AudioRequests { get; set; }
     public DbSet<AudioRequestType> AudioRequestTypes { get; set; }
     public DbSet<FileRequestedEvent> FileRequestedEvents { get; set; }
-    private void CreateUsers()
+    public void CreateUsers()
     {
         var user = new User
         {
@@ -55,7 +34,7 @@ public sealed class DataBaseContext : DbContext
         SaveChanges();
     }
 
-    private void CreateEndpointTypes()
+    public void CreateEndpointTypes()
     {
         List<EndPointType> endpointTypes =
         [
@@ -67,7 +46,7 @@ public sealed class DataBaseContext : DbContext
         EndPointTypes.AddRange(endpointTypes);
         SaveChanges();
     }
-    private void CreateEndpoints()
+    public void CreateEndpoints()
     {
         var endpoint = new Endpoint
         {
@@ -82,7 +61,7 @@ public sealed class DataBaseContext : DbContext
         SaveChanges();
     }
 
-    private void CreateAudioRequestTypes()
+    public void CreateAudioRequestTypes()
     {
         List<AudioRequestType> requestTypes =
         [

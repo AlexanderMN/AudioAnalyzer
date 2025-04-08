@@ -1,7 +1,6 @@
 using System.Net;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data.Persistence.Models;
-using AudioParserLib.Wav;
 using RabbitMqInfrastructure.Ftp;
 
 namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
@@ -76,6 +75,6 @@ public class FileServiceCommunication: IFileServiceCommunication
     
     public static string GetUserInternalFilePath(User user,UploadedFile uploadedFile)
     {
-        return $"/users/{user.Id}/{FtpSettings.DefaultFileUploadFolder}/{uploadedFile.Id}.{uploadedFile.Id}";
+        return $"/users/{user.Id}/{FtpSettings.DefaultFileUploadFolder}/{uploadedFile.Id}.{uploadedFile.UploadedFileType}";
     }
 }

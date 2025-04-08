@@ -129,7 +129,5 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\Sy
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioParser.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\AudioParser.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\RabbitMqInfrastructure.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Web\bin\Debug\net8.0\RabbitMqInfrastructure.pdb

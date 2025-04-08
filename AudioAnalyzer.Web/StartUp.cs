@@ -56,6 +56,7 @@ public class StartUp
         _builder.Services.AddScoped<IRepository<EndPointType>, DbContextEndpointTypeRepository>();
         _builder.Services.AddScoped<IRepository<Endpoint>, DbContextEndpointRepository>();
         _builder.Services.AddScoped<IRepository<User>, DbContextUserRepository>();
+        _builder.Services.AddScoped<IRepository<AudioRequest>, AudioRequestRepository>();
         _builder.Services.AddScoped<FileUploadHub>();
         _builder.Services.AddSingleton<FileUploadHubConnectionContext>();
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
@@ -159,22 +160,46 @@ public class StartUp
         {
             throw new ApplicationException("Application has not been configured");
         }
-        
-        IRepository<Endpoint> endpointRepository = new DbContextEndpointRepository(
-            new DataBaseContext(_app.Configuration));
 
-        IFtpClient ftpClient = new FtpClient();
-        
-        var ftpStructureBuilder = new FtpStructureBuilder(
-            ftpClient: ftpClient,
-            dbEndpointRepository: endpointRepository);
+        using (var scope = _app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetService<DataBaseContext>();
+            
+            if (db is null)
+                return;
+            
+            var created = db.Database.EnsureCreated();
+            if (created)
+            {
+                db.CreateAudioRequestTypes();
+                db.CreateEndpointTypes();
+                db.CreateEndpoints();
+                db.CreateUsers();   
+            }
+            
+            using var endpointRepository = scope.ServiceProvider.GetRequiredService<IRepository<Endpoint>>()!; 
+            using var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<User>>()!;
+            IFtpClient ftpClient = new FtpClient();
 
-        ftpStructureBuilder.CreateDefaultFolders().Wait();
-        
+            var ftpStructureBuilder = new FtpStructureBuilder(
+                ftpClient: ftpClient,
+                dbEndpointRepository: endpointRepository);
+            
+            try
+            {
+                ftpStructureBuilder.CreateDefaultFolders().Wait();
+                ftpStructureBuilder.CreateUserFolders(userRepository.GetEntity(1, false).Result!).Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         RabbitMqMessageConsumer consumer = new RabbitMqMessageConsumer(
             rabbitMqSetting: _app.Services.GetService<RabbitMqSetting>()!,
             brokerQueueCallbacks: _app.Services.GetService<BrokerQueueCallbacks>()!);
-
+        
         consumer.StartAsync(CancellationToken.None).Wait();
     }
 

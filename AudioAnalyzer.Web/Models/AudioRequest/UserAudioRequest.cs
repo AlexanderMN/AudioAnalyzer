@@ -10,13 +10,12 @@ public class UserAudioRequest
     
     [JsonPropertyName("requestId")]
     public int RequestId { get; set; }
-    
 
     [JsonPropertyName("fileIds")]
     public List<int> FileIds { get; set; }
     
-    [JsonPropertyName("folderPath")]
-    public string FolderPath { get; set; }
+    [JsonPropertyName("filePath")]
+    public string FilePath { get; set; }
     
     [JsonPropertyName("task")]
     public string CallbackQueue { get; set; }

@@ -26,8 +26,6 @@ C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debu
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Data.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\obj\Debug\net8.0\AudioAna.9A9C7A1B.Up2Date
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioParser.dll
-C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioParser.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Core.dll
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\AudioAnalyzer.Core.pdb
 C:\Users\alexm\RiderProjects\AudioAnalyzer\AudioAnalyzer.Infrastructure\bin\Debug\net8.0\RabbitMqInfrastructure.dll
