@@ -246,8 +246,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>e3a6mz31nm</Fingerprint>
-      <Integrity>mio3qMI077FhwOoVri5IkHuxkIOhpj2KKeodQorDWhw=</Integrity>
+      <Fingerprint>do83k9rd0d</Fingerprint>
+      <Integrity>U2kJpBXNGMavuH1z94oKSAQGve0iLjEVwpeddIRsWeE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\sidebar.js'))</OriginalItemSpec>

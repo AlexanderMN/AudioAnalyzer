@@ -1,7 +1,11 @@
 using System.Text;
 using System.Text.Json;
+using AudioAnalyzer.Data;
+using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Web.Hubs;
-using AudioAnalyzer.Web.Models.AudioResponse;
+using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.SplitResponse;
+using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 using RabbitMqInfrastructure.Broker;
 
@@ -15,10 +19,13 @@ namespace AudioAnalyzer.Web;
 public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
 {
     private readonly FileUploadHubConnectionContext _connectionContext;
-    public RabbitMqQueueCallbacks(IHubContext<FileUploadHub> hubContext,
-                                  FileUploadHubConnectionContext connectionContext)
+    private DatabaseService _databaseService;
+    public RabbitMqQueueCallbacks(FileUploadHubConnectionContext connectionContext,
+                                  IConfiguration configuration)
     {
         _connectionContext = connectionContext;
+        DataBaseContext dbContext = new DataBaseContext(configuration);
+        _databaseService = new DatabaseService(dbContext);
         RegisterDelegates(typeof(RabbitMqQueueCallbacks));
     }
     
@@ -38,10 +45,8 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
         var jsonResponse = JsonSerializer.Deserialize<TranscribedResponseJson>(text);
-        
-        if (jsonResponse == null)
-            return;
-        if (jsonResponse.AudioResponses[0].Response is TranscribedText transcribedText)
+
+        if (jsonResponse?.AudioResponses[0].Response is TranscribedText transcribedText)
         {
             await _connectionContext.SendTranscribedText(connectionContext: _connectionContext, 
                                                   userId: jsonResponse.AudioResponses[0].UserId, 
@@ -63,7 +68,27 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
 
-        var audioResponse = JsonSerializer.Deserialize<AudioResponse>(text);
+        var splitResponse = JsonSerializer.Deserialize<SplitResponse>(text);
         
+        if (splitResponse == null)
+            return;
+        
+        var uploadedFile = await _databaseService.UploadedFileRepository
+                                                 .GetEntity(splitResponse.FileId, false);
+        if (uploadedFile == null)
+            return;
+        
+        if (splitResponse.ResponseCode == 1)
+        {
+            uploadedFile.FileState = FileState.Error;
+            _databaseService.UploadedFileRepository.Update(uploadedFile);
+            await _databaseService.UploadedFileRepository.SaveAsync();
+            return;
+        }
+        
+        uploadedFile.FileState = FileState.Ready;
+        uploadedFile.Duration = splitResponse.Duration;
+        _databaseService.UploadedFileRepository.Update(uploadedFile);
+        await _databaseService.UploadedFileRepository.SaveAsync();
     }
 }

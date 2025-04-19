@@ -9,8 +9,10 @@ public class UploadedFile
     public int Id { get; set; }
     public string UploadedFileName { get; set; }
     public string UploadedFileType { get; set; }
-    public bool IsProcessed { get; set; }
-    
+    public int FileStateId { get; set; }
+    public FileState FileState { get; set; }
+    public double Duration { get; set; }
+    public DateTime UploadedDate { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }
     public int EndpointId { get; set; }

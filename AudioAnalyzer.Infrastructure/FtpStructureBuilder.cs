@@ -1,4 +1,5 @@
 using System.Net;
+using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Data.Persistence.Repositories;
 using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
@@ -10,16 +11,17 @@ namespace AudioAnalyzer.Infrastructure;
 public class FtpStructureBuilder
 {
     IFtpClient _ftpClient;
-    IRepository<Endpoint> _dbEndpointRepository;
+    DatabaseService _databaseService;
 
-    public FtpStructureBuilder(IFtpClient ftpClient, IRepository<Endpoint> dbEndpointRepository)
+    public FtpStructureBuilder(IFtpClient ftpClient,
+                               DatabaseService databaseService)
     {
         _ftpClient = ftpClient;
-        _dbEndpointRepository = dbEndpointRepository;
+        _databaseService = databaseService;
     }
     public async Task CreateDefaultFolders()
     {
-        var endpoints = _dbEndpointRepository.GetEntityList(e => e.EndPointTypeId == 3);
+        var endpoints = _databaseService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
 
         foreach (var endpoint in endpoints)
         {
@@ -30,12 +32,13 @@ public class FtpStructureBuilder
 
     public async Task CreateUserFolders(User user)
     {
-        var endpoints = _dbEndpointRepository.GetEntityList(e => e.EndPointTypeId == 3);
+        var endpoints = _databaseService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
 
         foreach (var endpoint in endpoints)
         {
             await CreateFolder(endpoint, $"/users/{user.Id}");
             await CreateFolder(endpoint, $"/users/{user.Id}/uploadedFiles");
+            await CreateFolder(endpoint, $"/users/{user.Id}/uploadFiles/split_files");
             await CreateFolder(endpoint, $"/users/{user.Id}/requests");
         }
     }

@@ -1,7 +1,8 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
 using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Web.Models.AudioResponse;
+using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AudioAnalyzer.Web.Hubs;

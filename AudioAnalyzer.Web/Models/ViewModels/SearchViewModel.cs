@@ -1,4 +1,5 @@
-using AudioAnalyzer.Web.Models.AudioResponse;
+using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 
 namespace AudioAnalyzer.Web.Models.ViewModels;
 
@@ -6,7 +7,7 @@ public class SearchViewModel: ViewModelBase
 {
     public TranscribedResponseJson AudioTranscribedResponse { get; set; }
 
-    public SearchViewModel(TranscribedResponseJson audioTranscribedResponse):base("Search")
+    public SearchViewModel(TranscribedResponseJson audioTranscribedResponse = null):base("Search")
     {
         AudioTranscribedResponse = audioTranscribedResponse;
     }

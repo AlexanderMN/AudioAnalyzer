@@ -6,5 +6,5 @@ namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 
 public interface IFileServiceCommunication
 {
-    public Task<Endpoint?> SendDataAsFileToFileServerAsync(User user, UploadedFile uploadedFile, Stream fileStream);
+    public Task<Endpoint?> SendDataAsFileToFileServerAsync(User user, Endpoint endpoint, UploadedFile uploadedFile, Stream fileStream);
 }

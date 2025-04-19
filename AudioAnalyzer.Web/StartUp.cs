@@ -50,13 +50,9 @@ public class StartUp
         
         _builder.Services.AddSingleton<IFtpClient, FtpClient>();
         _builder.Services.AddSingleton<AudioFileNameHandler>();
-        _builder.Services.AddScoped<IFileServiceCommunication, FileServiceCommunication>();
+        _builder.Services.AddScoped<FileServiceCommunication>();
         _builder.Services.AddDbContext<DataBaseContext>();
-
-        _builder.Services.AddScoped<IRepository<EndPointType>, DbContextEndpointTypeRepository>();
-        _builder.Services.AddScoped<IRepository<Endpoint>, DbContextEndpointRepository>();
-        _builder.Services.AddScoped<IRepository<User>, DbContextUserRepository>();
-        _builder.Services.AddScoped<IRepository<AudioRequest>, AudioRequestRepository>();
+        _builder.Services.AddScoped<DatabaseService>();
         _builder.Services.AddScoped<FileUploadHub>();
         _builder.Services.AddSingleton<FileUploadHubConnectionContext>();
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();
@@ -68,7 +64,7 @@ public class StartUp
                                                              .GetSection("Broker").Get<RabbitMqSetting>()!);
         
         _builder.Services.AddScoped<IRabbitMqPublisher, RabbitMqMessagePublisher>();
-
+        _builder.Services.AddScoped<RabbitMqPostManager>();
         _builder.Services.AddMvc()
                 .AddSessionStateTempDataProvider();
         _builder.Services.AddSession();
@@ -85,7 +81,6 @@ public class StartUp
     public WebApplicationBuilder ConfigureHost(string url = "https://127.0.0.1:7144", long maxFileSizeMbs = 500)
     {
         _builder.WebHost.UseUrls(url);
-        
         _builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = maxFileSizeMbs * 1024 * 1024);
         
         return _builder;
@@ -161,46 +156,10 @@ public class StartUp
             throw new ApplicationException("Application has not been configured");
         }
 
-        using (var scope = _app.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetService<DataBaseContext>();
-            
-            if (db is null)
-                return;
-            
-            var created = db.Database.EnsureCreated();
-            if (created)
-            {
-                db.CreateAudioRequestTypes();
-                db.CreateEndpointTypes();
-                db.CreateEndpoints();
-                db.CreateUsers();   
-            }
-            
-            using var endpointRepository = scope.ServiceProvider.GetRequiredService<IRepository<Endpoint>>()!; 
-            using var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<User>>()!;
-            IFtpClient ftpClient = new FtpClient();
-
-            var ftpStructureBuilder = new FtpStructureBuilder(
-                ftpClient: ftpClient,
-                dbEndpointRepository: endpointRepository);
-            
-            try
-            {
-                ftpStructureBuilder.CreateDefaultFolders().Wait();
-                ftpStructureBuilder.CreateUserFolders(userRepository.GetEntity(1, false).Result!).Wait();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        RabbitMqMessageConsumer consumer = new RabbitMqMessageConsumer(
-            rabbitMqSetting: _app.Services.GetService<RabbitMqSetting>()!,
-            brokerQueueCallbacks: _app.Services.GetService<BrokerQueueCallbacks>()!);
-        
-        consumer.StartAsync(CancellationToken.None).Wait();
+        using var scope = _app.Services.CreateScope();
+        InfrastructureConfiguration.ConfigureDatabase(scope);
+        InfrastructureConfiguration.ConfigureFtpServer(scope);
+        InfrastructureConfiguration.ConfigureBroker(scope);
     }
 
     private void OnAppStopping()

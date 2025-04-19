@@ -12,7 +12,5 @@ public class Endpoint
     
     public string? Username { get; set; }
     public string? Password { get; set; }
-    
-    public int EndPointTypeId { get; set; }
     public EndPointType EndPointType { get; set; }
 }

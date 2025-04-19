@@ -8,4 +8,5 @@ public class FtpSettings
 
     public const string DefaultFileUploadFolder = "uploadedFiles";
     public const string DefaultFileDownloadFolder = "downloadFiles";
+    public const string DefaultAudioRequestFolder = "requests";
 }

@@ -11,4 +11,6 @@ public class FileRequestedEvent
     
     public int UploadedFileId { get; set; }
     public UploadedFile UploadedFile { get; set; }
+    
+    public ICollection<AudioResponse> AudioResponses { get; set; }
 }

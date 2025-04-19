@@ -5,60 +5,51 @@ using RabbitMqInfrastructure.Ftp;
 
 namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 
-public class FileServiceCommunication: IFileServiceCommunication
+public class FileServiceCommunication
 {
     private int ftpEndpointTypeId = 3; // TODO: create endpoint id synchronization mechanism
-    private readonly EndpointService _endpointService;
     private readonly IFtpClient _ftpClient;
 
-    public FileServiceCommunication(EndpointService endpointService, IFtpClient ftpClient)
+    public FileServiceCommunication(IFtpClient ftpClient)
     {
-        _endpointService = endpointService;
         _ftpClient = ftpClient;
     }
 
-    public async Task<Endpoint?> SendDataAsFileToFileServerAsync(User user, UploadedFile uploadedFile, Stream fileStream)
+    public async Task<bool> SendDataAsFileToFileServerAsync(User user, 
+                                                                 UploadedFile uploadedFile,
+                                                                 Stream fileStream)
     {
-        var endPoint = _endpointService.GetAvailableEndpoint(ftpEndpointTypeId);
-        
-        if (endPoint == null)
-            return null;
-
-        var ftpResponse = await _ftpClient.CreateFtpDirectory(
-            uri: EndpointService.GetEndpointUri(endpoint: endPoint,
-                                                 endpointProtocol: EndpointProtocol.ftp,
-                                                 internalPath: GetUserUploadFolderPath(user, uploadedFile)));
-
-        if (ftpResponse.StatusCode != FtpStatusCode.PathnameCreated)
-            return null;
-        
-        ftpResponse.Dispose();
         
         MemoryStream wavFileStream = new MemoryStream();
-        
         if (!await FfMpegWrapper.ConvertStreamToStream(
             inputStream: fileStream,
             outputStream: wavFileStream,
             outputFormat: SupportedAudioFormats.Wav))
-            return null;
+            return false;
         
         uploadedFile.UploadedFileType = SupportedAudioFormats.Wav;
         var uploadResult = await _ftpClient.UploadFileToFTPServer(
-            uri: EndpointService.GetEndpointUri(endpoint: endPoint,
+            uri: EndpointService.GetEndpointUri(endpoint: uploadedFile.Endpoint,
                                                  endpointProtocol: EndpointProtocol.ftp,
                                                  internalPath: GetUserInternalFilePath(user, uploadedFile)),
             stream: wavFileStream);
         
-        return uploadResult.Item1?.StatusCode != FtpStatusCode.ClosingData ? null: endPoint;
+        return uploadResult.Item1?.StatusCode == FtpStatusCode.ClosingData;
     }
-    public async Task<Stream?> GetDataFromFileServerAsync(UploadedFile file)
+
+    public async Task<bool> CreateRequestFolder(AudioRequest request)
     {
-        var endpoint = await _endpointService.GetEndpoint(
-            endPointId: file.EndpointId);
-        
-        if (endpoint == null)
-            return null;
-        
+        var webResponse = await _ftpClient.CreateFtpDirectory(
+            EndpointService.GetEndpointUri(
+                endpoint: request.Endpoint,
+                endpointProtocol: EndpointProtocol.ftp,
+                $"/users/{request.UserId}/{FtpSettings.DefaultAudioRequestFolder}/{request.Id}")
+        );
+
+        return webResponse.StatusCode == FtpStatusCode.PathnameCreated;
+    }
+    public async Task<Stream?> GetDataFromFileServerAsync(Endpoint endpoint, UploadedFile file)
+    {
         var fileStream = await _ftpClient.DownloadFileFromFTPServer(
             uri: EndpointService.GetEndpointUri(
                 endpoint: endpoint,

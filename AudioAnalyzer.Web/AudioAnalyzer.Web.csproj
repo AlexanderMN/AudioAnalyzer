@@ -22,6 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\AudioRequests\SummaryRequest\" />
+      <Folder Include="Models\AudioResponses\SummaryResponse\" />
       <Folder Include="wwwroot\img\" />
     </ItemGroup>
 

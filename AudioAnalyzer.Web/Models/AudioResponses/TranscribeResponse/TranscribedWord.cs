@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioResponse;
+namespace AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 
 [Serializable]
 public class TranscribedWord

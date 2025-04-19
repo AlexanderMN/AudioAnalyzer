@@ -1,23 +1,23 @@
 using System.Collections.Concurrent;
 using System.Security.Claims;
 using System.Text.Json;
+using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Persistence.Models;
 using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Web.Models.AudioResponse;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AudioAnalyzer.Web.Hubs;
 
 public class FileUploadHub : Hub
 {
-    IRepository<User> _userRepository;
     // Store connection IDs with corresponding client identifiers (like file request ID)
     private readonly FileUploadHubConnectionContext _connectionContext;
-    public FileUploadHub(IRepository<User> userRepository,
-                         FileUploadHubConnectionContext connectionConnectionContext)
+    private readonly DatabaseService _databaseService;
+    public FileUploadHub(FileUploadHubConnectionContext connectionConnectionContext,
+                         DatabaseService databaseService)
     {
-        _userRepository = userRepository;
         _connectionContext = connectionConnectionContext;
+        _databaseService = databaseService;
     }
 
     // Notify a specific client when the file processing is done
@@ -60,7 +60,7 @@ public class FileUploadHub : Hub
         if (!Int32.TryParse(userNameId, out var userId))
             return null;
 
-        return await _userRepository.GetEntity(
+        return await _databaseService.UserRepository.GetEntity(
             id:userId, 
             includeRelatedEntities: true);
     }

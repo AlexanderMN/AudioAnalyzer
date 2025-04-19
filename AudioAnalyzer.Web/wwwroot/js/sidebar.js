@@ -1,13 +1,18 @@
 var inputButton = document.getElementById("button-input");
-var spectrogramButton = document.getElementById("button-spectrogram");
-var basicInfoButton = document.getElementById("button-basicinfo");
-var transcribeButton = document.getElementById("button-transcribe");
-var summaryButton = document.getElementById("button-summary");
-var searchButton = document.getElementById("button-search");
+var filesButton = document.getElementById("button-files");
+var requestsButton = document.getElementById("button-requests");
 var main = document.getElementById("main");
 
 function changeMainArea(newAreaHTMLFileName){
     $("#main").load("/api/Audio/" + newAreaHTMLFileName );
+}
+
+function filesButtonClick() {
+    changeMainArea("Files")
+}
+
+function requestsButtonClick() {
+    changeMainArea("Requests")
 }
 
 function spectrogramButtonClick(){
@@ -35,9 +40,6 @@ function inputButtonClick(){
 }
 
 inputButton.onclick = inputButtonClick;
-spectrogramButton.onclick = spectrogramButtonClick;
-basicInfoButton.onclick = basicInfoButtonClick;
-transcribeButton.onclick = transcribeButtonClick;
-summaryButton.onclick = summaryButtonClick;
-searchButton.onclick = searchButtonClick;
+filesButton.onclick = filesButtonClick;
+requestsButton.onclick = requestsButtonClick;
 

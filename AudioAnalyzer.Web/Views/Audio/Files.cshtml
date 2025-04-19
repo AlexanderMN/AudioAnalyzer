@@ -1,0 +1,98 @@
+@using System.ComponentModel.DataAnnotations
+@using AudioAnalyzer.Data
+@model List<AudioAnalyzer.Data.Persistence.Models.UploadedFile>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>UploadedFiles</title>
+</head>
+<body>
+<div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>
+                    Название
+                </td>
+                <td>
+                    Формат
+                </td>
+                <td>
+                    Длительность
+                </td>
+                <td>
+                    Состояние
+                </td>
+                <td>
+                    Время загрузки
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var file in Model)
+            {
+                <tr>
+                    <td>@file.UploadedFileName</td>
+                    <td>@file.UploadedFileType</td>
+                    <td>@TimeSpan.FromSeconds(file.Duration).ToString(@"h\:mm\:ss\.f")</td>
+                    <td>@file.FileState.GetNameAttribute()</td>
+                    <td>@file.UploadedDate</td>
+                    <td></td>
+                </tr>
+            }
+            </tbody>
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 14px;
+                    margin-top: 20px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                thead {
+                    background-color: #f5f5f5;
+                    color: #333;
+                }
+
+                thead td {
+                    text-align: center;
+                    font-weight: bold;
+                    border-bottom: 2px solid #ddd;
+                }
+
+                tbody tr:nth-child(even) {
+                    background-color: #fafafa;
+                }
+
+                tbody tr:hover {
+                    background-color: #f1f1f1;
+                }
+
+                tbody td {
+                    position: relative;
+                    text-align: center;
+                    border-bottom: 1px solid #eee;
+                    color: #444;
+                }
+
+                td {
+                    text-align: left;
+                }
+
+                tbody tr {
+                    margin-bottom: 15px;
+                    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+                    padding: 10px;
+                    border-radius: 5px;
+                }
+            </style>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>
