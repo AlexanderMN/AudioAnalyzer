@@ -16,6 +16,9 @@ public class SplitResponse
     [JsonPropertyName("duration")]
     public double Duration { get; set; }
     
+    [JsonPropertyName("splitNumber")]
+    public int SplitNumber { get; set; }
+    
     [JsonPropertyName("response")]
     public object Response { get; set; }
 }

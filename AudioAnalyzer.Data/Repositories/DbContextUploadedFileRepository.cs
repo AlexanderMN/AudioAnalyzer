@@ -1,7 +1,7 @@
-﻿using AudioAnalyzer.Data.Persistence.Models;
+﻿using AudioAnalyzer.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories;
+namespace AudioAnalyzer.Data.Repositories;
 
 public class DbContextUploadedFileRepository : IRepository<UploadedFile>
 {

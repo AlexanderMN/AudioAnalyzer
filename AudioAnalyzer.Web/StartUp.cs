@@ -1,9 +1,6 @@
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
-using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
-using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
+using AudioAnalyzer.Data.Repositories.AudioExtensions;
 using AudioAnalyzer.Infrastructure;
 using Microsoft.AspNetCore.Http.Features;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
@@ -12,7 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using RabbitMqInfrastructure.Broker;
 using RabbitMqInfrastructure.Ftp;
-using Endpoint = AudioAnalyzer.Data.Persistence.Models.Endpoint;
+using Endpoint = AudioAnalyzer.Data.Models.Endpoint;
 
 namespace AudioAnalyzer.Web;
 
@@ -52,7 +49,7 @@ public class StartUp
         _builder.Services.AddSingleton<AudioFileNameHandler>();
         _builder.Services.AddScoped<FileServiceCommunication>();
         _builder.Services.AddDbContext<DataBaseContext>();
-        _builder.Services.AddScoped<DatabaseService>();
+        _builder.Services.AddScoped<DatabaseDbContextService>();
         _builder.Services.AddScoped<FileUploadHub>();
         _builder.Services.AddSingleton<FileUploadHubConnectionContext>();
         _builder.Services.AddSingleton<BrokerQueueCallbacks, RabbitMqQueueCallbacks>();

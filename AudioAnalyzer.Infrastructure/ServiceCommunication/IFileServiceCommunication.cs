@@ -1,6 +1,6 @@
 using System.Net;
 using AudioAnalyzer.Core;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 
 namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 

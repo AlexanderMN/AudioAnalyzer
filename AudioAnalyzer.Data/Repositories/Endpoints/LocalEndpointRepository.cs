@@ -1,8 +1,8 @@
 using System.Net;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
+namespace AudioAnalyzer.Data.Repositories.Endpoints;
 
 public class LocalEndpointRepository : IRepository<Endpoint> 
 {

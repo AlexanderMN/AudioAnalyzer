@@ -1,18 +1,21 @@
-@using System.ComponentModel.DataAnnotations
 @using AudioAnalyzer.Data
-@model List<AudioAnalyzer.Data.Persistence.Models.UploadedFile>
+@model List<AudioAnalyzer.Data.Models.UploadedFile>
 <!DOCTYPE html>
 
-<html>
+<html lang="ru">
 <head>
     <title>UploadedFiles</title>
+    <link rel="stylesheet" href="/css/result-table.css"/>
 </head>
 <body>
 <div>
     <div>
-        <table>
+        <table id="file-table" class="result-table">
             <thead>
             <tr>
+                <td>
+                    <input type="checkbox" disabled="disabled"/>
+                </td>
                 <td>
                     Название
                 </td>
@@ -34,6 +37,8 @@
             @foreach (var file in Model)
             {
                 <tr>
+                    <td hidden="hidden">@file.Id</td>
+                    <td><input class="file-checkbox" type="checkbox"/></td>
                     <td>@file.UploadedFileName</td>
                     <td>@file.UploadedFileType</td>
                     <td>@TimeSpan.FromSeconds(file.Duration).ToString(@"h\:mm\:ss\.f")</td>
@@ -43,55 +48,19 @@
                 </tr>
             }
             </tbody>
-            <style>
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    font-size: 14px;
-                    margin-top: 20px;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                }
-
-                thead {
-                    background-color: #f5f5f5;
-                    color: #333;
-                }
-
-                thead td {
-                    text-align: center;
-                    font-weight: bold;
-                    border-bottom: 2px solid #ddd;
-                }
-
-                tbody tr:nth-child(even) {
-                    background-color: #fafafa;
-                }
-
-                tbody tr:hover {
-                    background-color: #f1f1f1;
-                }
-
-                tbody td {
-                    position: relative;
-                    text-align: center;
-                    border-bottom: 1px solid #eee;
-                    color: #444;
-                }
-
-                td {
-                    text-align: left;
-                }
-
-                tbody tr {
-                    margin-bottom: 15px;
-                    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-                    padding: 10px;
-                    border-radius: 5px;
-                }
-            </style>
         </table>
-
+        <div id="popup">
+            <div id="popup-content">
+                <h1>Запрос</h1>
+                <p id="file-count">файлов: </p>
+                <form id="request-form" method="get">
+                    <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
+                    <input type="submit" formaction="/Audio/Search" value="Поиск"/>
+                    <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
+                </form>
+            </div>
+        </div>
+        <script src="/js/fileTableScript.js"></script>
     </div>
 </div>
 </body>

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using AudioAnalyzer.Data;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AudioAnalyzer.Web.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class AccountController : Controller
 {
     private readonly DataBaseContext _dataBaseContext;

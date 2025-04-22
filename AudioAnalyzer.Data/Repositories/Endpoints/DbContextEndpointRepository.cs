@@ -1,9 +1,7 @@
-using System.Net;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
+namespace AudioAnalyzer.Data.Repositories.Endpoints;
 
 public class DbContextEndpointRepository : IRepository<Endpoint>
 {

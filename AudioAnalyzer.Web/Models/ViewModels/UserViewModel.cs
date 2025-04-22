@@ -1,4 +1,4 @@
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 
 namespace AudioAnalyzer.Web.Models.ViewModels;
 

@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -63,12 +63,19 @@ public sealed class DataBaseContext : DbContext
         modelBuilder.Entity<FileRequestedEvent>().HasIndex(fre => new { fre.UploadedFileId, fre.AudioRequestId })
                     .IsUnique();
 
+        modelBuilder.Entity<AudioResponse>().HasIndex(ar => new { ar.OrderId, ar.FileRequestedEventId });
+        modelBuilder.Entity<FileRequestedEvent>().HasIndex(fre => new { fre.UploadedFileId, fre.AudioRequestId });
+        
         modelBuilder.Entity<AudioRequest>()
                     .Property(ar => ar.AudioRequestType)
                     .HasConversion<string>();
         
         modelBuilder.Entity<Endpoint>()
                     .Property(ar => ar.EndPointType)
+                    .HasConversion<string>();
+        
+        modelBuilder.Entity<AudioResponse>()
+                    .Property(ar => ar.ResponseType)
                     .HasConversion<string>();
         
         base.OnModelCreating(modelBuilder);

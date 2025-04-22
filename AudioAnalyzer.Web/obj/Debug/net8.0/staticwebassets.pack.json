@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\home-style.css"
     },
     {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\result-table.css",
+      "PackagePath": "staticwebassets\\css\\result-table.css"
+    },
+    {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -29,6 +33,10 @@
       "PackagePath": "staticwebassets\\js\\basicInfo.js"
     },
     {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\fileTableScript.js",
+      "PackagePath": "staticwebassets\\js\\fileTableScript.js"
+    },
+    {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\home-script.js",
       "PackagePath": "staticwebassets\\js\\home-script.js"
     },
@@ -39,6 +47,10 @@
     {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\input.js",
       "PackagePath": "staticwebassets\\js\\input.js"
+    },
+    {
+      "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\requestTableScript.js",
+      "PackagePath": "staticwebassets\\js\\requestTableScript.js"
     },
     {
       "Id": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\search.js",

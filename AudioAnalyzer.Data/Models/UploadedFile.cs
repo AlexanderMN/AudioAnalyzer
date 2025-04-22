@@ -1,7 +1,4 @@
-using System.Collections;
-using System.ComponentModel.DataAnnotations;
-
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 
 public class UploadedFile
@@ -12,6 +9,7 @@ public class UploadedFile
     public int FileStateId { get; set; }
     public FileState FileState { get; set; }
     public double Duration { get; set; }
+    public int SplitNumber { get; set; }
     public DateTime UploadedDate { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }

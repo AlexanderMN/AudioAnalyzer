@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 public class User
 {

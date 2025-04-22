@@ -1,4 +1,4 @@
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 public enum EndPointType
 {

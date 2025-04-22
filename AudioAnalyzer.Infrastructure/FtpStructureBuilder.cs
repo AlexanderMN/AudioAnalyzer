@@ -1,8 +1,6 @@
 using System.Net;
 using AudioAnalyzer.Data;
-using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
+using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using RabbitMqInfrastructure.Ftp;
 
@@ -11,17 +9,17 @@ namespace AudioAnalyzer.Infrastructure;
 public class FtpStructureBuilder
 {
     IFtpClient _ftpClient;
-    DatabaseService _databaseService;
+    DatabaseDbContextService _databaseDbContextService;
 
     public FtpStructureBuilder(IFtpClient ftpClient,
-                               DatabaseService databaseService)
+                               DatabaseDbContextService databaseDbContextService)
     {
         _ftpClient = ftpClient;
-        _databaseService = databaseService;
+        _databaseDbContextService = databaseDbContextService;
     }
     public async Task CreateDefaultFolders()
     {
-        var endpoints = _databaseService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
+        var endpoints = _databaseDbContextService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
 
         foreach (var endpoint in endpoints)
         {
@@ -32,7 +30,7 @@ public class FtpStructureBuilder
 
     public async Task CreateUserFolders(User user)
     {
-        var endpoints = _databaseService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
+        var endpoints = _databaseDbContextService.EndpointRepository.GetEntityList(e => e.EndPointType == EndPointType.FTPServer);
 
         foreach (var endpoint in endpoints)
         {

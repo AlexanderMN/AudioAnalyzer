@@ -2,8 +2,11 @@ using System.Net;
 using System.Security.Claims;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
+using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
+using AudioAnalyzer.Web.Models.AudioRequests.SplitRequest;
+using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +15,22 @@ using RabbitMqInfrastructure.Broker;
 namespace AudioAnalyzer.Web.Controllers;
 
 [Authorize]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class AudioController : Controller
 {
     private readonly RabbitMqPostManager _postManager;
     private readonly FileServiceCommunication _fileServiceCommunication;
     private readonly AudioFileNameHandler _audioFileNameHandler;
-    private readonly DatabaseService _databaseService;
+    private readonly DatabaseDbContextService _databaseDbContextService;
     public AudioController(RabbitMqPostManager postManager, 
                            FileServiceCommunication fileServiceCommunication, 
                            AudioFileNameHandler audioFileNameHandler, 
-                           DatabaseService databaseService)
+                           DatabaseDbContextService databaseDbContextService)
     {
         _postManager = postManager;
         _fileServiceCommunication = fileServiceCommunication;
         _audioFileNameHandler = audioFileNameHandler;
-        _databaseService = databaseService;
+        _databaseDbContextService = databaseDbContextService;
     }
 
 
@@ -43,7 +46,7 @@ public class AudioController : Controller
         
         homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.OK);
         homeViewModel.UserName = user.UserName;
-        
+        homeViewModel.CurrentViewName = "Input";
         return View(homeViewModel);
     }
 
@@ -56,10 +59,21 @@ public class AudioController : Controller
         if (user == null)
             return Unauthorized();
         
-        List<UploadedFile> audioFiles = _databaseService.UploadedFileRepository
+        List<UploadedFile> audioFiles = _databaseDbContextService.UploadedFileRepository
                                                         .GetEntityList(f => f.UserId == user.Id);
         
         return PartialView("Files", audioFiles);
+    }
+
+    [HttpGet]
+    [Route("Requests")]
+    public async Task<IActionResult> Requests()
+    {
+        var user = await GetUserAsync();
+        
+        List<AudioRequest> requests = new List<AudioRequest>();
+        
+        return PartialView("Requests", requests);
     }
     
     [HttpGet]
@@ -71,86 +85,83 @@ public class AudioController : Controller
 
     [HttpGet]
     [Route("Search")]
+    public async Task<IActionResult> Search()
+    {
+        var searchViewModel = new SearchViewModel();
+        return PartialView("Search", searchViewModel);
+    }
+    
+    [HttpPost]
+    [Route("Search")]
     public async Task<IActionResult> Search(int fileId)
     {
         var searchViewModel = new SearchViewModel();
 
         var user = await GetUserAsync();
         if (user == null)
-            return Unauthorized();
+            return Unauthorized("Пользователь не авторизован");
 
-        var request = await _databaseService.SaveUserRequestAsync(user, AudioRequestType.Search, [fileId]);
+        var request = await _databaseDbContextService.SaveUserRequestAsync(user, AudioRequestType.Search, [fileId]);
 
         if (request.Id == 0)
-            return BadRequest();
+            return BadRequest("Не удалось создать запрос");
 
         var success = await _fileServiceCommunication.CreateRequestFolder(request);
         
         if (!success) 
-            return BadRequest();
+            return BadRequest("Не удалось создать запрос");
 
-        await _postManager.PostSearchRequest(
+        await _postManager.PostUserRequestToService<SearchRequest>(
             audioRequest: request,
             fileId: fileId,
             callbackQueueName: BrokerQueues.SearchQueue);
 
-        return PartialView("Search", searchViewModel);
+        return Ok();
     }
 
 
     [HttpGet]
     [Route("Transcribe")]
-    public async Task<IActionResult> Transcribe(List<int> fileIds)
+    public async Task<IActionResult> Transcribe()
     {
-        var transcribeViewModel = new TranscribeViewModel("");
-        
-        var user = await GetUserAsync();
-        if (user == null)
-            return Unauthorized();
-        
-        var request = await _databaseService.SaveUserRequestAsync(user, AudioRequestType.Transcribe, fileIds);
-
-        if (request.Id == 0)
-            return BadRequest();
-
-        var success = await _fileServiceCommunication.CreateRequestFolder(request);
-        
-        if (!success) 
-            return BadRequest();
-
-        foreach (var fileId in fileIds)
-        {
-            await _postManager.PostTranscribeRequest(
-                audioRequest: request,
-                fileId: fileId,
-                callbackQueueName: BrokerQueues.TranscribeQueue);   
-        }
+        string transcribedText = "";
+        var transcribeViewModel = new TranscribeViewModel(transcribedText);
         
         return PartialView("Transcribe", transcribeViewModel);
     }
-
-    [HttpGet]
-    [Route("Spectrogram")]
-    public async Task<IActionResult> Spectrogram(List<int> fileIds)
+    
+    [HttpPost]
+    [Route("Transcribe")]
+    public async Task<IActionResult> Transcribe(List<int> fileIds)
     {
-        var transcribeViewModel = new TranscribeViewModel("");
-        
         var user = await GetUserAsync();
-        if (user == null)
-            return Unauthorized();
+        if (user == null || fileIds.Count == 0)
+            return Unauthorized("Пользователь не авторизован");
+        
+        
+        var request = await _databaseDbContextService.SaveUserRequestAsync(user, AudioRequestType.Transcribe, fileIds);
 
-        var request = await _databaseService.SaveUserRequestAsync(user, AudioRequestType.Spectrogram, fileIds);
         if (request.Id == 0)
-            return BadRequest();
-        
-        var success = await _fileServiceCommunication.CreateRequestFolder(request);
-        
-        if (!success) 
-            return BadRequest();
-        
-        return PartialView("Spectrogram", transcribeViewModel);
-    }
+            return BadRequest("Не удалось создать запрос");
 
+        var uploadedFiles = _databaseDbContextService.UploadedFileRepository
+                                                     .GetEntityList(f => fileIds.Contains(f.Id));
+        
+        foreach (var file in uploadedFiles)
+        {
+            for (int i = 0; i < file.SplitNumber; i++)
+            {
+                await _postManager.PostUserRequestToService<TranscribeRequest>(
+                    audioRequest: request,
+                    fileId: file.Id,
+                    fileOrderId: i,
+                    callbackQueueName: BrokerQueues.TranscribeQueue);
+            }
+        }
+
+        return Ok();
+    }
+    
     [HttpGet]
     [Route("Input")]
     public IActionResult Input()
@@ -168,14 +179,14 @@ public class AudioController : Controller
         
         var homeViewModel = new HomeViewModel();
         var uploadedFiles = new List<UploadedFile>();
-        //TODO Add file params to db
+
         foreach (var requestFormFile in Request.Form.Files)
         {
             var audioFile = _audioFileNameHandler.ParseFileName(requestFormFile.FileName);
             if (!SupportedAudioFormats.SetOfSupportedFormats.Contains(audioFile.Extension))
                 return BadRequest();
             
-            var endpoints = _databaseService.EndpointRepository.GetEntityList(
+            var endpoints = _databaseDbContextService.EndpointRepository.GetEntityList(
                 (e => e.EndPointType == EndPointType.FTPServer)
             );
             if (endpoints.Count == 0)
@@ -193,9 +204,9 @@ public class AudioController : Controller
                 UserId = user.Id
             };
             uploadedFiles.Add(uploadedFile);
-            _databaseService.UploadedFileRepository.Create(uploadedFile);
+            _databaseDbContextService.UploadedFileRepository.Create(uploadedFile);
         }
-        await _databaseService.UploadedFileRepository.SaveAsync();
+        await _databaseDbContextService.UploadedFileRepository.SaveAsync();
 
         for (int i = 0; i < uploadedFiles.Count; i++)
         {
@@ -207,13 +218,13 @@ public class AudioController : Controller
             if (success)
                 continue;
 
-            await _databaseService.RollBackDbFiles(uploadedFiles);
+            await _databaseDbContextService.RollBackDbFiles(uploadedFiles);
             return BadRequest();
         }
 
         foreach (var uploadedFile in uploadedFiles)
         {
-            await _postManager.PostSplitRequest(
+            await _postManager.PostSystemRequestToService(
                 user: user,
                 fileId: uploadedFile.Id,
                 queueName: BrokerQueues.SplitQueue,
@@ -232,7 +243,7 @@ public class AudioController : Controller
         
         if (!int.TryParse(userNameId, out int userId))
             return null;
-        var user = await _databaseService.UserRepository.GetEntity(
+        var user = await _databaseDbContextService.UserRepository.GetEntity(
             id: userId, 
             includeRelatedEntities: true);
         

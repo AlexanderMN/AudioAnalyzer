@@ -1,0 +1,68 @@
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-table  thead {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.result-table thead td {
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.result-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.result-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.result-table tbody td {
+    position: relative;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+.result-table td {
+    text-align: left;
+}
+
+.result-table tbody tr {
+    margin-bottom: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.file-checkbox{
+    width: 12px;
+}
+
+#popup {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: none;
+    position: relative;
+    z-index: 1000;
+    width: 300px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+#popup-content {
+    position: relative;
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+

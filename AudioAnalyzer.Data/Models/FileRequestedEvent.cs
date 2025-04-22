@@ -1,11 +1,8 @@
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 public class FileRequestedEvent
 {
     public int Id { get; set; }
-    
-    public string UploadedFileName { get; set; }
-    
     public int AudioRequestId { get; set; }
     public AudioRequest AudioRequest { get; set; }
     

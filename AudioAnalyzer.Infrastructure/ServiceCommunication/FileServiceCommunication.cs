@@ -1,6 +1,6 @@
 using System.Net;
 using AudioAnalyzer.Core;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using RabbitMqInfrastructure.Ftp;
 
 namespace AudioAnalyzer.Infrastructure.ServiceCommunication;

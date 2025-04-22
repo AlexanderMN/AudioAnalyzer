@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
+namespace AudioAnalyzer.Data.Repositories.AudioExtensions;
 
 public class LocalAudioExtensionRepository : IAudioExtensionRepository
 {

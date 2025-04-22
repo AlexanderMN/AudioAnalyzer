@@ -1,4 +1,4 @@
-namespace AudioAnalyzer.Data.Persistence.Repositories.AudioExtensions;
+namespace AudioAnalyzer.Data.Repositories.AudioExtensions;
 
 public interface IAudioExtensionRepository 
 {

@@ -5,11 +5,11 @@ namespace AudioAnalyzer.Web.Models.ViewModels;
 
 public class SearchViewModel: ViewModelBase
 {
-    public TranscribedResponseJson AudioTranscribedResponse { get; set; }
+    public TranscribeResponse AudioTranscribedResponse { get; set; }
 
-    public SearchViewModel(TranscribedResponseJson audioTranscribedResponse = null):base("Search")
+    public SearchViewModel(TranscribeResponse transcribedResponse = null):base("Search")
     {
-        AudioTranscribedResponse = audioTranscribedResponse;
+        AudioTranscribedResponse = transcribedResponse;
     }
 }
 

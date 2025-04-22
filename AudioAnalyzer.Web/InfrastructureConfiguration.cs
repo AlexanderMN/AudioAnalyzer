@@ -1,12 +1,10 @@
 using AudioAnalyzer.Data;
-using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Data.Persistence.Repositories;
 using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Web.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using RabbitMqInfrastructure.Broker;
 using RabbitMqInfrastructure.Ftp;
-using Endpoint = AudioAnalyzer.Data.Persistence.Models.Endpoint;
+using Endpoint = AudioAnalyzer.Data.Models.Endpoint;
 
 namespace AudioAnalyzer.Web;
 
@@ -35,12 +33,12 @@ public static class InfrastructureConfiguration
 
     public static void ConfigureFtpServer(IServiceScope scope)
     {
-        using var databaseService = scope.ServiceProvider.GetRequiredService<DatabaseService>()!; 
+        using var databaseService = scope.ServiceProvider.GetRequiredService<DatabaseDbContextService>()!; 
         IFtpClient ftpClient = new FtpClient();
 
         var ftpStructureBuilder = new FtpStructureBuilder(
             ftpClient: ftpClient,
-            databaseService: databaseService);
+            databaseDbContextService: databaseService);
             
         try
         {

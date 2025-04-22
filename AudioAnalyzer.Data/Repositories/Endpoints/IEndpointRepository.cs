@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
+namespace AudioAnalyzer.Data.Repositories.Endpoints;
 
 public interface IEndpointRepository<TKey>
 {

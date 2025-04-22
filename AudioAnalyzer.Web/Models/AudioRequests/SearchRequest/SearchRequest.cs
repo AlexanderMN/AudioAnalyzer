@@ -1,9 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
+namespace AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
 
-[Serializable]
-public class TranscribeRequest : RequestBase
+public class SearchRequest : RequestBase
 {
     [JsonPropertyName("requestId")]
     public int RequestId { get; set; }
@@ -11,7 +10,7 @@ public class TranscribeRequest : RequestBase
     [JsonPropertyName("fileOrderId")] 
     public int FileOrderId { get; set; }
 
-    public TranscribeRequest(int userId,
+    public SearchRequest(int userId,
                              int fileId,
                              int fileOrderId,
                              int requestId,

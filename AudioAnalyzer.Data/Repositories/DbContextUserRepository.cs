@@ -1,8 +1,7 @@
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace AudioAnalyzer.Data.Persistence.Repositories;
+namespace AudioAnalyzer.Data.Repositories;
 
 public class DbContextUserRepository : IRepository<User>
 {

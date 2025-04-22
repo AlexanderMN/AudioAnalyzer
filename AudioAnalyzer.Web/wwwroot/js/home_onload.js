@@ -42,7 +42,7 @@ var fileHubConnection;
 
 
 $(document).ready(function () {
-    $("#main").load("/api/Audio/Input");
+    $("#main").load("/Audio/Input");
     
     audio = document.querySelector("audio");
 

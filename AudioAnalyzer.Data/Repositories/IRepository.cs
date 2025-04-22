@@ -1,4 +1,4 @@
-namespace AudioAnalyzer.Data.Persistence.Repositories;
+namespace AudioAnalyzer.Data.Repositories;
 
 
 public interface IRepository<T> : IDisposable 

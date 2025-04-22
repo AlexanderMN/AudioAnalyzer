@@ -1,5 +1,7 @@
 using System.Text.Json;
-using AudioAnalyzer.Data.Persistence.Models;
+using AudioAnalyzer.Data.Models;
+using AudioAnalyzer.Web.Models.AudioRequests;
+using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.SplitRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using RabbitMqInfrastructure.Broker;
@@ -14,50 +16,37 @@ public class RabbitMqPostManager
     {
         _rabbitMqPublisher = rabbitMqPublisher;
     }
-
-
-    public async Task PostSplitRequest(
+    
+    
+    public async Task PostSystemRequestToService(
         User user,
         int fileId,
         string queueName,
         string callbackQueueName)
     {
-        var splitRequest = new SplitRequest
-        {
-            UserId = user.Id,
-            FileId = fileId,
-            CallbackQueue = callbackQueueName
-        };
-
+        var splitRequest = new SplitRequest(user.Id, fileId, callbackQueueName);
+    
         var message = JsonSerializer.Serialize(splitRequest);
-
+    
         await _rabbitMqPublisher.PublishMessageAsync(message: message,
-                                                     queue: BrokerQueues.SplitQueue);
-
+                                                     queue: queueName);
     }
 
-    public async Task PostTranscribeRequest(AudioRequest audioRequest,
+    public async Task PostUserRequestToService<T>(AudioRequest audioRequest,
                                             int fileId,
-                                            string callbackQueueName)
+                                            string callbackQueueName, 
+                                            int fileOrderId = 0) where T : RequestBase
     {
-
-        var transcribeRequest = new TranscribeRequest
-        {
-            UserId = audioRequest.UserId,
-            FileId = fileId,
-            RequestId = audioRequest.Id,
-            CallbackQueue = callbackQueueName
-        };
-
-        var message = JsonSerializer.Serialize(transcribeRequest);
-        await _rabbitMqPublisher.PublishMessageAsync(message, BrokerQueues.AudioFileQueue);
-
-    }
-
-    public async Task PostSearchRequest(AudioRequest audioRequest,
-                                        int fileId,
-                                        string callbackQueueName)
-    {
+        RequestBase request;
         
+        if (typeof(T) == typeof(TranscribeRequest))
+            request = new TranscribeRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id, callbackQueueName);
+        else
+        {
+            request = new SearchRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id, callbackQueueName);
+        }
+        
+        var message = JsonSerializer.Serialize((T)request);
+        await _rabbitMqPublisher.PublishMessageAsync(message, BrokerQueues.AudioFileQueue);
     }
 }

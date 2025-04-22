@@ -1,23 +1,30 @@
-using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Data.Persistence.Repositories;
-using AudioAnalyzer.Data.Persistence.Repositories.Endpoints;
-using Endpoint = AudioAnalyzer.Data.Persistence.Models.Endpoint;
+using AudioAnalyzer.Data.Models;
+using AudioAnalyzer.Data.Repositories;
+using AudioAnalyzer.Data.Repositories.Endpoints;
+using Microsoft.EntityFrameworkCore;
+using Endpoint = AudioAnalyzer.Data.Models.Endpoint;
 
 namespace AudioAnalyzer.Data;
 
-public class DatabaseService : IDisposable
+public class DatabaseDbContextService : IDisposable
 {
+    private readonly DataBaseContext _context;
+    
     public readonly IRepository<AudioRequest> AudioRequestRepository;
     public readonly IRepository<User> UserRepository;
     public readonly IRepository<UploadedFile> UploadedFileRepository;
     public readonly IRepository<Endpoint> EndpointRepository;
-
-    public DatabaseService(DataBaseContext dbContext)
+    public readonly IRepository<AudioResponse> AudioResponseRepository;
+    public readonly IRepository<FileRequestedEvent> FileRequestedEventRepository;
+    public DatabaseDbContextService(DataBaseContext dbContext)
     {
+        _context = dbContext;
         AudioRequestRepository = new AudioRequestRepository(dbContext);
         UserRepository = new DbContextUserRepository(dbContext);
         UploadedFileRepository = new DbContextUploadedFileRepository(dbContext);
         EndpointRepository = new DbContextEndpointRepository(dbContext);
+        AudioResponseRepository = new AudioResponseRepository(dbContext);
+        FileRequestedEventRepository = new FileRequestedEventRepository(dbContext);
     }
 
     public async Task<AudioRequest> SaveUserRequestAsync(User user, AudioRequestType requestType, List<int> fileIds)
@@ -30,6 +37,7 @@ public class DatabaseService : IDisposable
             IsProcessed = false,
             UserId = user.Id,
             FileRequestedEvents = [],
+            CreationDate = DateTime.UtcNow,
             Endpoint = endpoint
         };
         
@@ -56,6 +64,13 @@ public class DatabaseService : IDisposable
         await UploadedFileRepository.SaveAsync();
     }
 
+    public async Task<FileRequestedEvent?> GetFileRequestedEventByIndex(int requestId, int fileId)
+    {
+        return await _context.FileRequestedEvents
+                             .Include(fre => fre.UploadedFile)
+                             .FirstOrDefaultAsync(fre => fre.UploadedFileId == fileId &&
+                                                  fre.AudioRequestId == requestId);
+    }
     public void Dispose()
     {
         AudioRequestRepository.Dispose();

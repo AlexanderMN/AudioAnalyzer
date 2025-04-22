@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 public enum FileState
 {

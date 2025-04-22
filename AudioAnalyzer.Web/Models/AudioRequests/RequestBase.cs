@@ -15,4 +15,11 @@ public class RequestBase
     
     [JsonIgnore]
     public string Queue { get; set; }
+
+    protected RequestBase(int userId, int fileId, string callbackQueueName)
+    {
+        UserId = userId;
+        FileId = fileId;
+        CallbackQueue = callbackQueueName;
+    }
 }

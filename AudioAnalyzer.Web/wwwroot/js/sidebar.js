@@ -4,7 +4,7 @@ var requestsButton = document.getElementById("button-requests");
 var main = document.getElementById("main");
 
 function changeMainArea(newAreaHTMLFileName){
-    $("#main").load("/api/Audio/" + newAreaHTMLFileName );
+    $("#main").load("/Audio/" + newAreaHTMLFileName );
 }
 
 function filesButtonClick() {

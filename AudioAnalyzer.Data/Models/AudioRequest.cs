@@ -1,4 +1,4 @@
-namespace AudioAnalyzer.Data.Persistence.Models;
+namespace AudioAnalyzer.Data.Models;
 
 public class AudioRequest
 {
@@ -12,5 +12,6 @@ public class AudioRequest
     public int EndpointId { get; set; }
     public Endpoint Endpoint { get; set; }
     
+    public DateTime CreationDate { get; set; }
     public ICollection<FileRequestedEvent> FileRequestedEvents { get; set; }
 }

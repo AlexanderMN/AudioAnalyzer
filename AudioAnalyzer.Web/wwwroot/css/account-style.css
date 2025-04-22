@@ -29,8 +29,7 @@ html, body {
 
 #form-container {
     position: relative;
-    width: 200px;
-    text-align: left;
+    width: 400px;
     left: 50%;
     margin-right: -50%;
     top: 50%;
@@ -39,7 +38,7 @@ html, body {
 
 .label-container {
     position: relative;
-    left: 0;
+    text-align: left;
     width: 100%;
     height: 100px;
 }
@@ -55,6 +54,11 @@ html, body {
     transform: translate(-50%, 0);
 }
 
+.account-form{
+    position: relative;
+    width: 50%;
+}
+
 .input-field{
     position: relative;
     width: 100%;
@@ -63,6 +67,6 @@ html, body {
 
 .form-button {
     position: relative;
-    width: 35%;
+    width: 100px;
     font-size: 14px;
 }

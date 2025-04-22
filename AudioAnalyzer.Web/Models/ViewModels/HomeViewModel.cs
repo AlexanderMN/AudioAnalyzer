@@ -10,6 +10,8 @@ public class HomeViewModel
         ErrorMessage = errorMessage;
     }
 
+    public string CurrentViewName { get; set; }
+    public object ViewData { get; set; }
     public HttpResponseMessage Response { get; set; }
     public string ErrorMessage { get; set; }
     public string FileName { get; set; }

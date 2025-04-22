@@ -1,5 +1,4 @@
-using AudioAnalyzer.Data.Persistence.Models;
-using AudioAnalyzer.Data.Persistence.Repositories;
+using AudioAnalyzer.Data.Models;
 
 namespace AudioAnalyzer.Infrastructure.ServiceCommunication;
 
