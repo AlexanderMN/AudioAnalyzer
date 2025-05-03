@@ -1,15 +1,12 @@
 //in-browser
 
 var SingletonFactory = (function (){
-    function SingletonClass(){
-        document.getElementById();
-    }
     var instances = new Map()
     return {
         getInstance : function (variable){
             name = Object.keys(variable)[0];
             if (!instances.has(name)) {
-                instances.set(name, new SingletonClass());
+                instances.set(name, {});
             }
             return instances.get(name);
         },
@@ -23,7 +20,6 @@ var SingletonFactory = (function (){
 var audioContext = new AudioContext();
 var audioFile;
 var arrayBuffer;
-var audio;
 var textForSearch = {r: [{
     response: [{
         text: String,
@@ -44,10 +40,9 @@ var fileHubConnection;
 $(document).ready(function () {
     $("#main").load("/Audio/Input");
     
-    audio = document.querySelector("audio");
-
-    // Example: Add custom play/pause buttons
 });
+
+
 
 async function startFileHubConnection() {
     try {

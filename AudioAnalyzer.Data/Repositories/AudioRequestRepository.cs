@@ -20,8 +20,18 @@ public class AudioRequestRepository : IRepository<AudioRequest>
     public List<AudioRequest> GetEntityList(Func<AudioRequest, bool>? predicate = null)
     {
         return predicate != null ? 
-            _context.AudioRequests.Where(predicate).ToList() : 
-            _context.AudioRequests.ToList();
+            _context.AudioRequests
+                    .Include(ar => ar.FileRequestedEvents)
+                    .ThenInclude(fre => fre.UploadedFile)
+                    .Include(ar => ar.FileRequestedEvents)
+                    .ThenInclude(fre => fre.AudioResponses)
+                    .Where(predicate).ToList() : 
+            _context.AudioRequests
+                    .Include(ar => ar.FileRequestedEvents)
+                    .ThenInclude(fre => fre.UploadedFile)
+                    .Include(ar => ar.FileRequestedEvents)
+                    .ThenInclude(fre => fre.AudioResponses)
+                    .ToList();
     }
 
     public async Task<AudioRequest?> GetEntity(int id, bool includeRelatedEntities)
@@ -30,6 +40,9 @@ public class AudioRequestRepository : IRepository<AudioRequest>
         {
             return await _context.AudioRequests
                                  .Include(ar => ar.FileRequestedEvents)
+                                 .ThenInclude(fre => fre.UploadedFile)
+                                 .Include(ar => ar.FileRequestedEvents)
+                                 .ThenInclude(fre => fre.AudioResponses)
                                  .FirstOrDefaultAsync();
         }
         

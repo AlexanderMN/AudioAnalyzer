@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
+namespace AudioAnalyzer.Web.Models.AudioResponses.SummaryResponse;
 
-[Serializable]
-public class TranscribeResponse : ResponseBase
+public class SummaryResponse : ResponseBase
 {
-    
     [JsonPropertyName("fileOrderId")]
     public int FileOrderId { get; set; }
     

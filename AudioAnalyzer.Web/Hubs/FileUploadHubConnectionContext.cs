@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 
@@ -33,14 +34,12 @@ public class FileUploadHubConnectionContext
 
     public async Task SendTranscribedTextForSearch(FileUploadHubConnectionContext connectionContext,
                                                           int userId, 
-                                                          TranscribeResponse transcribedTextJson)
+                                                          string text)
     {
         var user = connectionContext.ActiveUsers.Keys.FirstOrDefault(u => u.Id == userId);
         
         if (user == null)
             return;
-        
-        var text = JsonSerializer.Serialize(transcribedTextJson);
 
         await _hubContext.Clients.Client(user.ConnectionId).SendAsync(FileHubMethodNames.FileTextForSearch, text);
     }

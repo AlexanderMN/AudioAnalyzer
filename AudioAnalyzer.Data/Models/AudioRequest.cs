@@ -1,10 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AudioAnalyzer.Data.Models;
 
 public class AudioRequest
 {
     public int Id { get; set; }
-    public bool IsProcessed { get; set; }
-    
+    [NotMapped]
+    public AudioRequestState State { get; set; }
     public AudioRequestType AudioRequestType { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }
@@ -14,4 +17,27 @@ public class AudioRequest
     
     public DateTime CreationDate { get; set; }
     public ICollection<FileRequestedEvent> FileRequestedEvents { get; set; }
+}
+public enum AudioRequestState
+{
+    [Display(Name = "Обработка")]
+    Processing,
+    [Display(Name = "Полностью обработан")]
+    Processed,
+    [Display(Name = "Обработан с ошибками")]
+    ProcessedWithErrors,
+    [Display(Name = "Ошибка")]
+    Error
+}
+
+public enum AudioRequestType
+{
+    [Display(Name = "Транскрибация")]
+    Transcribe,
+    [Display(Name = "Поиск")]
+    Search,
+    [Display(Name = "Суммаризация")]
+    Summarize,
+    [Display(Name = "Спектрограмма")]
+    Spectrogram
 }

@@ -34,7 +34,7 @@ public class DatabaseDbContextService : IDisposable
         AudioRequest audioRequest = new AudioRequest
         {
             AudioRequestType = requestType,
-            IsProcessed = false,
+            State = AudioRequestState.Processing,
             UserId = user.Id,
             FileRequestedEvents = [],
             CreationDate = DateTime.UtcNow,
@@ -64,10 +64,20 @@ public class DatabaseDbContextService : IDisposable
         await UploadedFileRepository.SaveAsync();
     }
 
-    public async Task<FileRequestedEvent?> GetFileRequestedEventByIndex(int requestId, int fileId)
+    public async Task<FileRequestedEvent?> GetFileRequestedEventByIndex(int requestId, int fileId, bool includeResponses = false)
     {
+        if (includeResponses)
+            return await _context.FileRequestedEvents
+                                 .Include(fre => fre.UploadedFile)
+                                 .Include(fre => fre.AudioRequest)
+                                 .Include(fre => fre.AudioResponses)
+                                 .FirstOrDefaultAsync(fre => fre.UploadedFileId == fileId &&
+                                                             fre.AudioRequestId == requestId);
+        
+        
         return await _context.FileRequestedEvents
                              .Include(fre => fre.UploadedFile)
+                             .Include(fre => fre.AudioRequest)
                              .FirstOrDefaultAsync(fre => fre.UploadedFileId == fileId &&
                                                   fre.AudioRequestId == requestId);
     }
@@ -77,5 +87,31 @@ public class DatabaseDbContextService : IDisposable
         UserRepository.Dispose();
         UploadedFileRepository.Dispose();
         EndpointRepository.Dispose();
+    }
+
+    public async Task SetFileRequestedEventState(FileRequestedEvent fileRequestedEvent)
+    {
+        var audioResponses = AudioResponseRepository
+                                                      .GetEntityList(ar => ar.FileRequestedEventId == fileRequestedEvent.Id);
+
+        if (audioResponses.All(ar => ar.ResponseType == AudioResponseType.Success))
+        {
+            fileRequestedEvent.State = FileRequestedEventState.Completed;
+            FileRequestedEventRepository.Update(fileRequestedEvent);
+            await FileRequestedEventRepository.SaveAsync();
+            return;
+        }
+
+        if (audioResponses.All(ar => ar.ResponseType == AudioResponseType.Error))
+        {
+            fileRequestedEvent.State = FileRequestedEventState.Failed;
+            FileRequestedEventRepository.Update(fileRequestedEvent);
+            await FileRequestedEventRepository.SaveAsync();
+            return;
+        }
+            
+        fileRequestedEvent.State = FileRequestedEventState.CompletedWithError;
+        FileRequestedEventRepository.Update(fileRequestedEvent);
+        await FileRequestedEventRepository.SaveAsync();
     }
 }

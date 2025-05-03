@@ -8,60 +8,58 @@
     <link rel="stylesheet" href="/css/result-table.css"/>
 </head>
 <body>
-<div>
-    <div>
-        <table id="file-table" class="result-table">
-            <thead>
-            <tr>
-                <td>
-                    <input type="checkbox" disabled="disabled"/>
-                </td>
-                <td>
-                    Название
-                </td>
-                <td>
-                    Формат
-                </td>
-                <td>
-                    Длительность
-                </td>
-                <td>
-                    Состояние
-                </td>
-                <td>
-                    Время загрузки
-                </td>
+<div class="table-container">
+    <table id="file-table" class="result-table">
+        <thead>
+        <tr>
+            <td>
+                <input type="checkbox" disabled="disabled"/>
+            </td>
+            <td>
+                Название
+            </td>
+            <td>
+                Формат
+            </td>
+            <td>
+                Длительность
+            </td>
+            <td>
+                Состояние
+            </td>
+            <td>
+                Время загрузки
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var file in Model)
+        {
+            <tr class="default-row">
+                <td hidden="hidden">@file.Id</td>
+                <td><input class="file-checkbox" type="checkbox"/></td>
+                <td>@file.UploadedFileName</td>
+                <td>@file.UploadedFileType</td>
+                <td>@TimeSpan.FromSeconds(file.Duration).ToString(@"h\:mm\:ss\.f")</td>
+                <td>@file.FileState.GetNameAttribute()</td>
+                <td>@file.UploadedDate</td>
+                <td></td>
             </tr>
-            </thead>
-            <tbody>
-            @foreach (var file in Model)
-            {
-                <tr>
-                    <td hidden="hidden">@file.Id</td>
-                    <td><input class="file-checkbox" type="checkbox"/></td>
-                    <td>@file.UploadedFileName</td>
-                    <td>@file.UploadedFileType</td>
-                    <td>@TimeSpan.FromSeconds(file.Duration).ToString(@"h\:mm\:ss\.f")</td>
-                    <td>@file.FileState.GetNameAttribute()</td>
-                    <td>@file.UploadedDate</td>
-                    <td></td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        <div id="popup">
-            <div id="popup-content">
-                <h1>Запрос</h1>
-                <p id="file-count">файлов: </p>
-                <form id="request-form" method="get">
-                    <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
-                    <input type="submit" formaction="/Audio/Search" value="Поиск"/>
-                    <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
-                </form>
-            </div>
-        </div>
-        <script src="/js/fileTableScript.js"></script>
+        }
+        </tbody>
+    </table>
+</div>
+<div id="popup">
+    <div id="popup-content">
+        <h1>Запрос</h1>
+        <p id="file-count">файлов: </p>
+        <form id="request-form" method="get">
+            <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
+            <input type="submit" formaction="/Audio/Search" value="Поиск"/>
+            <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
+        </form>
     </div>
 </div>
+<script src="/js/fileTableScript.js"></script>
 </body>
 </html>

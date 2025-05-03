@@ -10,6 +10,7 @@ using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using RabbitMqInfrastructure.Broker;
 
 namespace AudioAnalyzer.Web.Controllers;
@@ -71,7 +72,34 @@ public class AudioController : Controller
     {
         var user = await GetUserAsync();
         
-        List<AudioRequest> requests = new List<AudioRequest>();
+        if (user == null)
+            return Unauthorized();
+        
+        List<AudioRequest> requests = _databaseDbContextService.AudioRequestRepository
+            .GetEntityList(f => f.UserId == user.Id);
+
+        foreach (var request in requests)
+        {
+            if (request.FileRequestedEvents.All(fre => fre.State == FileRequestedEventState.Completed))
+            {
+                request.State = AudioRequestState.Processed;
+                continue;
+            }
+
+            if (request.FileRequestedEvents.All(fre => fre.State == FileRequestedEventState.Failed))
+            {
+                request.State = AudioRequestState.Processed;
+                continue;
+            }
+
+            if (request.FileRequestedEvents.Any(fre => fre.State == FileRequestedEventState.Processing))
+            {
+                request.State = AudioRequestState.Processing;
+                continue;
+            }
+            
+            request.State = AudioRequestState.ProcessedWithErrors;
+        }
         
         return PartialView("Requests", requests);
     }
@@ -83,6 +111,14 @@ public class AudioController : Controller
         return PartialView("BasicInfo");
     }
 
+    [HttpGet]
+    [Route("Summary")]
+    public async Task<IActionResult> Summary()
+    {
+        var user = await GetUserAsync();
+        return PartialView("Summary", user);
+    }
+    
     [HttpGet]
     [Route("Search")]
     public async Task<IActionResult> Search()
@@ -122,11 +158,16 @@ public class AudioController : Controller
 
     [HttpGet]
     [Route("Transcribe")]
-    public async Task<IActionResult> Transcribe()
+    public async Task<IActionResult> Transcribe(int requestId, int fileId)
     {
-        string transcribedText = "";
-        var transcribeViewModel = new TranscribeViewModel(transcribedText);
+        var fileRequestedEvent = await _databaseDbContextService.GetFileRequestedEventByIndex(requestId, fileId, true);
+        var transcribedText = string.Join("", fileRequestedEvent.AudioResponses
+                                                  .OrderBy(resp => resp.OrderId)
+                                                  .Select(resp => resp.ResponseText));
+        if (fileRequestedEvent == null)
+            return BadRequest("Request not found");
         
+        var transcribeViewModel = new TranscribeViewModel(transcribedText);
         return PartialView("Transcribe", transcribeViewModel);
     }
     
@@ -134,13 +175,12 @@ public class AudioController : Controller
     [Route("Transcribe")]
     public async Task<IActionResult> Transcribe(List<int> fileIds)
     {
+        var a = Request;
         var user = await GetUserAsync();
         if (user == null || fileIds.Count == 0)
             return Unauthorized("Пользователь не авторизован");
         
-        
         var request = await _databaseDbContextService.SaveUserRequestAsync(user, AudioRequestType.Transcribe, fileIds);
-
         if (request.Id == 0)
             return BadRequest("Не удалось создать запрос");
 
@@ -203,6 +243,7 @@ public class AudioController : Controller
                 EndpointId = endpoint.Id,
                 UserId = user.Id
             };
+            
             uploadedFiles.Add(uploadedFile);
             _databaseDbContextService.UploadedFileRepository.Create(uploadedFile);
         }

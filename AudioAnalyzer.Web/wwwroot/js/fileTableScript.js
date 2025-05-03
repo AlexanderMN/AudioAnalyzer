@@ -1,36 +1,34 @@
-let rows = document.querySelectorAll("#file-table tr");
-let checkboxes = document.querySelectorAll(".file-checkbox");
-const popup = document.getElementById("popup");
-const requestForm = document.getElementById("request-form")
-const fileCount = document.getElementById("file-count");
+SingletonFactory.setInstance("checkedCount", 0);
 
-let checkedCount = 0;
-
-checkboxes.forEach((checkbox, index) => {
+document.querySelectorAll(".file-checkbox").forEach((checkbox, index) => {
     checkbox.onchange = () => {
+        let checkedCount = SingletonFactory.getInstance("checkedCount");
+        
         if (checkbox.checked) {
             checkedCount++;
-            fileCount.innerHTML = `выбрано файлов: ${checkedCount}`;
-            popup.style.display = "block";
+            document.getElementById("file-count").innerHTML = `выбрано файлов: ${checkedCount}`;
+            document.getElementById("popup").style.display = "block";
         }
         else {
             checkedCount--;
-            fileCount.innerHTML = `выбрано файлов: ${checkedCount}`;
+            document.getElementById("file-count").innerHTML = `выбрано файлов: ${checkedCount}`;
             if (checkedCount === 0) {
-                popup.style.display = "none";
+                document.getElementById("popup").style.display = "none";
             }
         }
+        
+        SingletonFactory.setInstance("checkedCount", checkedCount);
     }
 });
 
-requestForm.addEventListener("submit", async (e) => {
+document.getElementById("request-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    var fileIds = [];
+    let fileIds = [];
 
-    checkboxes.forEach((checkbox, index) =>{
+    document.querySelectorAll(".file-checkbox").forEach((checkbox, index) =>{
         if (checkbox.checked){
-            var cells = rows.item(index +1 ).cells;
+            var cells = document.querySelectorAll("#file-table tr").item(index +1 ).cells;
             var fileId = cells.item(0).innerHTML;
             fileIds.push(fileId)
         }
@@ -50,14 +48,23 @@ requestForm.addEventListener("submit", async (e) => {
             break;
 
     }
-    let arrStr = fileIds.join(',');
-    let request = `/Audio/${task}?fileIds=${arrStr}`;
-    var response = await fetch(request);
+    function getResponse(){
+        return $.ajax({
+            url: `/Audio/${task}?`,
+            type: "POST",
+            data: {fileIds: fileIds},
+            async: false
+        });
+    }
     
-    if (response.ok) {
-        alert("Запрос создан")
+    async function processResponse(data, textStatus, jqXHR){
+        if (textStatus === "success") {
+            alert("Запрос создан")
+        }
+        else {
+            alert("Ошибка создания запроса");
+        }
     }
-    else {
-        alert(response.message);
-    }
+    
+    getResponse().done(processResponse);
 })

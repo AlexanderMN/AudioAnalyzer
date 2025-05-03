@@ -39,18 +39,75 @@ public sealed class DataBaseContext : DbContext
     }
     public void CreateEndpoints()
     {
-        var endpoint = new Endpoint
-        {
-            Name = "ftp_1",
-            IPAddress = "127.0.0.1",
-            Port = 21,
-            Username = "alexMN",
-            Password = "3217AlexN",
-            EndPointType = EndPointType.FTPServer
-        };
-        Endpoints.Add(endpoint);
+        List<Endpoint> endpoints =
+        [
+            new Endpoint
+            {
+                Name = "ftp_1",
+                IPAddress = "192.168.93.156",
+                Port = 21,
+                Active = true,
+                Username = "alexMN",
+                Password = "3217AlexN",
+                EndPointType = EndPointType.FTPServer
+            },
+            new Endpoint
+            {
+                Name = "rabbit_1",
+                IPAddress = "192.168.93.156",
+                Port = 5672,
+                Active = true,
+                Username = "guest",
+                Password = "guest",
+                EndPointType = EndPointType.Broker
+            }
+        ];
+        Endpoints.AddRange(endpoints);
         SaveChanges();
     }
+
+    public void CreateUserUploadedFiles()
+    {
+        var uploadedFile = new UploadedFile
+        {
+            UploadedFileName = "startup",
+            UploadedFileType = "wav",
+            FileState = FileState.Ready,
+            Duration = 322,
+            SplitNumber = 2,
+            UploadedDate = DateTime.UtcNow,
+            UserId = 1,
+            EndpointId = 1
+        };
+        UploadedFiles.Add(uploadedFile);
+        SaveChanges();
+    }
+
+    public void CreateUserRequests()
+    {
+        var request = new AudioRequest
+        {
+            State = AudioRequestState.Processed,
+            AudioRequestType = AudioRequestType.Transcribe,
+            UserId = 1,
+            EndpointId = 1,
+            CreationDate = DateTime.UtcNow,
+        };
+        AudioRequests.Add(request);
+        SaveChanges();
+    }
+
+    public void CreateFileRequestedEvents()
+    {
+        var fre = new FileRequestedEvent
+        {
+            AudioRequestId = 1,
+            UploadedFileId = 1,
+        };
+        FileRequestedEvents.Add(fre);
+        SaveChanges();
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
@@ -68,6 +125,10 @@ public sealed class DataBaseContext : DbContext
         
         modelBuilder.Entity<AudioRequest>()
                     .Property(ar => ar.AudioRequestType)
+                    .HasConversion<string>();
+        
+        modelBuilder.Entity<AudioRequest>()
+                    .Property(ar => ar.State)
                     .HasConversion<string>();
         
         modelBuilder.Entity<Endpoint>()

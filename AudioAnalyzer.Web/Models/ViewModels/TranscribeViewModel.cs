@@ -1,11 +1,12 @@
+using AudioAnalyzer.Data.Models;
+
 namespace AudioAnalyzer.Web.Models.ViewModels;
 
-public class TranscribeViewModel: ViewModelBase
+public class TranscribeViewModel
 {
-    public string TranscribedText;
+    public string TranscribedText { get; set; }
 
-
-    public TranscribeViewModel(string transcribedText): base("Transcribe")
+    public TranscribeViewModel(string transcribedText)
     {
         TranscribedText = transcribedText;
     }

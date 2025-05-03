@@ -24,6 +24,9 @@ public static class InfrastructureConfiguration
             
             db.CreateEndpoints();
             db.CreateUsers();
+            db.CreateUserUploadedFiles();
+            db.CreateUserRequests();
+            db.CreateFileRequestedEvents();
         }
         catch (Exception e)
         {

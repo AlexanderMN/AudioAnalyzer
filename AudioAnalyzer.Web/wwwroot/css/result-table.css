@@ -1,28 +1,39 @@
+.table-container {
+    width: 100%;
+    /* Set a fixed height or max-height for the scrollable area */
+    max-height: 100%; /* Adjust this value as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd; /* Optional border */
+    border-radius: 4px; /* Optional rounded corners */
+}
 .result-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    margin-top: 20px;
+    font-size: 16px; /* Increased from 14px to 16px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.result-table  thead {
+.result-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     background-color: #f5f5f5;
-    color: #333;
 }
 
 .result-table thead td {
     text-align: center;
     font-weight: bold;
     border-bottom: 2px solid #ddd;
+    padding: 14px 10px; /* Increased padding to match larger font */
+    font-size: 17px; /* Slightly larger for headers */
 }
 
 .result-table tbody tr:nth-child(even) {
     background-color: #fafafa;
 }
 
-.result-table tbody tr:hover {
+.default-row:hover {
     background-color: #f1f1f1;
 }
 
@@ -31,6 +42,8 @@
     text-align: center;
     border-bottom: 1px solid #eee;
     color: #444;
+    padding: 18px 10px; /* Increased padding to match larger font */
+    line-height: 1.6; /* Slightly increased line height */
 }
 
 .result-table td {
@@ -40,12 +53,14 @@
 .result-table tbody tr {
     margin-bottom: 15px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    padding: 10px;
     border-radius: 5px;
+    height: 54px; /* Increased row height to accommodate larger font */
 }
 
-.file-checkbox{
-    width: 12px;
+.file-checkbox {
+    width: 14px; /* Slightly larger checkbox */
+    transform: scale(1.4); /* Adjusted scale */
+    margin: 0 5px; /* Adjusted margin */
 }
 
 #popup {
@@ -64,5 +79,30 @@
     height: 100%;
     width: 100%;
     text-align: center;
+}
+
+.hidden-row{
+    display: none;
+}
+
+.expanded-content {
+    background-color: #f9f9f9;
+}
+.expanded-content table {
+    width: 95%;
+    margin: 10px auto;
+}
+
+.expand-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 

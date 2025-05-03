@@ -26,7 +26,12 @@ public class DbContextUploadedFileRepository : IRepository<UploadedFile>
 
     public async Task<UploadedFile?> GetEntity(int id, bool includeRelatedEntities)
     {
-        return await _context.UploadedFiles.FirstOrDefaultAsync(e => e.Id == id);
+        if (!includeRelatedEntities)
+            return await _context.UploadedFiles.FirstOrDefaultAsync(e => e.Id == id);
+        
+        return await _context.UploadedFiles
+                             .Include(u => u.Endpoint)
+                             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public void Create(UploadedFile item)

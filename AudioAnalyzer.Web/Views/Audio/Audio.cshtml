@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio analyzer</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/home_onload.js"></script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
 </head>
@@ -28,24 +28,24 @@
                     </label>
                 </div>
             </div>
-            <table id="options-table">
+            <table class="options-table">
                     <tr>
                         <td>
-                            <button id="button-input" class="options-button">
+                            <button id="button-input" class="options-button" name="Input">
                                 Загрузить аудиофайлы
                             </button>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <button id="button-files" class="options-button">
+                            <button id="button-files" class="options-button" name="Files">
                                 Аудиофайлы
                             </button>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <button id="button-requests" class="options-button">
+                            <button id="button-requests" class="options-button" name="Requests">
                                 Запросы
                             </button>
                         </td>
@@ -58,11 +58,106 @@
         </div>
     </div>
     <div id="footer">
+        <style>
+            .audio-player {
+                position: relative;
+                width: 300px;
+                padding: 15px;
+                background-color: #d5d5d5;
+                color: white;
+                border-radius: 10px;
+                font-family: sans-serif;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .controls {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+
+            .controls #buttons{
+                display: flex;
+            }
+            
+            .controls button {
+                background: #f5f5f5;
+                border: none;
+                color: black;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .controls button:hover {
+                background: #5e5ea0;
+            }
+
+            .progress {
+                width: 100%;
+                height: 6px;
+                background: #f5f5f5;
+                margin-top: 10px;
+                position: relative;
+                border-radius: 3px;
+                overflow: hidden;
+            }
+
+            .progress-bar {
+                height: 100%;
+                background: #66f;
+                width: 0%;
+            }
+        </style>
         <div class="audio-player">
-            <audio id="audio" controls>
-                
-            </audio>
+            <audio id="audio"></audio>
+            <div class="progress" id="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="controls">
+                <div class="buttons">
+                    <button id="play-button">Пуск</button>
+                </div>
+                <span id="time">00:00</span>
+            </div>
         </div>
+        <script>
+            const audio = document.getElementById('audio');
+            const playButton = document.getElementById('play-button');
+            const timeDisplay = document.getElementById('time');
+            const progressBar = document.getElementById('progress-bar');
+            const progress = document.getElementById('progress');
+
+            playButton.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playButton.textContent = 'Стоп';
+                } else {
+                    audio.pause();
+                    playButton.textContent = 'Пуск';
+                }
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                const minutes = Math.floor(audio.currentTime / 60).toString().padStart(2, '0');
+                const seconds = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+                timeDisplay.textContent = `${minutes}:${seconds}`;
+
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${percent}%`;
+            });
+
+            progress.addEventListener('click', (e) => {
+                const clickX = e.offsetX;
+                const width = progress.clientWidth;
+                const percent = clickX / width;
+                audio.currentTime = percent * audio.duration;
+            });
+        </script>
     </div>
 </div>
 </body>

@@ -5,7 +5,9 @@ using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.SplitResponse;
+using AudioAnalyzer.Web.Models.AudioResponses.SummaryResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
 using RabbitMqInfrastructure.Broker;
@@ -21,58 +23,39 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
 {
     private readonly FileUploadHubConnectionContext _connectionContext;
     private readonly DatabaseDbContextService _databaseDbContextService;
-    
-    private ConcurrentDictionary<int, int> _requestCompletedCounts { get; set; }
+    private readonly BrokerRequestCounter _brokerRequestCounter;
     public RabbitMqQueueCallbacks(FileUploadHubConnectionContext connectionContext,
                                   IConfiguration configuration)
     {
         _connectionContext = connectionContext;
         DataBaseContext dbContext = new DataBaseContext(configuration);
         _databaseDbContextService = new DatabaseDbContextService(dbContext);
-        _requestCompletedCounts = new ConcurrentDictionary<int, int>();
-        
+        _brokerRequestCounter = new BrokerRequestCounter();
         RegisterDelegates(typeof(RabbitMqQueueCallbacks));
     }
     
     private async Task Search(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message);
-        var jsonResponse = JsonSerializer.Deserialize<TranscribeResponse>(text);
-        
-        if (jsonResponse == null)
+        var searchResponse = JsonSerializer.Deserialize<SearchResponse>(text);
+        if (searchResponse == null || searchResponse.ResponseCode == 1)
             return;
-        await _connectionContext.SendTranscribedTextForSearch(connectionContext: _connectionContext, 
-                                                       userId: jsonResponse.UserId, 
-                                                       transcribedTextJson: jsonResponse);
-    }
-
-    private async Task Transcribe(object state, BrokerEventArgs args)
-    {
-        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var jsonResponse = JsonSerializer.Deserialize<TranscribeResponse>(text);
-
-        
-        if (jsonResponse == null)
-            return;
-        
-        if (jsonResponse.ResponseCode == 1)
-        {
-            return;
-        }
         
         var fileRequestedEvent = await _databaseDbContextService
             .GetFileRequestedEventByIndex(
-                fileId: jsonResponse.FileId,
-                requestId: jsonResponse.RequestId);
+                fileId: searchResponse.FileId,
+                requestId: searchResponse.RequestId);
         
         //TODO add error
         if (fileRequestedEvent == null)
             return;
+
+        var textForSearch = JsonSerializer.Serialize(searchResponse.SearchText);
         
         var audioResponse = new AudioResponse
         {
-            OrderId = jsonResponse.FileOrderId,
-            ResponseText = jsonResponse.Response.ToString()!,
+            OrderId = searchResponse.FileOrderId,
+            ResponseText = textForSearch,
             ResponseType = AudioResponseType.Success,
             FileRequestedEvent = fileRequestedEvent
         };
@@ -80,34 +63,103 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         _databaseDbContextService.AudioResponseRepository.Create(audioResponse);
         await _databaseDbContextService.AudioResponseRepository.SaveAsync();
         
-        _requestCompletedCounts[jsonResponse.UserId]++;
-
-            
-        if (_requestCompletedCounts[jsonResponse.UserId] == fileRequestedEvent.UploadedFile.SplitNumber)
+        _brokerRequestCounter.AddRequest(searchResponse.RequestId);
+        _brokerRequestCounter.TryGetCurrentRequestCount(searchResponse.RequestId, out var count);
+        if (count == -1)
+            return;
+        if (count == fileRequestedEvent.UploadedFile.SplitNumber)
         {
-            await _connectionContext.SendTranscribedText(connectionContext: _connectionContext, 
-                                                  userId: jsonResponse.UserId, 
-                                                  text: jsonResponse.Response.ToString()!);   
+            await _databaseDbContextService.SetFileRequestedEventState(fileRequestedEvent);
+            _brokerRequestCounter.RemoveRequest(searchResponse.RequestId);
+        }
+    }
+
+    private async Task Transcribe(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        var transcribeResponse = JsonSerializer.Deserialize<TranscribeResponse>(text);
+        if (transcribeResponse == null || transcribeResponse.ResponseCode == 1)
+            return;
+        
+        var fileRequestedEvent = await _databaseDbContextService
+            .GetFileRequestedEventByIndex(
+                fileId: transcribeResponse.FileId,
+                requestId: transcribeResponse.RequestId);
+        
+        //TODO add error
+        if (fileRequestedEvent == null)
+            return;
+        
+        var audioResponse = new AudioResponse
+        {
+            OrderId = transcribeResponse.FileOrderId,
+            ResponseText = transcribeResponse.Text,
+            ResponseType = AudioResponseType.Success,
+            FileRequestedEventId = fileRequestedEvent.Id
+        };
+        
+        _databaseDbContextService.AudioResponseRepository.Create(audioResponse);
+        await _databaseDbContextService.AudioResponseRepository.SaveAsync();
+        
+        _brokerRequestCounter.AddRequest(transcribeResponse.RequestId);
+        _brokerRequestCounter.TryGetCurrentRequestCount(transcribeResponse.RequestId, out var count);
+        if (count == -1)
+            return;
+            
+        if (count == fileRequestedEvent.UploadedFile.SplitNumber)
+        {
+            await _databaseDbContextService.SetFileRequestedEventState(fileRequestedEvent);
+            _brokerRequestCounter.RemoveRequest(transcribeResponse.RequestId);
+
         }
     }
 
     private async Task Summarize(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        var summaryResponse = JsonSerializer.Deserialize<SummaryResponse>(text);
+        if (summaryResponse == null)
+            return;
         
-    }
+        var fileRequestedEvent = await _databaseDbContextService
+            .GetFileRequestedEventByIndex(
+                fileId: summaryResponse.FileId,
+                requestId: summaryResponse.RequestId);
+        
+        //TODO add error
+        if (fileRequestedEvent == null)
+            return;
+        
+        var audioResponse = new AudioResponse
+        {
+            OrderId = summaryResponse.FileOrderId,
+            ResponseText = summaryResponse.Text,
+            FileRequestedEventId = fileRequestedEvent.Id,
+            ResponseType = summaryResponse.ResponseCode == 0 ? 
+                AudioResponseType.Success : 
+                AudioResponseType.Error
+        };
 
-    private async Task Spectrogram(object state, BrokerEventArgs args)
-    {
-        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        _databaseDbContextService.AudioResponseRepository.Create(audioResponse);
+        await _databaseDbContextService.AudioResponseRepository.SaveAsync();
+        
+        _brokerRequestCounter.AddRequest(summaryResponse.RequestId);
+        _brokerRequestCounter.TryGetCurrentRequestCount(summaryResponse.RequestId, out var count);
+        
+        if (count == -1)
+            return;
+        
+        if (count == fileRequestedEvent.UploadedFile.SplitNumber)
+        {
+           await _databaseDbContextService.SetFileRequestedEventState(fileRequestedEvent);
+           _brokerRequestCounter.RemoveRequest(summaryResponse.RequestId);
+        }
     }
-
+    
     private async Task SplitResult(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-
         var splitResponse = JsonSerializer.Deserialize<SplitResponse>(text);
-        
         if (splitResponse == null)
             return;
         
@@ -130,5 +182,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         
         _databaseDbContextService.UploadedFileRepository.Update(uploadedFile);
         await _databaseDbContextService.UploadedFileRepository.SaveAsync();
+        
+        
     }
 }
