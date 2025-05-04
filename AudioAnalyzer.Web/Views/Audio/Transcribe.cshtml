@@ -1,8 +1,11 @@
 @model AudioAnalyzer.Web.Models.ViewModels.TranscribeViewModel
+<head>
+    <link rel="stylesheet" href="/css/transcribe.css"/>
+</head>
 <body>
 <div>
     <div id="transcribed-text">
-        @Model.TranscribedText
+        @string.Concat(Model.TranscribedText[0].ToString().ToUpper(), Model.TranscribedText.AsSpan(1))
     </div>
 </div>
 <script></script>

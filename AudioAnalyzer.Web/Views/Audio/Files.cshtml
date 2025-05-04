@@ -9,6 +9,17 @@
 </head>
 <body>
 <div class="table-container">
+    <div id="popup">
+        <div id="popup-content">
+            <h1>Запрос</h1>
+            <p id="file-count">файлов: </p>
+            <form id="request-form" method="get">
+                <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
+                <input type="submit" formaction="/Audio/Search" value="Поиск"/>
+                <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
+            </form>
+        </div>
+    </div>
     <table id="file-table" class="result-table">
         <thead>
         <tr>
@@ -48,17 +59,6 @@
         }
         </tbody>
     </table>
-</div>
-<div id="popup">
-    <div id="popup-content">
-        <h1>Запрос</h1>
-        <p id="file-count">файлов: </p>
-        <form id="request-form" method="get">
-            <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
-            <input type="submit" formaction="/Audio/Search" value="Поиск"/>
-            <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
-        </form>
-    </div>
 </div>
 <script src="/js/fileTableScript.js"></script>
 </body>

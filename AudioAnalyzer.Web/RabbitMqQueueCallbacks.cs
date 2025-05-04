@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Hubs;
@@ -50,7 +52,12 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         if (fileRequestedEvent == null)
             return;
 
-        var textForSearch = JsonSerializer.Serialize(searchResponse.SearchText);
+        JsonSerializerOptions options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic, UnicodeRanges.Arabic)
+        };
+        
+        var textForSearch = JsonSerializer.Serialize(searchResponse.SearchText, options);
         
         var audioResponse = new AudioResponse
         {

@@ -66,7 +66,9 @@
 #popup {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: none;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    right: 105%;
     z-index: 1000;
     width: 300px;
     border-radius: 8px;
@@ -76,8 +78,6 @@
 #popup-content {
     position: relative;
     top: 50%;
-    height: 100%;
-    width: 100%;
     text-align: center;
 }
 

@@ -8,6 +8,6 @@ public class SearchResponse : ResponseBase
     [JsonPropertyName("fileOrderId")]
     public int FileOrderId { get; set; }
     
-    [JsonPropertyName("searchText")]
+    [JsonPropertyName("text")]
     public SearchText SearchText { get; set; }
 }

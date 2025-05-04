@@ -1,5 +1,4 @@
 //in-browser
-
 var SingletonFactory = (function (){
     var instances = new Map()
     return {
@@ -17,23 +16,21 @@ var SingletonFactory = (function (){
     }
 })();
 
+let textForSearch = {
+    text: String,
+    time: Number,
+    words: [{
+        word: String,
+        start: Number,
+        end: Number
+    }]
+}
+
 var audioContext = new AudioContext();
 var audioFile;
 var arrayBuffer;
-var textForSearch = {r: [{
-    response: [{
-        text: String,
-        words: [{
-            word: String,
-            start: Number,
-            end: Number
-        }]
-    }]
-}
-]}
 
-var transcribedTextContainer;
-var textForSearchContainer;
+
 var fileHubConnection;
 
 
@@ -58,18 +55,17 @@ function initUploadHubConnection() {
         .withUrl("/hubs/fileUpload")
         .build();
 
-    fileHubConnection.on("TranscribedText", function (message) {
-        console.log("entered TranscribedText");
-        if (transcribedTextContainer instanceof HTMLElement) {
-            transcribedTextContainer.innerHTML = message;
-        }
-    });
-    
-    fileHubConnection.on("TranscribedTextForSearch", function (message) {
-        textForSearch = JSON.parse(message);
-        console.log("entered TranscribedTextForSearch");
-        
-    })
+    // fileHubConnection.on("TranscribedText", function (message) {
+    //     console.log("entered TranscribedText");
+    //     if (transcribedTextContainer instanceof HTMLElement) {
+    //         transcribedTextContainer.innerHTML = message;
+    //     }
+    // });
+    //
+    // fileHubConnection.on("TranscribedTextForSearch", function (message) {
+    //     console.log("entered TranscribedTextForSearch");
+    //    
+    // })
 
     fileHubConnection.onclose(async () => {
         await startFileHubConnection();

@@ -1,6 +1,9 @@
+@using System.Text.Json
 @model AudioAnalyzer.Web.Models.ViewModels.SearchViewModel
 <head>
     <title>Search</title>
+    <link rel="stylesheet" href="/css/search.css"/>
+    <link rel="stylesheet" href="/css/result-table.css"/>
 </head>
 <body>
 
@@ -16,8 +19,11 @@
             </form>
         </div>
     </div>
-    <div class="table-container">
-        <table id="search-result-table">
+    <div id="search-json-container">
+        @Model.SearchResponse
+    </div>
+    <div id="search-table-container" class="table-container">
+        <table id="search-result-table" class="result-table">
             <thead id = "search-thead">
                 <tr id >
                     <th style="width: 20%">Время</th>

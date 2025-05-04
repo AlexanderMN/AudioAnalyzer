@@ -1,7 +1,5 @@
-var searchSubmitForm = document.getElementById("search-submit-form")
-var userTextInput = document.getElementById("search-container-input");
-var searchResultTable = document.getElementById("search-result-table");
-var searchTbody = document.getElementById("search-tbody");
+textForSearch = JSON.parse(document.getElementById("search-json-container").innerHTML);
+
 function arrayContainsWords(array, words, startIndex){
 
     if (words.length === 1){
@@ -46,14 +44,12 @@ function getIndicesOf(searchWords, listOfWords) {
     return indices;
 }
 
-searchSubmitForm.onsubmit = async function (evt) {
+document.getElementById("search-submit-form").onsubmit = async function (evt) {
     evt.preventDefault();
-    
-    
-    
-    let inputText = userTextInput.value;
+    document.querySelector("#search-tbody").innerHTML = '';
+    let inputText = document.getElementById("search-container-input").value;
 
-    let response = textForSearch.r[0].response[0];
+    let response = textForSearch;
     let words = response.words.map(p => p.word);
 
     let searchWords = inputText.toLowerCase().split(/\s+/);
@@ -109,7 +105,7 @@ searchSubmitForm.onsubmit = async function (evt) {
         tableRow.cells[1].innerHTML = textToShow;
 
 
-        searchTbody.appendChild(tableRow);
+        document.getElementById("search-tbody").appendChild(tableRow);
     }
 
     console.log(indexes);

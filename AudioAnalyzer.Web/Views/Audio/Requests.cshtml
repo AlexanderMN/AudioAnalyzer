@@ -1,5 +1,4 @@
 @using AudioAnalyzer.Data
-@using AudioAnalyzer.Data.Models
 @model List<AudioAnalyzer.Data.Models.AudioRequest>
 
 <!DOCTYPE html>
@@ -10,55 +9,53 @@
     <link rel="stylesheet" href="/css/result-table.css"/>
 </head>
 <body>
-<div>
-    <div>
-        <table id="request-table" class="result-table">
-            <thead>
-            <tr>
-                <td>
-                    Id
-                </td>
-                <td>
-                    Тип запроса
-                </td>
-                <td>
-                    Состояние
-                </td>
-                <td>
-                    Дата создания
+<div class="table-container">
+    <table id="request-table" class="result-table">
+        <thead>
+        <tr>
+            <td>
+                Id
+            </td>
+            <td>
+                Тип запроса
+            </td>
+            <td>
+                Состояние
+            </td>
+            <td>
+                Дата создания
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var request in Model)
+        {
+            <tr class="default-row">
+                <td>@request.Id</td>
+                <td>@request.AudioRequestType.GetNameAttribute()</td>
+                <td>@request.State.GetNameAttribute()</td>
+                <td>@request.CreationDate</td>
+            </tr>
+            <tr class="hidden-row">
+                <td colspan="5" class="expanded-content">
+                    <table class="expanded-table">
+                        @foreach (var fileRequestedEvent in @request.FileRequestedEvents)
+                        {
+                            <tr><td hidden="hidden">@fileRequestedEvent.UploadedFile.Id</td>
+                                <td>@fileRequestedEvent.UploadedFile.UploadedFileName</td>
+                                <td>@fileRequestedEvent.UploadedFile.UploadedFileType</td>
+                                <td>@fileRequestedEvent.State.GetNameAttribute()</td>
+                                <td>@TimeSpan.FromSeconds(fileRequestedEvent.UploadedFile.Duration).ToString(@"h\:mm\:ss\.f")</td>
+                                <td><button class="expand-button">Результат</button></td>
+                            </tr>
+                        }
+                    </table>
                 </td>
             </tr>
-            </thead>
-            <tbody>
-            @foreach (var request in Model)
-            {
-                <tr class="default-row">
-                    <td>@request.Id</td>
-                    <td>@request.AudioRequestType.GetNameAttribute()</td>
-                    <td>@request.State.GetNameAttribute()</td>
-                    <td>@request.CreationDate</td>
-                </tr>
-                <tr class="hidden-row">
-                    <td colspan="5" class="expanded-content">
-                        <table class="expanded-table">
-                            @foreach (var fileRequestedEvent in @request.FileRequestedEvents)
-                            {
-                                <tr><td hidden="hidden">@fileRequestedEvent.UploadedFile.Id</td>
-                                    <td>@fileRequestedEvent.UploadedFile.UploadedFileName</td>
-                                    <td>@fileRequestedEvent.UploadedFile.UploadedFileType</td>
-                                    <td>@fileRequestedEvent.State.GetNameAttribute()</td>
-                                    <td>@TimeSpan.FromSeconds(fileRequestedEvent.UploadedFile.Duration).ToString(@"h\:mm\:ss\.f")</td>
-                                    <td><button class="expand-button">Результат</button></td>
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        <script src="/js/requestTableScript.js"></script>
-    </div>
+        }
+        </tbody>
+    </table>
+    <script src="/js/requestTableScript.js"></script>
 </div>
 </body>
 </html>

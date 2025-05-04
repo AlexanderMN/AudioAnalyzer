@@ -7,6 +7,16 @@ dropArea.ondragover = dropArea.ondragenter = function (evt) {
     evt.preventDefault();
 };
 
+audio.onloadedmetadata = function() {
+    progressBar.style.width = 0
+    playButton.textContent = 'Пуск';
+
+    const minutes = Math.floor(audio.duration / 60).toString().padStart(2, '0');
+    const seconds = Math.floor(audio.duration % 60).toString().padStart(2, '0');
+    
+    fullTime.innerHTML = `/${minutes}:${seconds}`;
+}
+
 function readInput(){
     var reader = new FileReader();
     reader.onload = function() {

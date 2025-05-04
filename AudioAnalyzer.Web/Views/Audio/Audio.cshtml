@@ -61,7 +61,7 @@
         <style>
             .audio-player {
                 position: relative;
-                width: 300px;
+                width: 500px;
                 padding: 15px;
                 background-color: #d5d5d5;
                 color: white;
@@ -113,7 +113,7 @@
             }
         </style>
         <div class="audio-player">
-            <audio id="audio"></audio>
+            <audio id="audio" preload="metadata"></audio>
             <div class="progress" id="progress">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -122,13 +122,17 @@
                 <div class="buttons">
                     <button id="play-button">Пуск</button>
                 </div>
-                <span id="time">00:00</span>
+                <div id="audio-time" style="margin-left: auto; margin-right: 0;">
+                    <span id="time">00:00</span>
+                    <span id="full-time">/00:00</span>
+                </div>
             </div>
         </div>
         <script>
-            const audio = document.getElementById('audio');
+            const audio = document.querySelector('audio');
             const playButton = document.getElementById('play-button');
             const timeDisplay = document.getElementById('time');
+            const fullTime = document.getElementById('full-time')
             const progressBar = document.getElementById('progress-bar');
             const progress = document.getElementById('progress');
 

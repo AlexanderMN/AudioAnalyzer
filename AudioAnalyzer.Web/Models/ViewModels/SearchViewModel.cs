@@ -1,19 +1,16 @@
+using System.Text.Json;
 using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 
 namespace AudioAnalyzer.Web.Models.ViewModels;
 
-public class SearchViewModel: ViewModelBase
+public class SearchViewModel
 {
-    public TranscribeResponse AudioTranscribedResponse { get; set; }
+    public string SearchResponse;
 
-    public SearchViewModel(TranscribeResponse transcribedResponse = null):base("Search")
+    public SearchViewModel(SearchResponse searchResponse)
     {
-        AudioTranscribedResponse = transcribedResponse;
+        SearchResponse = JsonSerializer.Serialize(searchResponse.SearchText);;
     }
-}
-
-public enum SearchErrorCodes
-{
-    CouldNotTranscribeFile
 }

@@ -1,4 +1,16 @@
-SingletonFactory.setInstance("checkedCount", 0);
+
+document.querySelectorAll(".default-row").forEach((row, index) => {
+    row.onclick = async () => {
+        await fetch(`/Audio/AudioFile?fileId=${row.cells.item(0).innerHTML}`)
+            .then(res => res.blob())
+            .then(data => {
+                audio.src = URL.createObjectURL(data);
+                audio.load();
+            });
+    }
+})
+SingletoFactory.setInstance("checkedCount", 0);
+
 
 document.querySelectorAll(".file-checkbox").forEach((checkbox, index) => {
     checkbox.onchange = () => {
@@ -20,6 +32,7 @@ document.querySelectorAll(".file-checkbox").forEach((checkbox, index) => {
         SingletonFactory.setInstance("checkedCount", checkedCount);
     }
 });
+
 
 document.getElementById("request-form").addEventListener("submit", async (e) => {
     e.preventDefault();

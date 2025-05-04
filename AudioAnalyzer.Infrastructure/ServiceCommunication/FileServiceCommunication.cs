@@ -48,15 +48,18 @@ public class FileServiceCommunication
 
         return webResponse.StatusCode == FtpStatusCode.PathnameCreated;
     }
-    public async Task<Stream?> GetDataFromFileServerAsync(Endpoint endpoint, UploadedFile file)
+    public async Task<MemoryStream?> GetDataFromFileServerAsync(UploadedFile file)
     {
         var fileStream = await _ftpClient.DownloadFileFromFTPServer(
             uri: EndpointService.GetEndpointUri(
-                endpoint: endpoint,
+                endpoint: file.Endpoint,
                 endpointProtocol: EndpointProtocol.ftp,
-                $"/{FtpSettings.DefaultFileDownloadFolder}/{file.UploadedFileName}.{file.UploadedFileType}"));
+                $"/users/{file.UserId}/{FtpSettings.DefaultFileUploadFolder}/{file.Id}.wav"));
         
-        return fileStream;
+        MemoryStream memoryStream = new MemoryStream();
+        await fileStream.CopyToAsync(memoryStream);
+        await memoryStream.FlushAsync();
+        return memoryStream;
     }
 
     public static string GetUserUploadFolderPath(User user, UploadedFile uploadedFile)

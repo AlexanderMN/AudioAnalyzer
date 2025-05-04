@@ -1,5 +1,9 @@
 using System.Net;
 using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
@@ -7,6 +11,7 @@ using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.SplitRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
+using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -121,36 +126,85 @@ public class AudioController : Controller
     
     [HttpGet]
     [Route("Search")]
-    public async Task<IActionResult> Search()
+    public async Task<IActionResult> Search(int requestId, int fileId)
     {
-        var searchViewModel = new SearchViewModel();
+        var fileRequestedEvent = await _databaseDbContextService
+            .GetFileRequestedEventByIndex(requestId, fileId, true);
+
+        var responses = fileRequestedEvent.AudioResponses
+                                          .OrderBy(resp => resp.OrderId)
+                                          .Select(resp => resp.ResponseText).ToList();
+
+        var fullSearchResponse = new SearchResponse
+        {
+            SearchText = new SearchText
+            {
+                
+            }
+        };
+
+        var finalTextBuilder = new StringBuilder();
+        var finalTextTime = 0.0f;
+        
+        var searchWords = new List<SearchWord>();
+
+        JsonSerializerOptions options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic, UnicodeRanges.Arabic)
+        };
+        
+        foreach (var response in responses)
+        {
+            var searchText = JsonSerializer.Deserialize<SearchText>(response, options);
+
+            finalTextBuilder.Append(searchText.Text);
+            
+            searchWords.AddRange(searchText.Words.Select(w => new SearchWord
+            {
+                word = w.word,
+                StartTime = w.StartTime + finalTextTime,
+                EndTime = w.EndTime + finalTextTime,
+            }));
+            
+            finalTextTime += searchText.TimeInSeconds;
+        }
+        
+        fullSearchResponse.SearchText.Text = finalTextBuilder.ToString();
+        fullSearchResponse.SearchText.TimeInSeconds = finalTextTime;
+        fullSearchResponse.SearchText.Words = searchWords;
+        
+        
+        var searchViewModel = new SearchViewModel(fullSearchResponse);
         return PartialView("Search", searchViewModel);
     }
     
     [HttpPost]
     [Route("Search")]
-    public async Task<IActionResult> Search(int fileId)
+    public async Task<IActionResult> Search(List<int> fileIds)
     {
-        var searchViewModel = new SearchViewModel();
-
         var user = await GetUserAsync();
         if (user == null)
             return Unauthorized("Пользователь не авторизован");
 
-        var request = await _databaseDbContextService.SaveUserRequestAsync(user, AudioRequestType.Search, [fileId]);
+        var request = await _databaseDbContextService.SaveUserRequestAsync(user, AudioRequestType.Search, fileIds);
 
         if (request.Id == 0)
             return BadRequest("Не удалось создать запрос");
-
-        var success = await _fileServiceCommunication.CreateRequestFolder(request);
         
-        if (!success) 
-            return BadRequest("Не удалось создать запрос");
-
-        await _postManager.PostUserRequestToService<SearchRequest>(
-            audioRequest: request,
-            fileId: fileId,
-            callbackQueueName: BrokerQueues.SearchQueue);
+        var uploadedFiles = _databaseDbContextService.UploadedFileRepository
+                                                     .GetEntityList(f => fileIds.Contains(f.Id));
+        
+        foreach (var file in uploadedFiles)
+        {
+            for (int i = 0; i < file.SplitNumber; i++)
+            {
+                await _postManager.PostUserRequestToService<SearchRequest>(
+                    audioRequest: request,
+                    fileId: file.Id,
+                    callbackQueueName: BrokerQueues.SearchQueue);
+            }
+        }
+        
 
         return Ok();
     }
@@ -161,6 +215,9 @@ public class AudioController : Controller
     public async Task<IActionResult> Transcribe(int requestId, int fileId)
     {
         var fileRequestedEvent = await _databaseDbContextService.GetFileRequestedEventByIndex(requestId, fileId, true);
+
+        if (fileRequestedEvent == null)
+            return BadRequest("Запрос еще не обработан");
         var transcribedText = string.Join("", fileRequestedEvent.AudioResponses
                                                   .OrderBy(resp => resp.OrderId)
                                                   .Select(resp => resp.ResponseText));
@@ -175,7 +232,6 @@ public class AudioController : Controller
     [Route("Transcribe")]
     public async Task<IActionResult> Transcribe(List<int> fileIds)
     {
-        var a = Request;
         var user = await GetUserAsync();
         if (user == null || fileIds.Count == 0)
             return Unauthorized("Пользователь не авторизован");
@@ -277,6 +333,19 @@ public class AudioController : Controller
         return Ok();
     }
 
+    [HttpGet]
+    [Route("AudioFile")]
+    public async Task<IActionResult> AudioFile(int fileId)
+    {
+        var uploadedFile = await _databaseDbContextService.UploadedFileRepository.GetEntity(fileId, true);
+        
+        if (uploadedFile == null)
+            return BadRequest("Файл не найден");
+        await using var fileStream = await _fileServiceCommunication.GetDataFromFileServerAsync(uploadedFile);
+        byte[] wavArray = fileStream!.ToArray();
+        return File(wavArray,  "application/octet-stream");
+    }
+    
     private async Task<User?> GetUserAsync()
     {
         //TODO: add timeout
