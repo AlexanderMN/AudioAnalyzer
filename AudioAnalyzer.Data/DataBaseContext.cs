@@ -14,6 +14,11 @@ public sealed class DataBaseContext : DbContext
         _configuration = config;
     }
 
+    public DataBaseContext()
+    {
+        
+    }
+    
     public DataBaseContext(IConfiguration config)
     {
         _configuration = config;
@@ -49,6 +54,8 @@ public sealed class DataBaseContext : DbContext
                 Active = true,
                 Username = "alexMN",
                 Password = "3217AlexN",
+                SpaceLeft = 5000000000,
+                SpaceLimit = 5000000000,
                 EndPointType = EndPointType.FTPServer
             },
             new Endpoint

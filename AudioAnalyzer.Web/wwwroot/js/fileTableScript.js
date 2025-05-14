@@ -9,7 +9,7 @@ document.querySelectorAll(".default-row").forEach((row, index) => {
             });
     }
 })
-SingletoFactory.setInstance("checkedCount", 0);
+SingletonFactory.setInstance("checkedCount", 0);
 
 
 document.querySelectorAll(".file-checkbox").forEach((checkbox, index) => {

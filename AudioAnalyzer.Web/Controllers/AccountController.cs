@@ -38,11 +38,8 @@ public class AccountController : Controller
         
         var user = _dataBaseContext.Users.FirstOrDefault(u => u.UserName == model.Username 
                                                               && u.Password == model.Password);
-
         if (user == null) 
             return View(model);
-        
-        
         await Authenticate(user.Id);
         return RedirectToAction("Audio", "Audio");
     }
@@ -93,21 +90,19 @@ public class AccountController : Controller
 
         return View(model);
     }
-    
+    [NonAction]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login");
     }
-
+    [NonAction]
     private async Task Authenticate(int userId)
     {
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, userId.ToString())
         };
-        
-        
         ClaimsIdentity id = new ClaimsIdentity(claims: claims,
                                                authenticationType: "ApplicationCookie", 
                                                nameType: ClaimsIdentity.DefaultNameClaimType, 

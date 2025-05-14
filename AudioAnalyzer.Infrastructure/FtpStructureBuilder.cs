@@ -36,7 +36,7 @@ public class FtpStructureBuilder
         {
             await CreateFolder(endpoint, $"/users/{user.Id}");
             await CreateFolder(endpoint, $"/users/{user.Id}/uploadedFiles");
-            await CreateFolder(endpoint, $"/users/{user.Id}/uploadFiles/split_files");
+            await CreateFolder(endpoint, $"/users/{user.Id}/uploadedFiles/split_files");
             await CreateFolder(endpoint, $"/users/{user.Id}/requests");
         }
     }

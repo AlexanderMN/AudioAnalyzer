@@ -31,9 +31,10 @@ public class StartUp
                 {
                     options.LoginPath = new PathString("/Account/Login");
                 });
-
-        _builder.Services.AddScoped<FtpStructureBuilder>();
         _builder.Services.AddControllersWithViews();
+        _builder.Services.AddEndpointsApiExplorer();
+        _builder.Services.AddSwaggerGen();
+        _builder.Services.AddScoped<FtpStructureBuilder>();
         _builder.Services.AddRazorPages();
         
         _builder.Services.AddSingleton<HttpClient>();
@@ -94,7 +95,7 @@ public class StartUp
         {
             throw new ApplicationException("The application needs to be configured before this method");
         }
-        
+
         // Configure the HTTP request pipeline.
         if (!_app.Environment.IsDevelopment())
         {
@@ -102,18 +103,20 @@ public class StartUp
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         }
 
-        
+
         _app.UseStaticFiles();
 
         _app.UseRouting();
 
         _app.UseSession();
-        
+
         _app.UseAuthentication();
         _app.UseAuthorization();
         
-        
-        
+        _app.UseSwagger();
+        _app.UseSwaggerUI();
+
+
         //_app.UseRabbitMq();
     }
 

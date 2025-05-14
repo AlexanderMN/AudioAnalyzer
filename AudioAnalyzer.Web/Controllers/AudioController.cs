@@ -9,7 +9,6 @@ using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Infrastructure.ServiceCommunication;
 using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
-using AudioAnalyzer.Web.Models.AudioRequests.SplitRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.ViewModels;
@@ -20,7 +19,6 @@ using RabbitMqInfrastructure.Broker;
 
 namespace AudioAnalyzer.Web.Controllers;
 
-[Authorize]
 [Route("[controller]")]
 public class AudioController : Controller
 {
@@ -272,10 +270,7 @@ public class AudioController : Controller
         var user = await GetUserAsync();
         if (user == null)
             return Unauthorized();
-        
-        var homeViewModel = new HomeViewModel();
         var uploadedFiles = new List<UploadedFile>();
-
         foreach (var requestFormFile in Request.Form.Files)
         {
             var audioFile = _audioFileNameHandler.ParseFileName(requestFormFile.FileName);
@@ -287,7 +282,7 @@ public class AudioController : Controller
             );
             if (endpoints.Count == 0)
                 return BadRequest();
-            var endpoint = endpoints.First();
+            var endpoint = endpoints.MaxBy(e => e.SpaceLeft);
             
             UploadedFile uploadedFile = new UploadedFile
             {
@@ -299,7 +294,6 @@ public class AudioController : Controller
                 EndpointId = endpoint.Id,
                 UserId = user.Id
             };
-            
             uploadedFiles.Add(uploadedFile);
             _databaseDbContextService.UploadedFileRepository.Create(uploadedFile);
         }
@@ -324,12 +318,10 @@ public class AudioController : Controller
             await _postManager.PostSystemRequestToService(
                 user: user,
                 fileId: uploadedFile.Id,
-                queueName: BrokerQueues.SplitQueue,
-                callbackQueueName: BrokerQueues.SplitResultQueue);
+                queueName: BrokerQueues.PreprocessQueue,
+                callbackQueueName: BrokerQueues.PreprocessResultQueue);
         
         }
-        
-        homeViewModel.Response = new HttpResponseMessage(HttpStatusCode.Accepted);   
         return Ok();
     }
 
@@ -345,7 +337,7 @@ public class AudioController : Controller
         byte[] wavArray = fileStream!.ToArray();
         return File(wavArray,  "application/octet-stream");
     }
-    
+    [NonAction]
     private async Task<User?> GetUserAsync()
     {
         //TODO: add timeout

@@ -21,12 +21,9 @@ public class FileServiceCommunication
     {
         
         MemoryStream wavFileStream = new MemoryStream();
-        if (!await FfMpegWrapper.ConvertStreamToStream(
-            inputStream: fileStream,
-            outputStream: wavFileStream,
-            outputFormat: SupportedAudioFormats.Wav))
-            return false;
-        
+        await fileStream.CopyToAsync(wavFileStream);
+        await wavFileStream.FlushAsync();
+        wavFileStream.Position = 0;
         uploadedFile.UploadedFileType = SupportedAudioFormats.Wav;
         var uploadResult = await _ftpClient.UploadFileToFTPServer(
             uri: EndpointService.GetEndpointUri(endpoint: uploadedFile.Endpoint,

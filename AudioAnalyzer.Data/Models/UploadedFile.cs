@@ -9,6 +9,7 @@ public class UploadedFile
     public string UploadedFileName { get; set; }
     public string UploadedFileType { get; set; }
     public FileState FileState { get; set; }
+    public long FileSize { get; set; }
     public double Duration { get; set; }
     public int SplitNumber { get; set; }
     public DateTime UploadedDate { get; set; }

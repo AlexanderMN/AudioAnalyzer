@@ -7,8 +7,8 @@ using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.PreprocessResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
-using AudioAnalyzer.Web.Models.AudioResponses.SplitResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.SummaryResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.TranscribeResponse;
 using Microsoft.AspNetCore.SignalR;
@@ -92,8 +92,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
             .GetFileRequestedEventByIndex(
                 fileId: transcribeResponse.FileId,
                 requestId: transcribeResponse.RequestId);
-        
-        //TODO add error
+
         if (fileRequestedEvent == null)
             return;
         
@@ -163,19 +162,19 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         }
     }
     
-    private async Task SplitResult(object state, BrokerEventArgs args)
+    private async Task PreprocessResult(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
-        var splitResponse = JsonSerializer.Deserialize<SplitResponse>(text);
-        if (splitResponse == null)
+        var preprocessResponse = JsonSerializer.Deserialize<PreprocessResponse>(text);
+        if (preprocessResponse == null)
             return;
         
         var uploadedFile = await _databaseDbContextService.UploadedFileRepository
-                                                 .GetEntity(splitResponse.FileId, false);
+                                                 .GetEntity(preprocessResponse.FileId, false);
         if (uploadedFile == null)
             return;
         
-        if (splitResponse.ResponseCode == 1)
+        if (preprocessResponse.ResponseCode == 1)
         {
             uploadedFile.FileState = FileState.Error;
             _databaseDbContextService.UploadedFileRepository.Update(uploadedFile);
@@ -184,8 +183,8 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         }
         
         uploadedFile.FileState = FileState.Ready;
-        uploadedFile.Duration = splitResponse.Duration;
-        uploadedFile.SplitNumber = splitResponse.SplitNumber;
+        uploadedFile.Duration = preprocessResponse.Duration;
+        uploadedFile.SplitNumber = preprocessResponse.SplitNumber;
         
         _databaseDbContextService.UploadedFileRepository.Update(uploadedFile);
         await _databaseDbContextService.UploadedFileRepository.SaveAsync();

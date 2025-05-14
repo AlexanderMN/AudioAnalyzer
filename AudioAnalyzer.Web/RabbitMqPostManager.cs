@@ -1,8 +1,8 @@
 using System.Text.Json;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Models.AudioRequests;
+using AudioAnalyzer.Web.Models.AudioRequests.PreprocessRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
-using AudioAnalyzer.Web.Models.AudioRequests.SplitRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using RabbitMqInfrastructure.Broker;
 
@@ -24,7 +24,7 @@ public class RabbitMqPostManager
         string queueName,
         string callbackQueueName)
     {
-        var splitRequest = new SplitRequest(user.Id, fileId, callbackQueueName);
+        var splitRequest = new PreprocessRequest(user.Id, fileId, callbackQueueName);
     
         var message = JsonSerializer.Serialize(splitRequest);
     

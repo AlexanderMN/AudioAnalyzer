@@ -18,6 +18,7 @@
     <div id="form-container">
         @using (Html.BeginForm("Login", "Account", FormMethod.Post))
         {
+            Html.AntiForgeryToken();
             <label class="label-container" for="login-input">Логин:</label>
             <div id="login-input">
                 @Html.EditorFor(model => model.Username,

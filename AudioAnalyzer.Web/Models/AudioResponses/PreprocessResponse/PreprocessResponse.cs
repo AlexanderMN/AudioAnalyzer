@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace AudioAnalyzer.Web.Models.AudioResponses.SplitResponse;
+namespace AudioAnalyzer.Web.Models.AudioResponses.PreprocessResponse;
 
-public class SplitResponse : ResponseBase
+public class PreprocessResponse : ResponseBase
 {
     
     [JsonPropertyName("duration")]
