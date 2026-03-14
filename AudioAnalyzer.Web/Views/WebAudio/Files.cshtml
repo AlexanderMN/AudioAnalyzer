@@ -14,10 +14,11 @@
             <h1>Запрос</h1>
             <p id="file-count">файлов: </p>
             <form id="request-form" method="get">
-                @Html.AntiForgeryToken();
-                <input type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
-                <input type="submit" formaction="/Audio/Search" value="Поиск"/>
-                <input type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
+                @Html.AntiForgeryToken()
+                <input style="width: 100%" type="submit" formaction="/Audio/Transcribe" value="Транскрибация"/>
+                <input style="width: 100%" type="submit" formaction="/Audio/Search" value="Поиск"/>
+                <input style="width: 100%" type="submit" formaction="/Audio/Summarize" value="Суммаризация"/>
+                <input style="width: 100%" type="submit" formaction="/Audio/Classify" value="Классификация"/>
             </form>
         </div>
     </div>

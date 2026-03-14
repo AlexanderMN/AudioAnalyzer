@@ -5,18 +5,16 @@ using AudioAnalyzer.Infrastructure;
 using AudioAnalyzer.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AudioAnalyzer.Web.Controllers;
+namespace AudioAnalyzer.Web.Controllers.Web;
 
 [Route("[controller]")]
-public class AccountController : Controller
+public class WebAccountController : Controller
 {
     private readonly DataBaseContext _dataBaseContext;
     private readonly FtpStructureBuilder _ftpStructureBuilder;
-    public AccountController(DataBaseContext dataBaseContext, FtpStructureBuilder ftpStructureBuilder)
+    public WebAccountController(DataBaseContext dataBaseContext, FtpStructureBuilder ftpStructureBuilder)
     {
         _dataBaseContext = dataBaseContext;
         _ftpStructureBuilder = ftpStructureBuilder;
@@ -26,7 +24,7 @@ public class AccountController : Controller
     [Route("Login")]
     public IActionResult Login()
     {
-        return View();
+        return View("Login");
     }
     
     [HttpPost]
@@ -40,15 +38,16 @@ public class AccountController : Controller
                                                               && u.Password == model.Password);
         if (user == null) 
             return View(model);
+        
         await Authenticate(user.Id);
-        return RedirectToAction("Audio", "Audio");
+        return Redirect("/Audio");
     }
 
     [HttpGet]
     [Route("Register")]
     public IActionResult Register()
     {
-        return View();
+        return View("Register");
     }
 
     [HttpPost]
@@ -77,7 +76,7 @@ public class AccountController : Controller
                 await _ftpStructureBuilder.CreateUserFolders(user);
             }
 
-            return RedirectToAction("Login");
+            return View("Login");
         }
         else
         {
@@ -85,10 +84,8 @@ public class AccountController : Controller
                 $"Логин '{model.Username}' уже занят." :
                 $"Пользователь с Email: '{model.Email}' уже существует .";
                 
-            ModelState.AddModelError(string.Empty, errorMessage);
+            return BadRequest(errorMessage);
         }
-
-        return View(model);
     }
     [NonAction]
     public async Task<IActionResult> Logout()

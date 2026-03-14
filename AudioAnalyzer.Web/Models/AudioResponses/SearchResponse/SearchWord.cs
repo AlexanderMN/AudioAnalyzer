@@ -13,7 +13,4 @@ public class SearchWord
     
     [JsonPropertyName("end")]
     public float EndTime{ get; set; }
-    
-    [JsonPropertyName("confidence")]
-    public float Confidence { get; set; }
 }

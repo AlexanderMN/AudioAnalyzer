@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AudioAnalyzer.Data.Models;
 
@@ -10,9 +11,11 @@ public class AudioRequest
     public AudioRequestState State { get; set; }
     public AudioRequestType AudioRequestType { get; set; }
     public int UserId { get; set; }
+    [JsonIgnore]
     public User User { get; set; }
     
     public int EndpointId { get; set; }
+    [JsonIgnore]
     public Endpoint Endpoint { get; set; }
     
     public DateTime CreationDate { get; set; }
@@ -38,6 +41,6 @@ public enum AudioRequestType
     Search,
     [Display(Name = "Суммаризация")]
     Summarize,
-    [Display(Name = "Спектрограмма")]
-    Spectrogram
+    [Display(Name = "Классификация")]
+    Classify
 }

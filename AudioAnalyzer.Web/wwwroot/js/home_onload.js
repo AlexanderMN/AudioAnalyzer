@@ -36,7 +36,6 @@ var fileHubConnection;
 
 $(document).ready(function () {
     $("#main").load("/Audio/Input");
-    
 });
 
 

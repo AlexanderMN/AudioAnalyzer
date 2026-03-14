@@ -39,6 +39,9 @@ document.querySelectorAll(".expand-button").forEach((expandButton) => {
             case "Поиск":
                 await getRequestResult(`Search?requestId=${cells.item(0).innerHTML}&fileId=${expandedRow.cells.item(0).innerHTML}`);
                 break;
+            case "Классификация":
+                await getRequestResult(`Classify?requestId=${cells.item(0).innerHTML}&fileId=${expandedRow.cells.item(0).innerHTML}`);
+                break;
         } 
     }
 })

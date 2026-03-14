@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AudioAnalyzer.Data.Models;
 
@@ -13,6 +14,7 @@ public class AudioResponse
     public int OrderId { get; set; }
     
     public int FileRequestedEventId { get; set; }
+    [JsonIgnore]
     public FileRequestedEvent FileRequestedEvent { get; set; }
 }
 

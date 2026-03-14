@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tjfT6QhCLWrijkRUd7Mn0lHgKfrAL6tFRf0NXnYxUlk=",
+  "Hash": "nalOxQ0OkFlbhGm3uZp0zM2FWFppYIkxqza7n80dOVw=",
   "Source": "AudioAnalyzer.Web",
   "BasePath": "_content/AudioAnalyzer.Web",
   "Mode": "Default",
@@ -241,8 +241,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "25yqirvuqx",
-      "Integrity": "qsLjnvJvf4+mYzC1+JFcDJxXVFtYh5VGX0AHbEqQsoA=",
+      "Fingerprint": "rup89anmr1",
+      "Integrity": "4zWqawOxPtUdVAsFk6tf/APoXsA1IluGNkxE/EtUZ6Q=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\fileTableScript.js"
@@ -325,8 +325,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "o86dd8ygik",
-      "Integrity": "2M3hmFnG/CQ6mvh6tAk6FT0uakHFZgVJg2No6IOt+cQ=",
+      "Fingerprint": "of89t5quk0",
+      "Integrity": "9CP6VZUGd6AynLLWfBcDly+g6SMdi1xTXsw1WKwEh6E=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\requestTableScript.js"
@@ -2519,51 +2519,6 @@
       ]
     },
     {
-      "Route": "js/fileTableScript.25yqirvuqx.js",
-      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\fileTableScript.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2558"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"qsLjnvJvf4+mYzC1+JFcDJxXVFtYh5VGX0AHbEqQsoA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 05 May 2025 16:40:50 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "25yqirvuqx"
-        },
-        {
-          "Name": "label",
-          "Value": "js/fileTableScript.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-qsLjnvJvf4+mYzC1+JFcDJxXVFtYh5VGX0AHbEqQsoA="
-        }
-      ]
-    },
-    {
       "Route": "js/fileTableScript.js",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\fileTableScript.js",
       "Selectors": [],
@@ -2574,7 +2529,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2558"
+          "Value": "2654"
         },
         {
           "Name": "Content-Type",
@@ -2582,11 +2537,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"qsLjnvJvf4+mYzC1+JFcDJxXVFtYh5VGX0AHbEqQsoA=\""
+          "Value": "\"4zWqawOxPtUdVAsFk6tf/APoXsA1IluGNkxE/EtUZ6Q=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 05 May 2025 16:40:50 GMT"
+          "Value": "Wed, 04 Jun 2025 22:37:28 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2596,7 +2551,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-qsLjnvJvf4+mYzC1+JFcDJxXVFtYh5VGX0AHbEqQsoA="
+          "Value": "sha256-4zWqawOxPtUdVAsFk6tf/APoXsA1IluGNkxE/EtUZ6Q="
+        }
+      ]
+    },
+    {
+      "Route": "js/fileTableScript.rup89anmr1.js",
+      "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\fileTableScript.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2654"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4zWqawOxPtUdVAsFk6tf/APoXsA1IluGNkxE/EtUZ6Q=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Jun 2025 22:37:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rup89anmr1"
+        },
+        {
+          "Name": "label",
+          "Value": "js/fileTableScript.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4zWqawOxPtUdVAsFk6tf/APoXsA1IluGNkxE/EtUZ6Q="
         }
       ]
     },
@@ -2857,7 +2857,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1963"
+          "Value": "2171"
         },
         {
           "Name": "Content-Type",
@@ -2865,11 +2865,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"2M3hmFnG/CQ6mvh6tAk6FT0uakHFZgVJg2No6IOt+cQ=\""
+          "Value": "\"9CP6VZUGd6AynLLWfBcDly+g6SMdi1xTXsw1WKwEh6E=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 03 May 2025 00:29:50 GMT"
+          "Value": "Mon, 02 Jun 2025 18:44:54 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2879,12 +2879,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-2M3hmFnG/CQ6mvh6tAk6FT0uakHFZgVJg2No6IOt+cQ="
+          "Value": "sha256-9CP6VZUGd6AynLLWfBcDly+g6SMdi1xTXsw1WKwEh6E="
         }
       ]
     },
     {
-      "Route": "js/requestTableScript.o86dd8ygik.js",
+      "Route": "js/requestTableScript.of89t5quk0.js",
       "AssetFile": "C:\\Users\\alexm\\RiderProjects\\AudioAnalyzer\\AudioAnalyzer.Web\\wwwroot\\js\\requestTableScript.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2894,7 +2894,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1963"
+          "Value": "2171"
         },
         {
           "Name": "Content-Type",
@@ -2902,11 +2902,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"2M3hmFnG/CQ6mvh6tAk6FT0uakHFZgVJg2No6IOt+cQ=\""
+          "Value": "\"9CP6VZUGd6AynLLWfBcDly+g6SMdi1xTXsw1WKwEh6E=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 03 May 2025 00:29:50 GMT"
+          "Value": "Mon, 02 Jun 2025 18:44:54 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2916,7 +2916,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o86dd8ygik"
+          "Value": "of89t5quk0"
         },
         {
           "Name": "label",
@@ -2924,7 +2924,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-2M3hmFnG/CQ6mvh6tAk6FT0uakHFZgVJg2No6IOt+cQ="
+          "Value": "sha256-9CP6VZUGd6AynLLWfBcDly+g6SMdi1xTXsw1WKwEh6E="
         }
       ]
     },

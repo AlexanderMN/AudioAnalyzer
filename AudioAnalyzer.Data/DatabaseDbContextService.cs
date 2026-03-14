@@ -64,7 +64,9 @@ public class DatabaseDbContextService : IDisposable
         await UploadedFileRepository.SaveAsync();
     }
 
-    public async Task<FileRequestedEvent?> GetFileRequestedEventByIndex(int requestId, int fileId, bool includeResponses = false)
+    public async Task<FileRequestedEvent?> GetFileRequestedEventByIndex(int requestId, 
+                                                                        int fileId, 
+                                                                        AudioRequestType requestType, bool includeResponses = false)
     {
         if (includeResponses)
             return await _context.FileRequestedEvents
@@ -72,7 +74,8 @@ public class DatabaseDbContextService : IDisposable
                                  .Include(fre => fre.AudioRequest)
                                  .Include(fre => fre.AudioResponses)
                                  .FirstOrDefaultAsync(fre => fre.UploadedFileId == fileId &&
-                                                             fre.AudioRequestId == requestId);
+                                                             fre.AudioRequestId == requestId
+                                                             && fre.AudioRequest.AudioRequestType == requestType);
         
         
         return await _context.FileRequestedEvents

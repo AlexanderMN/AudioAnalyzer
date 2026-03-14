@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using AudioAnalyzer.Core;
 using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Repositories.AudioExtensions;
@@ -24,14 +25,14 @@ public class StartUp
 
     public WebApplicationBuilder ConfigureServices()
     {
-        // Add services to the container.
-        
         _builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = new PathString("/Account/Login");
                 });
-        _builder.Services.AddControllersWithViews();
+        _builder.Services.AddControllersWithViews()
+                .AddJsonOptions(options => 
+                                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));;
         _builder.Services.AddEndpointsApiExplorer();
         _builder.Services.AddSwaggerGen();
         _builder.Services.AddScoped<FtpStructureBuilder>();

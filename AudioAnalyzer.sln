@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Data", "Audio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Core", "AudioAnalyzer.Core\AudioAnalyzer.Core.csproj", "{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Scaler", "AudioAnalyzer.Scaler\AudioAnalyzer.Scaler.csproj", "{08D70F92-3BF7-4044-B6BC-492972D7CFDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Api", "AudioAnalyzer.Api\AudioAnalyzer.Api.csproj", "{6AF75F1C-B485-4905-B580-7A2188045443}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +44,9 @@ Global
 		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCCB7E4-2A5A-4E25-AEB9-BE7D7D8FB7E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{08D70F92-3BF7-4044-B6BC-492972D7CFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08D70F92-3BF7-4044-B6BC-492972D7CFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08D70F92-3BF7-4044-B6BC-492972D7CFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08D70F92-3BF7-4044-B6BC-492972D7CFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF75F1C-B485-4905-B580-7A2188045443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF75F1C-B485-4905-B580-7A2188045443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF75F1C-B485-4905-B580-7A2188045443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF75F1C-B485-4905-B580-7A2188045443}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

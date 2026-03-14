@@ -11,9 +11,6 @@ public class SearchText
     [JsonPropertyName("time")]
     public float TimeInSeconds{ get; set; }
     
-    [JsonPropertyName("confidence")]
-    public float Confidence{ get; set; }
-    
     [JsonPropertyName("words")]
     public List<SearchWord>? Words{ get; set; }
 }

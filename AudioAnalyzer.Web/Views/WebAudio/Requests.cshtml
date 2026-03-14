@@ -1,4 +1,5 @@
 @using AudioAnalyzer.Data
+@using AudioAnalyzer.Data.Models
 @model List<AudioAnalyzer.Data.Models.AudioRequest>
 
 <!DOCTYPE html>
@@ -46,7 +47,23 @@
                                 <td>@fileRequestedEvent.UploadedFile.UploadedFileType</td>
                                 <td>@fileRequestedEvent.State.GetNameAttribute()</td>
                                 <td>@TimeSpan.FromSeconds(fileRequestedEvent.UploadedFile.Duration).ToString(@"h\:mm\:ss\.f")</td>
-                                <td><button class="expand-button">Результат</button></td>
+                                <td>
+                                    @{
+                                        if (fileRequestedEvent.AudioRequest.AudioRequestType == AudioRequestType.Classify
+                                        && fileRequestedEvent.AudioRequest.State == AudioRequestState.Processed)
+                                        {
+                                            <text>
+                                                Класс: @fileRequestedEvent.AudioResponses.Select(resp => resp.ResponseText).GroupBy(x => x).OrderByDescending(g => g.Count()).First().Key 
+                                            </text>   
+                                        }
+                                        else
+                                        {
+                                            <button class="expand-button">
+                                                Результат
+                                            </button>
+                                        }
+                                    }
+                                </td>
                             </tr>
                         }
                     </table>

@@ -24,7 +24,6 @@ public class FileServiceCommunication
         await fileStream.CopyToAsync(wavFileStream);
         await wavFileStream.FlushAsync();
         wavFileStream.Position = 0;
-        uploadedFile.UploadedFileType = SupportedAudioFormats.Wav;
         var uploadResult = await _ftpClient.UploadFileToFTPServer(
             uri: EndpointService.GetEndpointUri(endpoint: uploadedFile.Endpoint,
                                                  endpointProtocol: EndpointProtocol.ftp,
@@ -51,7 +50,7 @@ public class FileServiceCommunication
             uri: EndpointService.GetEndpointUri(
                 endpoint: file.Endpoint,
                 endpointProtocol: EndpointProtocol.ftp,
-                $"/users/{file.UserId}/{FtpSettings.DefaultFileUploadFolder}/{file.Id}.wav"));
+                $"/users/{file.UserId}/{FtpSettings.DefaultFileUploadFolder}/{file.Id}.{file.UploadedFileType}"));
         
         MemoryStream memoryStream = new MemoryStream();
         await fileStream.CopyToAsync(memoryStream);

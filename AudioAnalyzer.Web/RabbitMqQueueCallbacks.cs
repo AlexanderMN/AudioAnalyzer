@@ -7,6 +7,7 @@ using AudioAnalyzer.Data;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Hubs;
 using AudioAnalyzer.Web.Models.AudioResponses;
+using AudioAnalyzer.Web.Models.AudioResponses.ClassificationResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.PreprocessResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.SearchResponse;
 using AudioAnalyzer.Web.Models.AudioResponses.SummaryResponse;
@@ -46,7 +47,8 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         var fileRequestedEvent = await _databaseDbContextService
             .GetFileRequestedEventByIndex(
                 fileId: searchResponse.FileId,
-                requestId: searchResponse.RequestId);
+                requestId: searchResponse.RequestId,
+                requestType: AudioRequestType.Search);
         
         //TODO add error
         if (fileRequestedEvent == null)
@@ -91,7 +93,8 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         var fileRequestedEvent = await _databaseDbContextService
             .GetFileRequestedEventByIndex(
                 fileId: transcribeResponse.FileId,
-                requestId: transcribeResponse.RequestId);
+                requestId: transcribeResponse.RequestId, 
+                requestType: AudioRequestType.Transcribe);
 
         if (fileRequestedEvent == null)
             return;
@@ -120,7 +123,7 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         }
     }
 
-    private async Task Summarize(object state, BrokerEventArgs args)
+    private async Task Summary(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
         var summaryResponse = JsonSerializer.Deserialize<SummaryResponse>(text);
@@ -130,7 +133,8 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
         var fileRequestedEvent = await _databaseDbContextService
             .GetFileRequestedEventByIndex(
                 fileId: summaryResponse.FileId,
-                requestId: summaryResponse.RequestId);
+                requestId: summaryResponse.RequestId,
+                requestType: AudioRequestType.Summarize);
         
         //TODO add error
         if (fileRequestedEvent == null)
@@ -161,7 +165,46 @@ public class RabbitMqQueueCallbacks : BrokerQueueCallbacks
            _brokerRequestCounter.RemoveRequest(summaryResponse.RequestId);
         }
     }
-    
+
+    private async Task Classification(object state, BrokerEventArgs args)
+    {
+        string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+        var classificationResponse = JsonSerializer.Deserialize<ClassificationResponse>(text);
+        if (classificationResponse == null || classificationResponse.ResponseCode == 1)
+            return;
+        
+        var fileRequestedEvent = await _databaseDbContextService
+            .GetFileRequestedEventByIndex(
+                fileId: classificationResponse.FileId,
+                requestId: classificationResponse.RequestId,
+                requestType: AudioRequestType.Classify);
+
+        if (fileRequestedEvent == null)
+            return;
+        
+        var audioResponse = new AudioResponse
+        {
+            OrderId = classificationResponse.FileOrderId,
+            ResponseText = classificationResponse.Text,
+            ResponseType = AudioResponseType.Success,
+            FileRequestedEventId = fileRequestedEvent.Id
+        };
+        
+        _databaseDbContextService.AudioResponseRepository.Create(audioResponse);
+        await _databaseDbContextService.AudioResponseRepository.SaveAsync();
+        
+        _brokerRequestCounter.AddRequest(classificationResponse.RequestId);
+        _brokerRequestCounter.TryGetCurrentRequestCount(classificationResponse.RequestId, out var count);
+        if (count == -1)
+            return;
+            
+        if (count == fileRequestedEvent.UploadedFile.SplitNumber)
+        {
+            await _databaseDbContextService.SetFileRequestedEventState(fileRequestedEvent);
+            _brokerRequestCounter.RemoveRequest(classificationResponse.RequestId);
+
+        }
+    }
     private async Task PreprocessResult(object state, BrokerEventArgs args)
     {
         string text = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);

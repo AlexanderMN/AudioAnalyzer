@@ -1,8 +1,10 @@
 using System.Text.Json;
 using AudioAnalyzer.Data.Models;
 using AudioAnalyzer.Web.Models.AudioRequests;
+using AudioAnalyzer.Web.Models.AudioRequests.ClassificationRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.PreprocessRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.SearchRequest;
+using AudioAnalyzer.Web.Models.AudioRequests.SummaryRequest;
 using AudioAnalyzer.Web.Models.AudioRequests.TranscribeRequest;
 using RabbitMqInfrastructure.Broker;
 
@@ -41,9 +43,18 @@ public class RabbitMqPostManager
         
         if (typeof(T) == typeof(TranscribeRequest))
             request = new TranscribeRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id, callbackQueueName);
-        else
+        else if (typeof(T) == typeof(SearchRequest))
         {
             request = new SearchRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id, callbackQueueName);
+        }
+        else if (typeof(T) == typeof(SummaryRequest))
+        {
+            request = new SummaryRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id, callbackQueueName);
+        }
+        else
+        {
+            request = new ClassificationRequest(audioRequest.UserId, fileId, fileOrderId, audioRequest.Id,
+                                                callbackQueueName);
         }
         
         var message = JsonSerializer.Serialize((T)request);

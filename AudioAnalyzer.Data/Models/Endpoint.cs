@@ -25,6 +25,7 @@ public enum EndPointType
     FTPServer,
     HTTPServer, 
     FileSplitter, 
-    AudioSummarizer
+    AudioSummarizer,
+    AudioClassifier
 }
 

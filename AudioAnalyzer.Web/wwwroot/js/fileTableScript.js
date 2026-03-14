@@ -59,6 +59,9 @@ document.getElementById("request-form").addEventListener("submit", async (e) => 
         case "Суммаризация":
             task = "Summary";
             break;
+        case "Классификация":
+            task = 'Classify';
+            break;
 
     }
     function getResponse(){

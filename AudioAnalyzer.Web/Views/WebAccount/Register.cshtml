@@ -14,7 +14,7 @@
         Создать аккаунт
     </div>
     <div id="form-container">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        @using (Html.BeginForm("Register", "WebAccount", FormMethod.Post))
         {
             Html.AntiForgeryToken();
             <label class="label-container" for="login-input">Логин:</label>
@@ -27,7 +27,7 @@
                                         @class = "input-field"
                                     }
                                 })
-                @Html.ValidationMessageFor(model => model.Username)
+                @* @Html.ValidationMessageFor(model => model.Username) *@
             </div>
 
             <label class="label-container" for="password-input">Пароль:</label>
@@ -40,7 +40,7 @@
                                         @class = "input-field"
                                     }
                                 })
-                @Html.ValidationMessageFor(model => model.Password)
+                @* @Html.ValidationMessageFor(model => model.Password) *@
             </div>
 
             <label class="label-container" for="email-input">Почта:</label>
@@ -53,7 +53,7 @@
                                         @class = "input-field"
                                     }
                                 })
-                @Html.ValidationMessageFor(model => model.Email)
+                @* @Html.ValidationMessageFor(model => model.Email) *@
             </div>
 
             <button class="form-button" type="submit">Создать</button>

@@ -1,5 +1,7 @@
 is_global = true
 build_property.TargetFramework = net8.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v8.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
@@ -20,50 +22,50 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Account/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAccount/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Account/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAccount/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Audio.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cQXVkaW8uY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Audio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cQXVkaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/BasicInfo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cQmFzaWNJbmZvLmNzaHRtbA==
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/BasicInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cQmFzaWNJbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Files.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cRmlsZXMuY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Files.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cRmlsZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cSW5kZXguY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Input.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cSW5wdXQuY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Input.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cSW5wdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Requests.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cUmVxdWVzdHMuY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Requests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cUmVxdWVzdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Search.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cU2VhcmNoLmNzaHRtbA==
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cU2VhcmNoLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Spectrogram.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cU3BlY3Ryb2dyYW0uY3NodG1s
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Spectrogram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cU3BlY3Ryb2dyYW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Summary.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cU3VtbWFyeS5jc2h0bWw=
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Summary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cU3VtbWFyeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/Audio/Transcribe.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaW9cVHJhbnNjcmliZS5jc2h0bWw=
+[C:/Users/alexm/RiderProjects/AudioAnalyzer/AudioAnalyzer.Web/Views/WebAudio/Transcribe.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViQXVkaW9cVHJhbnNjcmliZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
