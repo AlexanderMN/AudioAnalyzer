@@ -1,0 +1,93 @@
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+
+namespace RabbitMqInfrastructure.Broker;
+
+public class RabbitMqMessageConsumer
+{
+    private IConnection? _connection;
+    private IChannel? _channel;
+
+    private readonly RabbitMqSetting _rabbitMqSetting;
+    protected readonly BrokerQueueCallbacks BrokerQueueCallbacks;
+    public RabbitMqMessageConsumer(RabbitMqSetting rabbitMqSetting,
+                                   BrokerQueueCallbacks brokerQueueCallbacks)
+    {
+        _rabbitMqSetting = rabbitMqSetting;
+        BrokerQueueCallbacks = brokerQueueCallbacks;
+    }
+
+    private async Task Start()
+    {
+        var factory = new ConnectionFactory
+        {
+            HostName = _rabbitMqSetting.IpAddress,
+            Port = _rabbitMqSetting.Port,
+            UserName = _rabbitMqSetting.UserName,
+            Password = _rabbitMqSetting.Password,
+        };
+        try
+        {
+            _connection ??= await factory.CreateConnectionAsync();
+            _channel ??= await _connection.CreateChannelAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public void Dispose()
+    {
+        _channel?.Dispose();
+        _connection?.Dispose();
+    }
+
+    public async Task Subscribe(string topic, Func<object, BrokerEventArgs, Task> callback)
+    {
+        if (_channel == null ) 
+            return;
+           
+        await _channel.QueueDeclareAsync(
+            queue: topic, 
+            durable: true,
+            exclusive: false,
+            autoDelete: false);
+        
+        var consumer = new AsyncEventingBasicConsumer(_channel);
+        
+        consumer.ReceivedAsync += async (model,  ea) =>
+        {
+            BrokerEventArgs eventArgs = new BrokerEventArgs(ea.RoutingKey, ea.Body.ToArray());
+            await callback(model, eventArgs);
+        };
+        
+        await _channel.BasicConsumeAsync(
+            queue: topic,
+            autoAck: true,
+            consumer: consumer);
+    }
+
+    private async Task SubscribeToAllQueuesAsync(CancellationToken stoppingToken)
+    {
+        
+        foreach (var eventDelegate in BrokerQueueCallbacks.Callbacks)
+        {
+            await Subscribe(eventDelegate.Key, (Func<object, BrokerEventArgs, Task>)eventDelegate.Value);
+        }
+    }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        await Start();
+        await SubscribeToAllQueuesAsync(cancellationToken);
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        Dispose();
+        
+        return Task.CompletedTask;
+    }
+}

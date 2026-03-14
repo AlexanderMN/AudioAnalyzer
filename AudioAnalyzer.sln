@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Core", "Audio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioAnalyzer.Api", "AudioAnalyzer.Api\AudioAnalyzer.Api.csproj", "{6AF75F1C-B485-4905-B580-7A2188045443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqInfrastructure", "AudioAnalyzer.RabbitMqInfrastructure\RabbitMqInfrastructure.csproj", "{648C176D-4566-4395-8B15-4DB37EE1E46A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{6AF75F1C-B485-4905-B580-7A2188045443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AF75F1C-B485-4905-B580-7A2188045443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AF75F1C-B485-4905-B580-7A2188045443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648C176D-4566-4395-8B15-4DB37EE1E46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648C176D-4566-4395-8B15-4DB37EE1E46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648C176D-4566-4395-8B15-4DB37EE1E46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648C176D-4566-4395-8B15-4DB37EE1E46A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

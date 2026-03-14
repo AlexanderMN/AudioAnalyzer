@@ -1,0 +1,13 @@
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\bin\Debug\net8.0\RabbitMqInfrastructure.deps.json
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\bin\Debug\net8.0\RabbitMqInfrastructure.dll
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\bin\Debug\net8.0\RabbitMqInfrastructure.pdb
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.csproj.AssemblyReference.cache
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.AssemblyInfoInputs.cache
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.AssemblyInfo.cs
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.csproj.CoreCompileInputs.cache
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.dll
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\refint\RabbitMqInfrastructure.dll
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.pdb
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\ref\RabbitMqInfrastructure.dll
+C:\Users\alexm\RiderProjects\InfrastructureTemplates\RabbitMqInfrastructure\obj\Debug\net8.0\RabbitMqInfrastructure.sourcelink.json
